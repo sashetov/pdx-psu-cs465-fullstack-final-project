@@ -1,4 +1,7 @@
 node_modules/
+# production
+/build
+# misc
+npm-debug.log*
 .vscode/
-# package-lock.json
-# package.json
+*.vim
