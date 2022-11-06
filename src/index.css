@@ -17,6 +17,10 @@ body {
   background-color: #1f262a;
 }
 
+.btn {
+  width: 100% !important;
+  height: 90% !important;
+}
 
 .cell {
   font-family: "dancing_scriptregular";
