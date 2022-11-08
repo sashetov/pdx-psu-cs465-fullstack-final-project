@@ -106,7 +106,7 @@ const Board = () => {
 
       // board is full
       if (counter === 9) {
-        console.log(`Game over :( No one won.)`);
+        console.log(`Game over :( No one won.`);
         // end game here
       }
       // board is not full
