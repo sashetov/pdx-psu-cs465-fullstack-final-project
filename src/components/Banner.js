@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Banner() {
   return (
     <div className="container mx-auto text-center">
