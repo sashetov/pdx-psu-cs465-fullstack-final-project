@@ -126,6 +126,8 @@ const Board = ({ socket }) => {
       // board is not full
       else {
         // continue game
+        socket.emit('move', { boardState: newBoard });
+        setTurn(turn === 0 ? 1 : 0);
       }
     } else {
       console.log(`Player ${curr} won!`);
@@ -143,7 +145,10 @@ const Board = ({ socket }) => {
           <button
             className="btn my-0"
             onClick={(event) => {
-              move(event, 0);
+              // only mark and change turn when the square is empty
+              if (boardState[0] === '') {
+                move(event, 0);
+              }
             }}
           ></button>
         </div>
@@ -151,7 +156,10 @@ const Board = ({ socket }) => {
           <button
             className="btn"
             onClick={(event) => {
-              move(event, 1);
+              // only mark and change turn when the square is empty
+              if (boardState[1] === '') {
+                move(event, 1);
+              }
             }}
           ></button>
         </div>
@@ -159,7 +167,10 @@ const Board = ({ socket }) => {
           <button
             className="btn"
             onClick={(event) => {
-              move(event, 2);
+              // only mark and change turn when the square is empty
+              if (boardState[2] === '') {
+                move(event, 2);
+              }
             }}
           ></button>
         </div>
@@ -169,7 +180,10 @@ const Board = ({ socket }) => {
           <button
             className="btn"
             onClick={(event) => {
-              move(event, 3);
+              // only mark and change turn when the square is empty
+              if (boardState[3] === '') {
+                move(event, 3);
+              }
             }}
           ></button>
         </div>
@@ -177,7 +191,10 @@ const Board = ({ socket }) => {
           <button
             className="btn"
             onClick={(event) => {
-              move(event, 4);
+              // only mark and change turn when the square is empty
+              if (boardState[4] === '') {
+                move(event, 4);
+              }
             }}
           ></button>
         </div>
@@ -185,7 +202,10 @@ const Board = ({ socket }) => {
           <button
             className="btn"
             onClick={(event) => {
-              move(event, 5);
+              // only mark and change turn when the square is empty
+              if (boardState[5] === '') {
+                move(event, 5);
+              }
             }}
           ></button>
         </div>
@@ -195,7 +215,10 @@ const Board = ({ socket }) => {
           <button
             className="btn"
             onClick={(event) => {
-              move(event, 6);
+              // only mark and change turn when the square is empty
+              if (boardState[6] === '') {
+                move(event, 6);
+              }
             }}
           ></button>
         </div>
@@ -203,7 +226,10 @@ const Board = ({ socket }) => {
           <button
             className="btn"
             onClick={(event) => {
-              move(event, 7);
+              // only mark and change turn when the square is empty
+              if (boardState[7] === '') {
+                move(event, 7);
+              }
             }}
           ></button>
         </div>
@@ -211,7 +237,10 @@ const Board = ({ socket }) => {
           <button
             className="btn"
             onClick={(event) => {
-              move(event, 8);
+              // only mark and change turn when the square is empty
+              if (boardState[8] === '') {
+                move(event, 8);
+              }
             }}
           ></button>
         </div>
