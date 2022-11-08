@@ -77,6 +77,7 @@ const Board = ({ socket }) => {
 
   };
 
+ 
   return (
     <div ref={reference} className="container-sm w-50">
       <div className="row">
@@ -85,8 +86,8 @@ const Board = ({ socket }) => {
             className="btn my-0"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[0] === '') {
-                move(event, 0);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -96,8 +97,8 @@ const Board = ({ socket }) => {
             className="btn"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[1] === '') {
-                move(event, 1);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -107,8 +108,8 @@ const Board = ({ socket }) => {
             className="btn"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[2] === '') {
-                move(event, 2);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -120,8 +121,8 @@ const Board = ({ socket }) => {
             className="btn"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[3] === '') {
-                move(event, 3);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -131,8 +132,8 @@ const Board = ({ socket }) => {
             className="btn"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[4] === '') {
-                move(event, 4);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -142,8 +143,8 @@ const Board = ({ socket }) => {
             className="btn"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[5] === '') {
-                move(event, 5);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -155,8 +156,8 @@ const Board = ({ socket }) => {
             className="btn"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[6] === '') {
-                move(event, 6);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -166,8 +167,8 @@ const Board = ({ socket }) => {
             className="btn"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[7] === '') {
-                move(event, 7);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -177,8 +178,8 @@ const Board = ({ socket }) => {
             className="btn"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[8] === '') {
-                move(event, 8);
+              if (boardState[this.id] === '') {
+                move(event, this.id);
               }
             }}
           ></button>
@@ -190,98 +191,3 @@ const Board = ({ socket }) => {
 
 export default Board;
 
-/*
- if (index === 0) {
-      if (
-        (newBoard[1] === curr && newBoard[2] === curr) ||
-        (newBoard[3] === curr && newBoard[6] === curr) ||
-        (newBoard[4] === curr && newBoard[8] === curr)
-      ) {
-        winner = curr;
-      }
-    } else if (index === 1) {
-      if (
-        (newBoard[0] === curr && newBoard[2] === curr) ||
-        (newBoard[4] === curr && newBoard[7] === curr)
-      ) {
-        winner = curr;
-      }
-    } else if (index === 2) {
-      if (
-        (newBoard[0] === curr && newBoard[1] === curr) ||
-        (newBoard[5] === curr && newBoard[8] === curr) ||
-        (newBoard[4] === curr && newBoard[6] === curr)
-      ) {
-        winner = curr;
-      }
-    } else if (index === 3) {
-      if (
-        (newBoard[0] === curr && newBoard[6] === curr) ||
-        (newBoard[4] === curr && newBoard[5] === curr)
-      ) {
-        winner = curr;
-      }
-    } else if (index === 4) {
-      if (
-        (newBoard[1] === curr && newBoard[7] === curr) ||
-        (newBoard[3] === curr && newBoard[5] === curr) ||
-        (newBoard[0] === curr && newBoard[8] === curr) ||
-        (newBoard[2] === curr && newBoard[6] === curr)
-      ) {
-        winner = curr;
-      }
-    } else if (index === 5) {
-      if (
-        (newBoard[2] === curr && newBoard[8] === curr) ||
-        (newBoard[3] === curr && newBoard[4] === curr)
-      ) {
-        winner = curr;
-      }
-    } else if (index === 6) {
-      if (
-        (newBoard[0] === curr && newBoard[3] === curr) ||
-        (newBoard[7] === curr && newBoard[8] === curr) ||
-        (newBoard[2] === curr && newBoard[4] === curr)
-      ) {
-        winner = curr;
-      }
-    } else if (index === 7) {
-      if (
-        (newBoard[1] === curr && newBoard[4] === curr) ||
-        (newBoard[6] === curr && newBoard[8] === curr)
-      ) {
-        winner = curr;
-      }
-    } else if (index === 8) {
-      if (
-        (newBoard[2] === curr && newBoard[5] === curr) ||
-        (newBoard[0] === curr && newBoard[4] === curr) ||
-        (newBoard[6] === curr && newBoard[7] === curr)
-      ) {
-        winner = curr;
-      }
-    } else {
-      console.log('Weird error happened. How did you get here?');
-    }
-
-    if (winner === '') {
-      let counter = 0;
-      // check if board is full
-      newBoard.forEach((space) => {
-        if (space !== '') {
-          counter = counter + 1;
-        }
-      });
-
-      // board is full
-      if (counter === 9) {
-        console.log(`Game over :( No one won.`);
-        // end game here
-      }
-      // board is not full
-      else {
-        // continue game
-        socket.emit('move', { boardState: newBoard });
-        setTurn(turn === 0 ? 1 : 0);
-      }
-      */
