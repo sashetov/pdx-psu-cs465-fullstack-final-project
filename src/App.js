@@ -1,5 +1,6 @@
 import Banner from './components/Banner';
-import Board  from './components/Board';
+import Board from './components/Board';
+import React from 'react';
 
 function App() {
   return (
@@ -7,7 +8,6 @@ function App() {
       <Banner />
       <Board />
     </div>
-    
   );
 }
 
