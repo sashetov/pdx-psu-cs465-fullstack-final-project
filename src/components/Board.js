@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import React, { useEffect, useRef, useState } from 'react';
 
-const Board = ({ socket }) =>  {
+const Board = ({ socket }) => {
   //Hooks
   const [turn, setTurn] = useState(0);
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
@@ -20,24 +19,8 @@ const Board = ({ socket }) =>  {
     };
   }, [socket]);
 
-
-
-  useEffect(() => {
-    const exampleHandler = (data) => {
-      console.log(data);
-    };
-
-    socket.on('move_done', exampleHandler);
-    socket.on('client_disconnect', exampleHandler);
-
-    return () => {
-      socket.off('move_done', exampleHandler);
-      socket.off('client_disconnect', exampleHandler);
-    };
-  }, [socket]);
-
   //Variables and constants
-  //let mark = '';
+  //let mark = ''; // not yet used, removed so eslint would stop complaining
   let winner = '';
   const reference = useRef(null);
 
@@ -52,7 +35,6 @@ const Board = ({ socket }) =>  {
 
     setBoard(newBoard);
     console.log(newBoard);
-    socket.emit('move', { boardState: boardState });
     // check for winner
     if (index === 0) {
       if (
@@ -149,6 +131,8 @@ const Board = ({ socket }) =>  {
       console.log(`Player ${curr} won!`);
       // end game here
     }
+
+    socket.emit('move', { boardState: newBoard });
     setTurn(turn === 0 ? 1 : 0);
   };
 
