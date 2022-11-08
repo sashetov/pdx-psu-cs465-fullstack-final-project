@@ -1,9 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const Board = ({ socket }) => {
+const Board = ({ socket }) =>  {
   //Hooks
   const [turn, setTurn] = useState(0);
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
+
+  useEffect(() => {
+    const exampleHandler = (data) => {
+      console.log(data);
+    };
+
+    socket.on('move_done', exampleHandler);
+    socket.on('client_disconnect', exampleHandler);
+
+    return () => {
+      socket.off('move_done', exampleHandler);
+      socket.off('client_disconnect', exampleHandler);
+    };
+  }, [socket]);
+
+
 
   useEffect(() => {
     const exampleHandler = (data) => {
