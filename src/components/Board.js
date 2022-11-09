@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+const initialBoard = ['', '', '', '', '', '', '', '', ''];
+
 const Board = ({ socket }) => {
   //Hooks
   const [turn, setTurn] = useState(0);
@@ -25,6 +27,7 @@ const Board = ({ socket }) => {
   const reference = useRef(null);
 
   //Functions
+  //Check board for a winning state.
   const checkWinner = () => {
     const board = [...boardState];
     for (let i = 0; i < 9; i += 3) {
@@ -43,6 +46,7 @@ const Board = ({ socket }) => {
     return winner;
   }
 
+  //Check board for a tie
   const checkTie = () => {
     const board = [...boardState];
     let counter = 0;
@@ -53,6 +57,8 @@ const Board = ({ socket }) => {
     });
     return counter === 9;
   }
+
+  
 
   const move = (event, index) => {
     const newBoard = [...boardState];
@@ -68,6 +74,8 @@ const Board = ({ socket }) => {
    winner = checkWinner();
    if (winner !== '') {
     console.log(`${winner} won!`);
+    setBoard(initialBoard);
+    console.log("Board reset: " + boardState);
    } else if (checkTie() === true) {
     console.log(`Game over :( No one won.`);
    } else { 
@@ -81,105 +89,115 @@ const Board = ({ socket }) => {
   return (
     <div ref={reference} className="container-sm w-50">
       <div className="row">
-        <div className="col cell text-center" id="0">
+        <div className="col cell text-center">
           <button
             className="btn my-0"
+            id="0"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+            
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
         </div>
-        <div className="col cell text-center" id="1">
+        <div className="col cell text-center" >
           <button
             className="btn"
+            id="1"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
         </div>
-        <div className="col cell text-center" id="2">
+        <div className="col cell text-center">
           <button
             className="btn"
+            id="2"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
         </div>
       </div>
       <div className="row text-center">
-        <div className="col cell text-center" id="3">
+        <div className="col cell text-center" >
           <button
             className="btn"
+            id="3"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
         </div>
-        <div className="col cell text-center" id="4">
+        <div className="col cell text-center" >
           <button
             className="btn"
+            id="4"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
         </div>
-        <div className="col cell text-center" id="5">
+        <div className="col cell text-center" >
           <button
             className="btn"
+            id="5"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
         </div>
       </div>
       <div className="row">
-        <div className="col cell text-center" id="6">
+        <div className="col cell text-center">
           <button
             className="btn"
+            id="6"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
         </div>
-        <div className="col cell text-center" id="7">
+        <div className="col cell text-center">
           <button
             className="btn"
+            id="7"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
         </div>
-        <div className="col cell text-center" id="8">
+        <div className="col cell text-center">
           <button
             className="btn"
+            id="8"
             onClick={(event) => {
               // only mark and change turn when the square is empty
-              if (boardState[this.id] === '') {
-                move(event, this.id);
+              if (boardState[event.target.id] === '') {
+                move(event, event.target.id);
               }
             }}
           ></button>
