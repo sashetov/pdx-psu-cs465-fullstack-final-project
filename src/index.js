@@ -3,5 +3,6 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import React from 'react';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
