@@ -13,10 +13,10 @@ function App() {
     return () => newSocket.close();
   }, [setSocket]);
 
-  // TODO add connection to Splash page when user first opens the domain
   return (
     <div>
       <Banner />
+      <Splash />
       {socket ? <Board socket={socket} /> : <div>Not Connected</div>}
     </div>
   );
