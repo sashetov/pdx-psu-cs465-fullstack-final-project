@@ -9,7 +9,8 @@ const Board = ({ socket }) => {
     const exampleHandler = (data) => {
       console.log(data);
     };
-
+    console.log("socket:", socket);
+    window.socket = socket;
     socket.on('move_done', exampleHandler);
     socket.on('client_disconnect', exampleHandler);
 
