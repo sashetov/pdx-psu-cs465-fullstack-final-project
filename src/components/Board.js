@@ -48,7 +48,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+            aria-label="cell 0">     
         </div>
         <div className="col cell text-center" 
             id="1" 
@@ -57,7 +58,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+          aria-label="cell 1">     
         </div>
         <div className="col cell text-center" 
             id="2" 
@@ -66,7 +68,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+            aria-label="cell 2">     
         </div>
       </div>
       <div className="row text-center">
@@ -77,7 +80,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+          aria-label="cell 3">     
         </div>
         <div className="col cell text-center" 
             id="4" 
@@ -86,7 +90,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+          aria-label="cell 4">     
         </div>
         <div className="col cell text-center" 
             id="5" 
@@ -95,7 +100,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+          aria-label="cell 5">     
         </div>
       </div>
       <div className="row">
@@ -106,7 +112,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+          aria-label="cell 6">     
         </div>
         <div className="col cell text-center" 
             id="7" 
@@ -115,7 +122,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+          aria-label="cell 7">     
         </div>
         <div className="col cell text-center" 
             id="8" 
@@ -124,7 +132,8 @@ const Board = ({ socket }) => {
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
-          }}>     
+          }}
+          aria-label="cell 8">     
         </div>
       </div>
     </div>
