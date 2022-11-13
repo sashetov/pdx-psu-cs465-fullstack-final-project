@@ -7,13 +7,14 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.2",
+    "express": "4.16.4",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "express": "4.16.4",
-    "socket.io": "2.1.1"
+    "react-scripts": "^5.0.1",
+    "socket.io": "^4.5.3",
+    "socket.io-client": "^4.5.3",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "eslint": "^8.24.0",
@@ -23,7 +24,7 @@
     "eslint-plugin-n": "^15.3.0",
     "eslint-plugin-promise": "^6.0.1",
     "eslint-plugin-react": "^7.31.8",
-    "nodemon": "1.18.4"
+    "nodemon": "^2.0.20"
   },
   "scripts": {
     "start": "nodemon server/index.js localhost 8080",
@@ -49,5 +50,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    }
   }
 }
