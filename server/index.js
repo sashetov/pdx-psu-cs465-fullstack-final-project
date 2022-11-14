@@ -168,6 +168,30 @@ io.sockets.on('connection', (socket) => {
     symbol: null,
     gameId: null,
   };
+
+  socket.on("isOpponentAvailable", (data)=>{
+    let gameId = players[id].gameId, game = games[gameId];
+    let yourTurn = null;
+    if(game.nextPlayer === 0 && game['player1'] === id){
+      yourTurn = true;
+    }
+    else if(game.nextPlayer === 1 && game['player2'] === id){ // will happen if you emmitted before the first move....
+      yourTurn = true
+    }
+    else{
+      yourTurn = false;
+    }
+    if(game.player1 !== null && game.player2 !==null){
+      socket.emit('opponentAvailable', {
+        status: 'ok',
+        msg: 'you have an opponent',
+        data: {
+          isYourTurn: yourTurn
+        },
+      });
+    }
+  });
+
   socket.on('move', (data) => {
     console.log('id:', id);
     console.log('data:', data);
