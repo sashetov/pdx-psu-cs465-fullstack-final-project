@@ -1,7 +1,14 @@
-import socketio from "socket.io-client";
-import React from 'react';
-
+import React, { createContext } from 'react';
+import { io, Socket } from 'socket.io-client';
 const url = ('http://localhost:8080');
 
-export const socket = socketio.connect(url);
-export const SocketContext = React.createContext();
+const socket = io(url), SocketContext = createContext(socket);
+socket.on('connect', () => console.log('connected to socket'));
+
+const SocketProvider = ({ children }) => {
+    return (
+        <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+    );
+};
+
+export { SocketContext, SocketProvider };

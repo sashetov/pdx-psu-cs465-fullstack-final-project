@@ -1,24 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Banner from './Banner';
 import Board from './Board';
-import io from 'socket.io-client';
+import openSocket from 'socket.io-client';
+
 import Splash from './Splash';
-import { socket } from './socket';
+//import { SocketContext } from './socket';
 
 function App() {
   const [socket, setSocket] = useState(null);
   const [first, setFirst] = useState(true);
  
   useEffect(() => {
-    const newSocket = io.connect(window.location.origin);
+    const newSocket = openSocket("http://localhost:5000:8080");
     setSocket(newSocket);
     return () => newSocket.close();
   }, [setSocket]);
+  
+  let url = new URL('http://localhost:8080/join'), params = { playerName:"Test", socket_id: "21" }; //socket_id:socket.id
+  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
 
   function handleSubmit(event) {
-    console.log(event.target.name);
-    setFirst(event.target.name);
-    console.log("First: " + first);
+    event.preventDefault();
+    let { value } = event.target;
+    console.log("Socket: " + socket.connected);
+    fetch(url).then((response) => {
+      console.log(response.json());
+    })
   }
 
   const splash = (
@@ -26,7 +34,7 @@ function App() {
       id="player"
       class="form w-50 mx-auto mt-5 p-3"
       method="get"
-      onSubmit={handleSubmit}
+      onSubmit={event => {handleSubmit(event)}}
     >
       <div class="form-group mx-auto my-2">
         <label class="py-2" for="name">
