@@ -2,32 +2,22 @@ import React, { useEffect, useState, useContext } from 'react';
 import Banner from './Banner';
 import Board from './Board';
 import openSocket from 'socket.io-client';
-
+import io from 'socket.io-client'
 import Splash from './Splash';
 //import { SocketContext } from './socket';
 
-function App() {
-  const [socket, setSocket] = useState(null);
-  const [first, setFirst] = useState(true);
- 
-  useEffect(() => {
-    const newSocket = openSocket("http://localhost:5000:8080");
-    setSocket(newSocket);
-    return () => newSocket.close();
-  }, [setSocket]);
-  
-  let url = new URL('http://localhost:8080/join'), params = { playerName:"Test", socket_id: "21" }; //socket_id:socket.id
-  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    let { value } = event.target;
-    console.log("Socket: " + socket.connected);
-    fetch(url).then((response) => {
-      console.log(response.json());
-    })
-  }
+  const Container = ({ socket }) => {
+    const [first, setFirst] = useState(true);
+    function handleSubmit(event) {
+      event.preventDefault();
+     // let { value } = event.target.body;
+      let id = socket.id;    
+      let url = new URL('http://localhost:8080/join'), params = { playerName:"Test", socket_id: id}; //socket_id:socket.id
+        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+        fetch(url).then((response) => {
+          console.log(response.json());
+        })
+    }
 
   const splash = (
     <form
@@ -73,4 +63,4 @@ function App() {
   );
 }
 //
-export default App;
+export default Container;

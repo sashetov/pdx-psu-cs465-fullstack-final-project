@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Container from './components/Container';
-import { SocketProvider } from './components/socket';
-class App extends React.Component {
-  
-  render() {
-    return (
-      <SocketProvider>
-        <Container />
-      </SocketProvider>
-    )
-  }
+import { SocketContext } from './components/socket';
+
+
+function App() {
+  const socket = useContext(SocketContext);
+  return (
+    <Container socket={socket}/>
+  );
 }
 
 export default App;
