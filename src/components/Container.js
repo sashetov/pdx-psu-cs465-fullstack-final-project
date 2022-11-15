@@ -8,15 +8,19 @@ import Splash from './Splash';
 
   const Container = ({ socket }) => {
     const [first, setFirst] = useState(true);
+    const [joined, setJoined] = useState(false);
+
     function handleSubmit(event) {
       event.preventDefault();
      // let { value } = event.target.body;
       let id = socket.id;    
       let url = new URL('http://localhost:8080/join'), params = { playerName:"Test", socket_id: id}; //socket_id:socket.id
-        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-        fetch(url).then((response) => {
-          console.log(response.json());
-        })
+      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+      fetch(url).then((response) => {
+        console.log(response.json());
+      })
+      console.log(joined);
+      setJoined(true);
     }
 
   const splash = (
@@ -52,7 +56,7 @@ import Splash from './Splash';
   return (
     <div>
       <Banner />
-      {first ? (
+      {!joined ? (
         splash
       ) : socket ? (
         <Board socket={socket} />
