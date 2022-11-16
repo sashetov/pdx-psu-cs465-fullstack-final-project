@@ -59,8 +59,8 @@ const Board = ({ socket }) => {
   const move = (event, index) => {
     const newBoard = [...boardState];
     const curr = turn === 0 ? 'X' : 'O';
-    socket.on('move_done', allow_move);
     socket.on('opponentAvailable', two_player); //status ok
+    socket.on('move_done', allow_move);
     console.log(`currently block is:` + block.current);
     if (block.current === false) {
       if (newBoard[index] === '') {
