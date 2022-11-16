@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Banner from './Banner';
 import Board from './Board';
-import openSocket from 'socket.io-client';
-import io from 'socket.io-client'
-import Splash from './Splash';
-//import { SocketContext } from './socket';
+
 
   const Container = ({ socket }) => {
     const [first, setFirst] = useState(true);
@@ -12,7 +9,6 @@ import Splash from './Splash';
 
     function handleSubmit(event) {
       event.preventDefault();
-     // let { value } = event.target.body;
       let id = socket.id;    
       let url = new URL('http://localhost:8080/join'), params = { playerName:"Test", socket_id: id}; //socket_id:socket.id
       Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));

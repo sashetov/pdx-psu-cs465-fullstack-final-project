@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 const url = ('http://localhost:8080');
 
 const socket = io(url), SocketContext = createContext(socket);
