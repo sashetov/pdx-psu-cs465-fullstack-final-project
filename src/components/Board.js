@@ -4,8 +4,9 @@ const Board = ({ socket }) => {
   //Hooks
   const [turn, setTurn] = useState(0);
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
-  const [block, setBlock] = useState(true);
+  let block = useRef(true);
 
+  //useEffect does after render
   useEffect(() => {
     const exampleHandler = (data) => {
       console.log(data);
@@ -17,8 +18,7 @@ const Board = ({ socket }) => {
     socket.on('client_disconnect', exampleHandler);
     //socket emits status, msg, data
     //status: error or success
-    socket.on('move_done', allow_move);
-    socket.on('opponentAvailable', two_player); //status ok
+
     return () => {
       socket.off('move_done', exampleHandler);
       socket.off('client_disconnect', exampleHandler);
@@ -30,38 +30,53 @@ const Board = ({ socket }) => {
 
   //Functions
   const allow_move = (data) => {
-    console.log(data);
     if (data.status === 'error') {
-      setBlock(true);
-      console.log(data.msg);
+      block.current = true;
+      console.log('client error:' + data.msg);
     } else if (data.status === 'success') {
-      setBlock(false);
-      console.log(data.msg);
+      console.log('move was successful');
+      block.current = false;
+      //console.log(data.msg);
     } else {
       console.log('unknown error occured w/ allow_move');
-      console.log(data.status);
+      block.current = true;
+      //console.log(data.status);
       console.log(data.msg);
     }
+    console.log(`current value of block: ` + block.current);
   };
 
   const two_player = (data) => {
     if (data.status === 'ok') {
       console.log('another player has joined');
-      setBlock(false);
+      block.current = false;
+    } else {
+      console.log('You are alone :( ');
+      block.current = true;
     }
   };
 
   const move = (event, index) => {
     const newBoard = [...boardState];
     const curr = turn === 0 ? 'X' : 'O';
-    if (newBoard[index] === '') {
-      newBoard[index] = curr;
-      event.target.innerHTML = curr;
+    socket.on('move_done', allow_move);
+    socket.on('opponentAvailable', two_player); //status ok
+    console.log(`currently block is:` + block.current);
+    if (block.current === false) {
+      if (newBoard[index] === '') {
+        newBoard[index] = curr;
+        event.target.innerHTML = curr;
+        setTurn(turn === 0 ? 1 : 0);
+        console.log(`Marked ${index}`);
+      }
+      console.log(`we weren't blocked but alas the board wasn't empty`);
+    } else {
+      console.log('we were blocked from making a move');
     }
     setBoard(newBoard);
     console.log(newBoard);
     socket.emit('move', { boardState: newBoard });
-    setTurn(turn === 0 ? 1 : 0);
+    //block.current = false;
   };
 
   return (
@@ -72,7 +87,7 @@ const Board = ({ socket }) => {
           id="0"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
@@ -83,7 +98,7 @@ const Board = ({ socket }) => {
           id="1"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
@@ -94,7 +109,7 @@ const Board = ({ socket }) => {
           id="2"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
@@ -107,7 +122,7 @@ const Board = ({ socket }) => {
           id="3"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
@@ -118,7 +133,7 @@ const Board = ({ socket }) => {
           id="4"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
@@ -129,7 +144,7 @@ const Board = ({ socket }) => {
           id="5"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
@@ -142,7 +157,7 @@ const Board = ({ socket }) => {
           id="6"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
@@ -153,7 +168,7 @@ const Board = ({ socket }) => {
           id="7"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
@@ -164,7 +179,7 @@ const Board = ({ socket }) => {
           id="8"
           onClick={(event) => {
             // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '' && block === false) {
+            if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
