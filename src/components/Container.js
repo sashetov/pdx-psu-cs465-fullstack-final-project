@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Banner from './Banner';
 import Board from './Board';
 
