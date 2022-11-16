@@ -38,6 +38,9 @@ const Board = ({ socket }) => {
     setTurn(turn === 0 ? 1 : 0);
   }
 
+  socket.on('move_done', (data) => {
+    console.log("From Server" + JSON.stringify(data));
+  })
  
   return (
     <div ref={reference} className="container-sm w-50">
