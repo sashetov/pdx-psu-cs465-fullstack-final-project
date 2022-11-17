@@ -48,6 +48,7 @@ when you do win the game, it will let you know by changing the data.gameWinner f
     2 means game is over and was a draw \
     null means game is still in play \
 example of successful win: \
+```
 {
   "status": "success",
   "msg": "player moved to position 8",
@@ -56,3 +57,32 @@ example of successful win: \
     "gameWinner": 0
   }
 }
+```
+
+## How to check if the game is ready and what your turn is:
+add a handler for event:
+```
+    socket.on('opponentAvailable', changeBoardStateToReadyToPlay);
+```
+or something similar \
+the event data will contain something like this for player 1:
+```
+{
+  "status": "ok",
+  "msg": "you have an opponent",
+  "data": {
+    "isYourTurn": true
+  }
+}
+```
+and something like this for player 2:
+```
+{
+  "status": "ok",
+  "msg": "you have an opponent",
+  "data": {
+    "isYourTurn": false
+  }
+}
+```
+you can use isYourTurn to determine if its your turn or not
