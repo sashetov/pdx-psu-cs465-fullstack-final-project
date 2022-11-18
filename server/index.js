@@ -174,25 +174,28 @@ let checkBoardForWinner = (gameId) => {
 };
 
 io.sockets.on('connection', (socket) => {
+  const ERR_GAME_NOT_STARTED = 1,
+        ERR_BAD_MOVE_ID = 2,
+        ERR_NO_OPPONENT_YET = 3,
+        ERR_SLOT_TAKEN = 4,
+        ERR_MOVE_OUT_OF_TURN = 5;
   let id = socket.id;
-
   sockets[socket.id] = socket;
   players[socket.id] = {
     playerName: null, // not yet known, has to be set by GET to /join
     symbol: null,
     gameId: null,
   };
-
   socket.on('move', (data) => {
     console.log('id:', id);
     console.log('data:', data);
     data.socket_id = id;
     if (players[id].gameId === null) {
-      // houston we have a problem
       let data = {
         status: 'error',
         msg: 'player attempting to move without being in a game, join this player to a game with GET to /join',
-        data: null,
+        errorCode : ERR_GAME_NOT_STARTED,
+        data: null
       };
       socket.emit('move_done', data);
       console.log('move_done', data);
@@ -206,6 +209,7 @@ io.sockets.on('connection', (socket) => {
       if(!Number.isInteger(moveId)) {
         let data = {
           status: 'error',
+          errorCode: ERR_BAD_MOVE_ID,
           msg: 'you did not provide a valid move id, you need to provide data that looks like {move_id: move_id}, where move_id is an interger that corresponds to an index in the board array',
           data: null,
         };
@@ -215,7 +219,8 @@ io.sockets.on('connection', (socket) => {
         // error: game not fully initiallized yet
         let data = {
           status: 'error',
-          msg: 'player attempting to play in a game that is not fully initialized yet',
+          msg: 'player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet',
+          errorCode: ERR_NO_OPPONENT_YET,
           data: null,
         };
         socket.emit('move_done', data);
@@ -224,6 +229,7 @@ io.sockets.on('connection', (socket) => {
         // error: slot moved into already
         let data = {
           status: 'error',
+          errorCode: ERR_SLOT_TAKEN,
           msg: 'player attempting to move to a slot in the game that already has a symbol in it',
           data: null,
         };
@@ -244,6 +250,7 @@ io.sockets.on('connection', (socket) => {
           // don't play out of turn...
           let data = {
             status: 'error',
+            errorCode: ERR_MOVE_OUT_OF_TURN,
             msg: 'player attempting to play out of turn',
             data: null,
           };
