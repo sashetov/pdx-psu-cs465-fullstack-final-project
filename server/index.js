@@ -53,6 +53,20 @@ app.get('/join', (req, res) => {
         gameId = i;
         players[socket_id]['gameId'] = gameId; // set gameId so client knows its ok to proceed
         console.log('found game and joined');
+        let data = {
+          status: 'ok',
+          msg: 'you have an opponent',
+          data: {
+            isYourTurn: false
+          },
+        };
+        let player1_socket = sockets[game["player1"]];
+        let player2_socket = sockets[game["player2"]];
+        data.data.isYourTurn = true;
+        player1_socket.emit('opponentAvailable', data);
+        data.data.isYourTurn = false;
+        player2_socket.emit('opponentAvailable', data);
+        console.log('found game and joined');
       }
       if (gameId !== null) break;
     }
@@ -169,58 +183,52 @@ io.sockets.on('connection', (socket) => {
     gameId: null,
   };
 
-  socket.on("isOpponentAvailable", (data)=>{
-    let gameId = players[id].gameId, game = games[gameId];
-    let yourTurn = null;
-    if(game.nextPlayer === 0 && game['player1'] === id){
-      yourTurn = true;
-    }
-    else if(game.nextPlayer === 1 && game['player2'] === id){ // will happen if you emmitted before the first move....
-      yourTurn = true
-    }
-    else{
-      yourTurn = false;
-    }
-    if(game.player1 !== null && game.player2 !==null){
-      socket.emit('opponentAvailable', {
-        status: 'ok',
-        msg: 'you have an opponent',
-        data: {
-          isYourTurn: yourTurn
-        },
-      });
-    }
-  });
-
   socket.on('move', (data) => {
     console.log('id:', id);
     console.log('data:', data);
     data.socket_id = id;
     if (players[id].gameId === null) {
       // houston we have a problem
-      socket.emit('move_done', {
+      let data = {
         status: 'error',
         msg: 'player attempting to move without being in a game, join this player to a game with GET to /join',
         data: null,
-      });
+      };
+      socket.emit('move_done', data);
+      console.log('move_done', data);
     } else {
       let gameId = players[id].gameId,
         game = games[gameId],
         moveId = parseInt(data.move_id);
-      if (game['winner'] === -1) {
+      console.log("gameId:", gameId);
+      console.log("game:", game);
+      console.log("moveId:", moveId);
+      if(!Number.isInteger(moveId)) {
+        let data = {
+          status: 'error',
+          msg: 'you did not provide a valid move id, you need to provide data that looks like {move_id: move_id}, where move_id is an interger that corresponds to an index in the board array',
+          data: null,
+        };
+        console.log('move_done', data);
+        socket.emit('move_done', data);
+      } else if (game['winner'] === -1) {
         // error: game not fully initiallized yet
-        socket.emit('move_done', {
+        let data = {
           status: 'error',
           msg: 'player attempting to play in a game that is not fully initialized yet',
           data: null,
-        });
-      } else if (game['state'][moveId] !== '') {
+        };
+        socket.emit('move_done', data);
+        console.log('move_done', data);
+      } else if (game['state'][moveId] !== undefined && game['state'][moveId] !== "" ) {
         // error: slot moved into already
-        socket.emit('move_done', {
+        let data = {
           status: 'error',
           msg: 'player attempting to move to a slot in the game that already has a symbol in it',
           data: null,
-        });
+        };
+        console.log('move_done', data);
+        socket.emit('move_done', data);
       } else {
         let currPlayer = null;
         let otherPlayer = null;
@@ -232,26 +240,29 @@ io.sockets.on('connection', (socket) => {
           currPlayer = 1;
           otherPlayer = 0;
         }
-
         if (currPlayer !== game['nextPlayer']) {
           // don't play out of turn...
-          socket.emit('move_done', {
+          let data = {
             status: 'error',
             msg: 'player attempting to play out of turn',
             data: null,
-          });
+          };
+          socket.emit('move_done', data);
+          console.log("move_done:", data);
         } else {
           game['state'][moveId] = players[id]['symbol']; // do the move
           game['nextPlayer'] = otherPlayer; // switch next player turn
           winner = checkBoardForWinner(gameId);
-          socket.emit('move_done', {
+          let data = {
             status: 'success',
             msg: `player moved to position ${moveId}`,
             data: {
               boardState: game['state'],
               gameWinner: winner,
             },
-          });
+          };
+          socket.emit('move_done', data);
+          console.log('move_done', data);
           if (winner === 0 || winner === 1 || winner === 2) {
             // game is over, can delete game
             delete games[gameId];

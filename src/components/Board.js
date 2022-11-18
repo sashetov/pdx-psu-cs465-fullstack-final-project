@@ -26,20 +26,12 @@ const Board = ({ socket }) => {
   //Functions
 
   const move = (event, index) => {
-    const newBoard = [...boardState];
-    const curr = turn === 0 ? 'X' : 'O';
-    if (newBoard[index] === '') {
-      newBoard[index] = curr;
-      event.target.innerHTML = curr;
-    }
-    setBoard(newBoard);
-    console.log(newBoard); 
-    socket.emit('move', { boardState: newBoard });
-    setTurn(turn === 0 ? 1 : 0);
+    socket.emit('move', { move_id: index});
   }
 
   socket.on('move_done', (data) => {
     console.log("From Server" + JSON.stringify(data));
+    // TODO: you need to handle errors here....
   })
  
   return (
