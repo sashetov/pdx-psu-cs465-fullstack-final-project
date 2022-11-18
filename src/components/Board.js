@@ -57,27 +57,13 @@ const Board = ({ socket }) => {
   };
 
   const move = (event, index) => {
-    const newBoard = [...boardState];
-    const curr = turn === 0 ? 'X' : 'O';
-    socket.on('opponentAvailable', two_player); //status ok
-    socket.on('move_done', allow_move);
-    console.log(`currently block is:` + block.current);
-    if (block.current === false) {
-      if (newBoard[index] === '') {
-        newBoard[index] = curr;
-        event.target.innerHTML = curr;
-        setTurn(turn === 0 ? 1 : 0);
-        console.log(`Marked ${index}`);
-      }
-      console.log(`we weren't blocked but alas the board wasn't empty`);
-    } else {
-      console.log('we were blocked from making a move');
-    }
-    setBoard(newBoard);
-    console.log(newBoard);
-    socket.emit('move', { boardState: newBoard });
-    //block.current = false;
+    socket.emit('move', { move_id: index });
   };
+
+  socket.on('move_done', (data) => {
+    console.log('From Server' + JSON.stringify(data));
+    // TODO: you need to handle errors here....
+  });
 
   return (
     <div ref={reference} className="container-sm w-50">
@@ -102,7 +88,6 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-          aria-label="cell 1"
         ></div>
         <div
           className="col cell text-center"
@@ -126,7 +111,6 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-          aria-label="cell 3"
         ></div>
         <div
           className="col cell text-center"
@@ -137,7 +121,6 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-          aria-label="cell 4"
         ></div>
         <div
           className="col cell text-center"
@@ -148,7 +131,6 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-          aria-label="cell 5"
         ></div>
       </div>
       <div className="row">
@@ -161,7 +143,6 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-          aria-label="cell 6"
         ></div>
         <div
           className="col cell text-center"
@@ -172,7 +153,6 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-          aria-label="cell 7"
         ></div>
         <div
           className="col cell text-center"
@@ -183,7 +163,6 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-          aria-label="cell 8"
         ></div>
       </div>
     </div>
