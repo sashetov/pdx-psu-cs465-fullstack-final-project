@@ -10,12 +10,12 @@ import Board from './Board';
     function handleSubmit(event) {
       event.preventDefault();
       let id = socket.id;    
-      let url = new URL('http://localhost:8080/join'), params = { playerName:"Test", socket_id: id}; //socket_id:socket.id
+      let url = new URL('http://localhost:8080/join'), params = { playerName: event.target[0].value, socket_id: id}; //socket_id:socket.id
       Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
       fetch(url).then((response) => {
         console.log(response.json());
       })
-      console.log(joined);
+      console.log(event.target);
       setJoined(true);
     }
 
@@ -30,7 +30,7 @@ import Board from './Board';
         <label class="py-2" for="name">
           Please enter player name:
         </label>
-        <input type="text" class="form-control" id="name" />
+        <input type="text" class="form-control" id="name" name="name" />
       </div>
       <div class="row form-group mx-auto mb-2">
         <input
