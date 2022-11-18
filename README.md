@@ -47,7 +47,7 @@ when you do win the game, it will let you know by changing the data.gameWinner f
     1 means player 2 won \
     2 means game is over and was a draw \
     null means game is still in play \
-example of successful win: \
+example of successful win:
 ```
 {
   "status": "success",
@@ -86,3 +86,27 @@ and something like this for player 2:
 }
 ```
 you can use isYourTurn to determine if its your turn or not
+
+## Error codes and errors coming back from backend on `move` event
+You will find these error codes in the event data that comes back with the `move_done` event coming from the socket, which looks something like this:
+```
+{
+  "status": "error",
+  "msg": "player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet",
+  "errorCode": 3,
+  "data": null
+}
+```
+You can use the statusCode to quickly figure out which error you are dealing with.\
+You can use the msg if you need s standard text to display in an error dialog or console.log\
+\
+\
+The possible error code values are:
+```
+error code:
+   1 - player attempting to move without being in a game, join this player to a game with GET to /join
+   2 - you did not provide a valid move id, you need to provide data that looks like {move_id: move_id}, where move_id is an interger that corresponds to an index in the board array
+   3 - player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet
+   4 - player attempting to move to a slot in the game that already has a symbol in it
+   5 - player attempting to play out of turn
+```
