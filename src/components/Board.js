@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const Board = ({ socket }) => {
   //Hooks
-  const [turn, setTurn] = useState(0);
+  //const [turn, setTurn] = useState(0);
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
-  let block = useRef(true);
-
+  const index = useRef(-1);
+  const tracker = useRef(false);
+  const turn = useRef(0);
   //useEffect does after render
   useEffect(() => {
     const exampleHandler = (data) => {
@@ -29,40 +30,35 @@ const Board = ({ socket }) => {
   const reference = useRef(null);
 
   //Functions
-  const allow_move = (data) => {
-    if (data.status === 'error') {
-      block.current = true;
-      console.log('client error:' + data.msg);
-    } else if (data.status === 'success') {
-      console.log('move was successful');
-      block.current = false;
-      //console.log(data.msg);
-    } else {
-      console.log('unknown error occured w/ allow_move');
-      block.current = true;
-      //console.log(data.status);
-      console.log(data.msg);
-    }
-    console.log(`current value of block: ` + block.current);
-  };
 
-  const two_player = (data) => {
-    if (data.status === 'ok') {
-      console.log('another player has joined');
-      block.current = false;
-    } else {
-      console.log('You are alone :( ');
-      block.current = true;
-    }
-  };
-
+  // Sends the server which square was clicked. Server determines validity.
   const move = (event, index) => {
     socket.emit('move', { move_id: index });
   };
-
+  // Handles status and errorCode from server and marks the correct square
   socket.on('move_done', (data) => {
+    const newBoard = [...boardState];
+    const curr = turn.current === 0 ? 'X' : 'O';
     console.log('From Server' + JSON.stringify(data));
+
     // TODO: you need to handle errors here....
+    if (data.status === 'error') {
+      console.log('client error:' + data.msg);
+      tracker.current = false;
+    } else if (data.status === 'success') {
+      newBoard[index.current] = curr;
+
+      tracker.current = true;
+      setBoard(newBoard);
+      //setTurn(turn === 0 ? 1 : 0);
+
+      console.log('move was successful');
+      console.log(newBoard);
+    } else {
+      tracker.current = false;
+      console.log('unknown error occured w/ client side move_done');
+      console.log('client error:' + data.msg);
+    }
   });
 
   return (
@@ -74,7 +70,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
           aria-label="cell 0"
@@ -85,7 +87,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
         ></div>
@@ -95,7 +103,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn.current === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
           aria-label="cell 2"
@@ -108,7 +122,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
         ></div>
@@ -118,7 +138,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
         ></div>
@@ -128,7 +154,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
         ></div>
@@ -140,7 +172,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
         ></div>
@@ -150,7 +188,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
         ></div>
@@ -160,7 +204,13 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
+              const curr = turn === 0 ? 'X' : 'O';
+              index.current = event.target.id;
               move(event, event.target.id);
+              if (tracker.current === true) {
+                event.target.innerHTML = curr;
+                turn.current = turn.current === 0 ? 1 : 0;
+              }
             }
           }}
         ></div>

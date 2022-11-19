@@ -2,29 +2,33 @@ import React, { useState } from 'react';
 import Banner from './Banner';
 import Board from './Board';
 
+const Container = ({ socket }) => {
+  const [first, setFirst] = useState(true);
+  const [joined, setJoined] = useState(false);
 
-  const Container = ({ socket }) => {
-    const [first, setFirst] = useState(true);
-    const [joined, setJoined] = useState(false);
-
-    function handleSubmit(event) {
-      event.preventDefault();
-      let id = socket.id;    
-      let url = new URL('http://localhost:8080/join'), params = { playerName: event.target[0].value, socket_id: id}; //socket_id:socket.id
-      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-      fetch(url).then((response) => {
-        console.log(response.json());
-      })
-      console.log(event.target);
-      setJoined(true);
-    }
+  function handleSubmit(event) {
+    event.preventDefault();
+    let id = socket.id;
+    let url = new URL('http://localhost:8080/join'),
+      params = { playerName: event.target[0].value, socket_id: id }; //socket_id:socket.id
+    Object.keys(params).forEach((key) =>
+      url.searchParams.append(key, params[key])
+    );
+    fetch(url).then((response) => {
+      console.log(response.json());
+    });
+    console.log(event.target);
+    setJoined(true);
+  }
 
   const splash = (
     <form
       id="player"
       class="form w-50 mx-auto mt-5 p-3"
       method="get"
-      onSubmit={event => {handleSubmit(event)}}
+      onSubmit={(event) => {
+        handleSubmit(event);
+      }}
     >
       <div class="form-group mx-auto my-2">
         <label class="py-2" for="name">
@@ -61,6 +65,6 @@ import Board from './Board';
       )}
     </div>
   );
-}
+};
 //
 export default Container;
