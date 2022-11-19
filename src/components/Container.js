@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import { render } from '@testing-library/react';
+import React, { useEffect, useState } from 'react';
 import Banner from './Banner';
 import Board from './Board';
+import Waiting from './Waiting'
 
 
   const Container = ({ socket }) => {
-    const [first, setFirst] = useState(true);
-    const [joined, setJoined] = useState(false);
-
+    const [joined, setJoined] = useState(false); 
+    const [toRender, setToRender] = useState(null);
     function handleSubmit(event) {
       event.preventDefault();
       let id = socket.id;    
@@ -15,9 +16,15 @@ import Board from './Board';
       fetch(url).then((response) => {
         console.log(response.json());
       })
-      console.log(event.target);
       setJoined(true);
+      setToRender(Waiting);  
+    };
+  
+  socket.on('opponentAvailable', (data) => {
+    if(data.status === 'ok') {
+      setToRender(<Board socket={socket}/>);
     }
+  });
 
   const splash = (
     <form
@@ -47,20 +54,27 @@ import Board from './Board';
         />
       </div>
     </form>
-  );
+  ); 
 
-  return (
-    <div>
+  
+  
+  if(!joined) {
+    return (
+      <div>
       <Banner />
-      {!joined ? (
-        splash
-      ) : socket ? (
-        <Board socket={socket} />
-      ) : (
-        <div>Not Connected</div>
-      )}
+      { splash }
     </div>
-  );
+    )
+  } else {
+    return (
+      <div>
+        <Banner />
+        {toRender}
+      </div>
+    );
+  }
 }
-//
+
 export default Container;
+
+
