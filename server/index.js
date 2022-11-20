@@ -268,7 +268,10 @@ io.sockets.on('connection', (socket) => {
               gameWinner: winner,
             },
           };
-          socket.emit('move_done', data);
+          let player1_socket = sockets[game["player1"]];
+          let player2_socket = sockets[game["player2"]];
+          player1_socket.emit('move_done', data);
+          player2_socket.emit('move_done', data);
           console.log('move_done', data);
           if (winner === 0 || winner === 1 || winner === 2) {
             // game is over, can delete game
