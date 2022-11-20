@@ -6,26 +6,26 @@ const Board = ({ socket }) => {
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
   const markSquare = useRef(false);
   const errorCode = useRef(-1);
-
+  const [message, setMessage] = useState('');
+  //const winner = useRef(null);
   // useEffect does after render
-  useEffect(() => {
-    const exampleHandler = (data) => {
-      console.log(`Example Handler: `);
-      console.log(data);
-    };
+  //useEffect(() => {
+  //   console.log('in useEffect');
+  //   const exampleHandler = (data) => {
+  //    console.log(`Example Handler: `);
+  //    console.log(data);
+  //   };
 
-    console.log('socket:', socket);
-    window.socket = socket;
+  //   console.log('socket:', socket);
+  //    window.socket = socket;
 
-    socket.on('client_disconnect', exampleHandler);
-    //socket emits status, msg, data
-    //status: error or success
+  //    socket.on('client_disconnect', exampleHandler);
 
-    return () => {
-      socket.off('move_done', exampleHandler);
-      socket.off('client_disconnect', exampleHandler);
-    };
-  }, [socket]);
+  //   return () => {
+  //     socket.off('move_done', exampleHandler);
+  //     socket.off('client_disconnect', exampleHandler);
+  //    };
+  //  }, [socket]);
 
   // Variables and constants
   const reference = useRef(null);
@@ -43,7 +43,7 @@ const Board = ({ socket }) => {
 
     // Captures status message and errorCode from server
     socket.on('move_done', (data) => {
-      console.log('From Server' + JSON.stringify(data));
+      //console.log('From Server' + JSON.stringify(data));
       let state = [...boardState];
       // Receives status and errorCode from the server for use on client side
       if (data.status === 'error') {
@@ -54,9 +54,9 @@ const Board = ({ socket }) => {
         console.log('move is allowed');
         errorCode.current = 7; //success
         markSquare.current = true;
-        console.log(`new board state: `);
+        //console.log(`new board state: `);
         state = [...data.data.boardState];
-        console.log(state);
+        //console.log(state);
       } else {
         console.log('unknown error occured w/ client side move_done');
         console.log('client received from server an error:' + data.msg);
@@ -72,11 +72,11 @@ const Board = ({ socket }) => {
   // Marks the square if appropriate and updates boardState
   const mark = (event, index, newBoard) => {
     console.log(`In mark():`);
-    console.log(event);
+    //console.log(event);
 
     console.log(`client side errorCode set to ${errorCode.current}`);
     console.log(`markSquare set to ${markSquare.current}`);
-    console.log(newBoard);
+
     // Marking square allowed
     if (markSquare.current === true) {
       event.target.innerHTML = newBoard[index];
@@ -85,7 +85,35 @@ const Board = ({ socket }) => {
     } else {
       console.log('The move was disallowed. No state changes');
     }
-    setBoard(newBoard);
+    setBoard([...newBoard]);
+    message_picker();
+    errorCode.current = -1; // reset error code
+  };
+
+  const message_picker = () => {
+    console.log('in message');
+    if (errorCode.current === 1) {
+      console.log(`errorCode is : ${errorCode.current}`);
+      setMessage(`You are not in a game. Please join.`);
+    } else if (errorCode.current === 2) {
+      console.log(`errorCode is : ${errorCode.current}`);
+      setMessage(`Invalid move id`);
+    } else if (errorCode.current === 3) {
+      console.log(`errorCode is : ${errorCode.current}`);
+      setMessage(`You do not have an opponent. Please wait.`);
+    } else if (errorCode.current === 4) {
+      console.log(`errorCode is : ${errorCode.current}`);
+      setMessage(`That square is taken! Please try another square.`);
+    } else if (errorCode.current === 5) {
+      console.log(`errorCode is : ${errorCode.current}`);
+      setMessage(`You can't play out of turn! Wait for your opponent to play.`);
+    } else if (errorCode.current === 7) {
+      setMessage(`Move was a success`);
+    } else if (errorCode.current === -1) {
+      setMessage(``);
+    } else {
+      setMessage(``);
+    }
   };
 
   // renders the board
@@ -96,10 +124,7 @@ const Board = ({ socket }) => {
           className="col cell text-center"
           id="0"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            move(event, event.target.id);
           }}
           aria-label="cell 0"
         ></div>
@@ -107,20 +132,14 @@ const Board = ({ socket }) => {
           className="col cell text-center"
           id="1"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            move(event, event.target.id);
           }}
         ></div>
         <div
           className="col cell text-center"
           id="2"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            move(event, event.target.id);
           }}
           aria-label="cell 2"
         ></div>
@@ -130,30 +149,21 @@ const Board = ({ socket }) => {
           className="col cell text-center"
           id="3"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            move(event, event.target.id);
           }}
         ></div>
         <div
           className="col cell text-center"
           id="4"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            move(event, event.target.id);
           }}
         ></div>
         <div
           className="col cell text-center"
           id="5"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            move(event, event.target.id);
           }}
         ></div>
       </div>
@@ -162,32 +172,36 @@ const Board = ({ socket }) => {
           className="col cell text-center"
           id="6"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            move(event, event.target.id);
           }}
         ></div>
         <div
           className="col cell text-center"
           id="7"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            move(event, event.target.id);
           }}
         ></div>
         <div
           className="col cell text-center"
           id="8"
           onClick={(event) => {
-            // only mark and change turn when the square is empty
-            if (boardState[event.target.id] === '') {
-              move(event, event.target.id);
-            }
+            // Allow clicking
+            //if (boardState[event.target.id] === '') {
+            move(event, event.target.id);
+            //}
           }}
         ></div>
+      </div>
+      <div className="row" style={{ margin: '20px' }}></div>
+      <div className="row">
+        <div
+          className="col message text-center"
+          id="user_message"
+          aria-label="message board"
+        >
+          {message}
+        </div>
       </div>
     </div>
   );
