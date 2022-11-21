@@ -2,30 +2,35 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const Board = ({ socket }) => {
   // Hooks
-  //const [turn, setTurn] = useState(0);
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
   const markSquare = useRef(false);
   const errorCode = useRef(-1);
   const [message, setMessage] = useState('');
-  //const winner = useRef(null);
-  // useEffect does after render
-  //useEffect(() => {
-  //   console.log('in useEffect');
-  //   const exampleHandler = (data) => {
-  //    console.log(`Example Handler: `);
-  //    console.log(data);
-  //   };
+  const [counter, setCount] = useState(0);
+  const winner = useRef(-2);
+  // const marker = ['', '', '', '', '', '', '', '', ''];
 
-  //   console.log('socket:', socket);
-  //    window.socket = socket;
+  // useEffect works after render
+  useEffect(
+    (counter) => {
+      console.log('in useEffect');
+      //   const exampleHandler = (data) => {
+      //    console.log(`Example Handler: `);
+      //    console.log(data);
+      //   };
+      // setCount(counter + 1);
+      console.log('socket:', socket);
+      window.socket = socket;
 
-  //    socket.on('client_disconnect', exampleHandler);
+      //    socket.on('client_disconnect', exampleHandler);
 
-  //   return () => {
-  //     socket.off('move_done', exampleHandler);
-  //     socket.off('client_disconnect', exampleHandler);
-  //    };
-  //  }, [socket]);
+      //   return () => {
+      //     socket.off('move_done', exampleHandler);
+      //     socket.off('client_disconnect', exampleHandler);
+      //    };
+    },
+    [socket]
+  );
 
   // Variables and constants
   const reference = useRef(null);
@@ -35,7 +40,6 @@ const Board = ({ socket }) => {
   // Sends the server which square was clicked. Server determines validity.
   const move = (event, index) => {
     // Sends server location player wants to mark
-
     console.log(`In move():`);
     console.log('socket:');
     console.log(socket);
@@ -43,8 +47,10 @@ const Board = ({ socket }) => {
 
     // Captures status message and errorCode from server
     socket.on('move_done', (data) => {
-      //console.log('From Server' + JSON.stringify(data));
+      console.log('From Server' + JSON.stringify(data));
       let state = [...boardState];
+      let win = data.data.gameWinner;
+
       // Receives status and errorCode from the server for use on client side
       if (data.status === 'error') {
         console.log('client received from server an error:' + data.msg);
@@ -54,23 +60,22 @@ const Board = ({ socket }) => {
         console.log('move is allowed');
         errorCode.current = 7; //success
         markSquare.current = true;
-        //console.log(`new board state: `);
+        console.log(`new board state: `);
         state = [...data.data.boardState];
-        //console.log(state);
+        console.log(state);
       } else {
         console.log('unknown error occured w/ client side move_done');
         console.log('client received from server an error:' + data.msg);
         errorCode.current = -1;
         markSquare.current = false;
       }
-
       console.log(`Exiting move_done and calling mark`);
-      mark(event, index, state);
+      mark(event, index, state, win);
     });
   };
 
   // Marks the square if appropriate and updates boardState
-  const mark = (event, index, newBoard) => {
+  const mark = (event, index, state, win) => {
     console.log(`In mark():`);
     //console.log(event);
 
@@ -79,17 +84,52 @@ const Board = ({ socket }) => {
 
     // Marking square allowed
     if (markSquare.current === true) {
-      event.target.innerHTML = newBoard[index];
-      console.log('Updated board:');
-      console.log(newBoard);
-    } else {
+      //marker.current[index] = state[index];
+      //console.log(marker.current[index]);
+      //event.target.innerHTML = state[index];
+      setCount(counter + 1);
+    }
+    // Marking square not allowed
+    else {
       console.log('The move was disallowed. No state changes');
     }
-    setBoard([...newBoard]);
+    setBoard([...state]);
+    console.log('Updated board:');
+    console.log(state);
+    console.log(`Exiting mark and calling message_picker`);
     message_picker();
-    errorCode.current = -1; // reset error code
+    console.log('back in mark');
+
+    // Checks to see if a player won
+    // TODO: Currently not working because it can't read null can we set it to -2 for null?
+    if (win !== -2) {
+      console.log('game winner has a value: ' + win);
+      if (win === -1) {
+        winner.current = -1;
+        console.log(
+          'Error: One of the players is missing. Please join the game.'
+        );
+      } else if (win === 0) {
+        winner.current = 0;
+        console.log('First Player won!'); // TODO: get player names to display
+      } else if (win === 1) {
+        winner.current = 1;
+        console.log('Second Player won!'); // TODO: get player names to display
+      } else if (win === 2) {
+        winner.current = 2;
+        console.log('Tied. Gameover');
+      }
+      console.log('exiting mark and calling winner_determined');
+      winner_determined();
+      // TODO: ASk to replay or go back to previous screen
+    }
+    console.log('winner_determined not called');
+
+    errorCode.current = -1; // reset errorCode
+    markSquare.current = false; // reset markSquare
   };
 
+  // User messages after a move
   const message_picker = () => {
     console.log('in message');
     if (errorCode.current === 1) {
@@ -110,9 +150,25 @@ const Board = ({ socket }) => {
     } else if (errorCode.current === 7) {
       setMessage(`Move was a success`);
     } else if (errorCode.current === -1) {
-      setMessage(``);
+      setMessage(`Default error...hmm..something must be wrong`);
     } else {
       setMessage(``);
+    }
+  };
+
+  // Updates user message if a game is over
+  const winner_determined = () => {
+    console.log('in winner determined');
+    if (winner.current === -1) {
+      setMessage('Error: One of the players is missing. Please join the game.');
+    } else if (winner.current === 0) {
+      setMessage('First Player won!'); // TODO: get player names to display
+    } else if (winner.current === 1) {
+      setMessage('Second Player won!'); // TODO: get player names to display
+    } else if (winner.current === 2) {
+      setMessage('Tied. Gameover');
+    } else {
+      setMessage('');
     }
   };
 
@@ -124,74 +180,116 @@ const Board = ({ socket }) => {
           className="col cell text-center"
           id="0"
           onClick={(event) => {
-            move(event, event.target.id);
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
           aria-label="cell 0"
-        ></div>
+        >
+          {boardState[0]}
+        </div>
         <div
           className="col cell text-center"
           id="1"
           onClick={(event) => {
-            move(event, event.target.id);
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
-        ></div>
+        >
+          {boardState[1]}
+        </div>
         <div
           className="col cell text-center"
           id="2"
           onClick={(event) => {
-            move(event, event.target.id);
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
           aria-label="cell 2"
-        ></div>
+        >
+          {boardState[2]}
+        </div>
       </div>
       <div className="row text-center">
         <div
           className="col cell text-center"
           id="3"
           onClick={(event) => {
-            move(event, event.target.id);
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
-        ></div>
+        >
+          {boardState[3]}
+        </div>
         <div
           className="col cell text-center"
           id="4"
           onClick={(event) => {
-            move(event, event.target.id);
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
-        ></div>
+        >
+          {boardState[4]}
+        </div>
         <div
           className="col cell text-center"
           id="5"
           onClick={(event) => {
-            move(event, event.target.id);
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
-        ></div>
+        >
+          {boardState[5]}
+        </div>
       </div>
       <div className="row">
         <div
           className="col cell text-center"
           id="6"
           onClick={(event) => {
-            move(event, event.target.id);
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
-        ></div>
+        >
+          {boardState[6]}
+        </div>
         <div
           className="col cell text-center"
           id="7"
           onClick={(event) => {
-            move(event, event.target.id);
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
-        ></div>
+        >
+          {boardState[7]}
+        </div>
         <div
           className="col cell text-center"
           id="8"
           onClick={(event) => {
-            // Allow clicking
-            //if (boardState[event.target.id] === '') {
-            move(event, event.target.id);
-            //}
+            // Allow clicking unless the game is over
+            if (winner.current === -2) {
+              move(event, event.target.id);
+            }
           }}
-        ></div>
+        >
+          {boardState[8]}
+        </div>
       </div>
       <div className="row" style={{ margin: '20px' }}></div>
       <div className="row">
