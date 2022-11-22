@@ -267,6 +267,10 @@ io.sockets.on('connection', (socket) => {
               boardState: game['state'],
               gameWinner: winner,
             },
+            played: {
+              moved: players[id]['symbol'],
+              indexOf: moveId
+            }
           };
           socket.emit('move_done', data);
           console.log('move_done', data);
