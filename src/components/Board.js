@@ -3,53 +3,42 @@ import React, { useEffect, useRef, useState } from 'react';
 const Board = ({ socket }) => {
   // Hooks
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
-  const markSquare = useRef(false);
-  const errorCode = useRef(-1);
   const [message, setMessage] = useState('');
-  const [counter, setCount] = useState(0);
-  const winner = useRef(-2);
-  // const marker = ['', '', '', '', '', '', '', '', ''];
-
-  // useEffect works after render
-  useEffect(
-    (counter) => {
-      console.log('in useEffect');
-      //   const exampleHandler = (data) => {
-      //    console.log(`Example Handler: `);
-      //    console.log(data);
-      //   };
-      // setCount(counter + 1);
-      console.log('socket:', socket);
-      window.socket = socket;
-
-      //    socket.on('client_disconnect', exampleHandler);
-
-      //   return () => {
-      //     socket.off('move_done', exampleHandler);
-      //     socket.off('client_disconnect', exampleHandler);
-      //    };
-    },
-    [socket]
-  );
+  const [update, setUpdate] = useState(0);
 
   // Variables and constants
   const reference = useRef(null);
+  const markSquare = useRef(false);
+  const errorCode = useRef(-1);
+  const winner = useRef(-2);
+
+  // useEffect works after render
+  useEffect(() => {
+    console.log('in useEffect');
+
+    console.log('socket:', socket);
+    window.socket = socket;
+  }, [socket]);
 
   // Functions
 
   // Sends the server which square was clicked. Server determines validity.
-  const move = (event, index) => {
+  const move = (index) => {
     // Sends server location player wants to mark
+    let win = -2;
+    setMessage('');
     console.log(`In move():`);
     console.log('socket:');
     console.log(socket);
+
     socket.emit('move', { move_id: index });
 
     // Captures status message and errorCode from server
     socket.on('move_done', (data) => {
+      console.log('In move_done');
       console.log('From Server' + JSON.stringify(data));
+
       let state = [...boardState];
-      let win = data.data.gameWinner;
 
       // Receives status and errorCode from the server for use on client side
       if (data.status === 'error') {
@@ -60,6 +49,7 @@ const Board = ({ socket }) => {
         console.log('move is allowed');
         errorCode.current = 7; //success
         markSquare.current = true;
+        win = data.data.gameWinner;
         console.log(`new board state: `);
         state = [...data.data.boardState];
         console.log(state);
@@ -69,35 +59,38 @@ const Board = ({ socket }) => {
         errorCode.current = -1;
         markSquare.current = false;
       }
+
       console.log(`Exiting move_done and calling mark`);
-      mark(event, index, state, win);
+
+      mark(state, win);
     });
   };
 
   // Marks the square if appropriate and updates boardState
-  const mark = (event, index, state, win) => {
+  const mark = (state, win) => {
     console.log(`In mark():`);
-    //console.log(event);
-
     console.log(`client side errorCode set to ${errorCode.current}`);
     console.log(`markSquare set to ${markSquare.current}`);
 
     // Marking square allowed
     if (markSquare.current === true) {
-      //marker.current[index] = state[index];
-      //console.log(marker.current[index]);
-      //event.target.innerHTML = state[index];
-      setCount(counter + 1);
+      //re-render
+      setUpdate(update + 1);
     }
     // Marking square not allowed
     else {
       console.log('The move was disallowed. No state changes');
     }
+
+    // Updates the board
     setBoard([...state]);
     console.log('Updated board:');
     console.log(state);
+
     console.log(`Exiting mark and calling message_picker`);
+
     message_picker();
+
     console.log('back in mark');
 
     // Checks to see if a player won
@@ -119,11 +112,12 @@ const Board = ({ socket }) => {
         winner.current = 2;
         console.log('Tied. Gameover');
       }
+
       console.log('exiting mark and calling winner_determined');
+
       winner_determined();
       // TODO: ASk to replay or go back to previous screen
     }
-    console.log('winner_determined not called');
 
     errorCode.current = -1; // reset errorCode
     markSquare.current = false; // reset markSquare
@@ -159,6 +153,7 @@ const Board = ({ socket }) => {
   // Updates user message if a game is over
   const winner_determined = () => {
     console.log('in winner determined');
+
     if (winner.current === -1) {
       setMessage('Error: One of the players is missing. Please join the game.');
     } else if (winner.current === 0) {
@@ -168,7 +163,7 @@ const Board = ({ socket }) => {
     } else if (winner.current === 2) {
       setMessage('Tied. Gameover');
     } else {
-      setMessage('');
+      //setMessage(``);
     }
   };
 
@@ -182,7 +177,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
           aria-label="cell 0"
@@ -195,7 +190,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
         >
@@ -207,7 +202,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
           aria-label="cell 2"
@@ -222,7 +217,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
         >
@@ -234,7 +229,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
         >
@@ -246,7 +241,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
         >
@@ -260,7 +255,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
         >
@@ -272,7 +267,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
         >
@@ -284,7 +279,7 @@ const Board = ({ socket }) => {
           onClick={(event) => {
             // Allow clicking unless the game is over
             if (winner.current === -2) {
-              move(event, event.target.id);
+              move(event.target.id);
             }
           }}
         >
