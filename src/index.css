@@ -1,17 +1,18 @@
 @font-face {
   font-family: 'dancing_scriptregular';
-  src: url('./fonts/dancingscript-variablefont_wght-webfont.woff2') format('woff2'),
-       url('./fonts/dancingscript-variablefont_wght-webfont.woff') format('woff');
+  src: url('./fonts/dancingscript-variablefont_wght-webfont.woff2')
+      format('woff2'),
+    url('./fonts/dancingscript-variablefont_wght-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
-html, body {
+html,
+body {
   height: 100%;
   max-width: 100%;
   overflow-x: hidden;
- }
+}
 
 body {
   background-color: #1f262a;
@@ -27,7 +28,7 @@ h1 {
 }
 
 .cell {
-  font-family: "dancing_scriptregular";
+  font-family: 'dancing_scriptregular';
   color: #01060a;
   height: 100px;
   box-shadow: 2px 2px 2px 2px #779ecb;
@@ -43,4 +44,16 @@ h1 {
   border: 1px solid #1f262a;
   box-shadow: 2px 2px 2px 2px #779ecb;
   width: 50% !important;
+}
+
+.message {
+  font-family: 'dancing_scriptregular';
+  color: #01060a;
+  height: 100px;
+  box-shadow: 2px 2px 2px 2px #779ecb;
+  border: 2px solid #779ecb;
+  font-size: 20px;
+  background-color: lightblue;
+  margin: 10px;
+  line-height: 50px;
 }
