@@ -34,7 +34,7 @@ const Board = ({ socket }) => {
     }
     setBoard(newBoard);
     console.log(newBoard); 
-    socket.emit('move', { boardState: newBoard });
+    socket.emit('move', { move_id: index });
     setTurn(turn === 0 ? 1 : 0);
   }
 
