@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Banner from './Banner';
 import Board from './Board';
 import Waiting from './Waiting'
+import Chat from './Chat';
 
 
   const Container = ({ socket }) => {
@@ -70,6 +71,7 @@ import Waiting from './Waiting'
       <div>
         <Banner />
         {toRender}
+        <Chat socket={socket}/>
       </div>
     );
   }

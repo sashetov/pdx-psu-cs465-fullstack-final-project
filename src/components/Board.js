@@ -31,9 +31,13 @@ const Board = ({ socket }) => {
 
   socket.on('move_done', (data) => {
     console.log("From Server" + JSON.stringify(data));
+    if(data.status === 'success'){
+      setBoard(data.boardState);
+    }
     // TODO: you need to handle errors here....
   })
  
+  
   return (
     <div ref={reference} className="container-sm w-50">
       <div className="row">
@@ -55,7 +59,7 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-          aria-label="cell 1">     
+          aria-label="cell 1">    
         </div>
         <div className="col cell text-center" 
             id="2" 
@@ -65,7 +69,7 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
-            aria-label="cell 2">     
+            aria-label="cell 2">   
         </div>
       </div>
       <div className="row text-center">

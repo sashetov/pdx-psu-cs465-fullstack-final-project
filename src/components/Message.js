@@ -8,7 +8,8 @@ function Message({ socket }) {
     e.preventDefault();
     setMessage(e.target.value);
     socket.emit('chat_msg', message);
-    setMessage('');
+    console.log("Sending: " + message);
+  //  setMessage('');
   };
 
   let handleChange = (e) => {
@@ -16,7 +17,7 @@ function Message({ socket }) {
   }
   const MsgWindow = (
     <form
-        className='send-message-form'
+        className='send-message-form msg'
         onSubmit={handleSubmit}>
           <input 
             onChange={handleChange}
@@ -33,3 +34,5 @@ function Message({ socket }) {
     
   );
 }
+
+export default Message;
