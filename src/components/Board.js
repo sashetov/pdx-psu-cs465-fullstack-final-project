@@ -31,10 +31,7 @@ const Board = ({ socket }) => {
 
   socket.on('move_done', (data) => {
     console.log("From Server" + JSON.stringify(data));
-    if(data.status === 'success'){
-      setBoard(data.boardState);
-    }
-    // TODO: you need to handle errors here....
+   
   })
  
   
