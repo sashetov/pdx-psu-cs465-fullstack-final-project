@@ -33,7 +33,6 @@ in some cases the response may be an erro ( such as 400 response if you didn't s
 NOTE: you can of course test with more tabs as well \
 TODO: add automated tests for this \
 NOTE: also check console output of server to see players array and games arrays and some other output regarding how the game was joined etc for more info
-\
 ## How to test making moves from frontend:
 now that you have a set up game you can start moving via the dev console with:
 ```
@@ -143,7 +142,6 @@ and something like this for the player getting the message:
   }
 }
 ```
-\
 ## Error codes and errors coming back from backend on `chat` event
 You will find these error codes in the event data that comes back with the `chat_done` event coming from the socket, which looks something like this:
 ```
@@ -165,4 +163,3 @@ error code:
    3 - player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet
    6 - chat message not provided, you need to provide it in the data for the socket under the key "message"
 ```
-\
