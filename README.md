@@ -109,7 +109,6 @@ error code:
    4 - player attempting to move to a slot in the game that already has a symbol in it
    5 - player attempting to play out of turn
 ```
-\
 ## Sending chat messages to your opponent
 To send the chat message you need to use a socket that has already been confirmed to be in an active game with an opponent
 ```
