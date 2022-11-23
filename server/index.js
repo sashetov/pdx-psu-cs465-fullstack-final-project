@@ -59,11 +59,11 @@ app.get('/join', (req, res) => {
           status: 'ok',
           msg: 'you have an opponent',
           data: {
-            isYourTurn: false
+            isYourTurn: false,
           },
         };
-        let player1_socket = sockets[game["player1"]];
-        let player2_socket = sockets[game["player2"]];
+        let player1_socket = sockets[game['player1']];
+        let player2_socket = sockets[game['player2']];
         data.data.isYourTurn = true;
         player1_socket.emit('opponentAvailable', data);
         data.data.isYourTurn = false;
@@ -178,10 +178,10 @@ let checkBoardForWinner = (gameId) => {
 
 io.sockets.on('connection', (socket) => {
   const ERR_GAME_NOT_STARTED = 1,
-        ERR_BAD_MOVE_ID = 2,
-        ERR_NO_OPPONENT_YET = 3,
-        ERR_SLOT_TAKEN = 4,
-        ERR_MOVE_OUT_OF_TURN = 5;
+    ERR_BAD_MOVE_ID = 2,
+    ERR_NO_OPPONENT_YET = 3,
+    ERR_SLOT_TAKEN = 4,
+    ERR_MOVE_OUT_OF_TURN = 5;
   let id = socket.id;
   sockets[socket.id] = socket;
   players[socket.id] = {
@@ -199,8 +199,8 @@ io.sockets.on('connection', (socket) => {
       let data = {
         status: 'error',
         msg: 'player attempting to move without being in a game, join this player to a game with GET to /join',
-        errorCode : ERR_GAME_NOT_STARTED,
-        data: null
+        errorCode: ERR_GAME_NOT_STARTED,
+        data: null,
       };
       socket.emit('move_done', data);
       console.log('move_done', data);
@@ -208,10 +208,10 @@ io.sockets.on('connection', (socket) => {
       let gameId = players[id].gameId,
         game = games[gameId],
         moveId = parseInt(data.move_id);
-      console.log("gameId:", gameId);
-      console.log("game:", game);
-      console.log("moveId:", moveId);
-      if(!Number.isInteger(moveId)) {
+      console.log('gameId:', gameId);
+      console.log('game:', game);
+      console.log('moveId:', moveId);
+      if (!Number.isInteger(moveId)) {
         let data = {
           status: 'error',
           errorCode: ERR_BAD_MOVE_ID,
@@ -230,7 +230,10 @@ io.sockets.on('connection', (socket) => {
         };
         socket.emit('move_done', data);
         console.log('move_done', data);
-      } else if (game['state'][moveId] !== undefined && game['state'][moveId] !== "" ) {
+      } else if (
+        game['state'][moveId] !== undefined &&
+        game['state'][moveId] !== ''
+      ) {
         // error: slot moved into already
         let data = {
           status: 'error',
@@ -260,7 +263,7 @@ io.sockets.on('connection', (socket) => {
             data: null,
           };
           socket.emit('move_done', data);
-          console.log("move_done:", data);
+          console.log('move_done:', data);
         } else {
           game['state'][moveId] = players[id]['symbol']; // do the move
           game['nextPlayer'] = otherPlayer; // switch next player turn
@@ -277,7 +280,10 @@ io.sockets.on('connection', (socket) => {
               indexOf: moveId
             }
           };
-          socket.emit('move_done', data);
+          let player1_socket = sockets[game['player1']];
+          let player2_socket = sockets[game['player2']];
+          player1_socket.emit('move_done', data);
+          player2_socket.emit('move_done', data);
           console.log('move_done', data);
           
           if (winner === 0 || winner === 1 || winner === 2) {

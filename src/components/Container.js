@@ -6,24 +6,27 @@ import Waiting from './Waiting'
 import Chat from './Chat';
 
 
-  const Container = ({ socket }) => {
-    const [joined, setJoined] = useState(false); 
-    const [toRender, setToRender] = useState(null);
-    function handleSubmit(event) {
-      event.preventDefault();
-      let id = socket.id;    
-      let url = new URL('http://localhost:8080/join'), params = { playerName: event.target[0].value, socket_id: id}; //socket_id:socket.id
-      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-      fetch(url).then((response) => {
-        console.log(response.json());
-      })
-      setJoined(true);
-      setToRender(Waiting);  
-    };
-  
+const Container = ({ socket }) => {
+  const [joined, setJoined] = useState(false);
+  const [toRender, setToRender] = useState(null);
+  function handleSubmit(event) {
+    event.preventDefault();
+    let id = socket.id;
+    let url = new URL('http://localhost:8080/join'),
+      params = { playerName: event.target[0].value, socket_id: id }; //socket_id:socket.id
+    Object.keys(params).forEach((key) =>
+      url.searchParams.append(key, params[key])
+    );
+    fetch(url).then((response) => {
+      console.log(response.json());
+    });
+    setJoined(true);
+    setToRender(Waiting);
+  }
+
   socket.on('opponentAvailable', (data) => {
-    if(data.status === 'ok') {
-      setToRender(<Board socket={socket}/>);
+    if (data.status === 'ok') {
+      setToRender(<Board socket={socket} />);
     }
   });
 
@@ -32,7 +35,9 @@ import Chat from './Chat';
       id="player"
       class="form w-50 mx-auto mt-5 p-3"
       method="get"
-      onSubmit={event => {handleSubmit(event)}}
+      onSubmit={(event) => {
+        handleSubmit(event);
+      }}
     >
       <div class="form-group mx-auto my-2">
         <label class="py-2" for="name">
@@ -55,17 +60,15 @@ import Chat from './Chat';
         />
       </div>
     </form>
-  ); 
+  );
 
-  
-  
-  if(!joined) {
+  if (!joined) {
     return (
       <div>
-      <Banner />
-      { splash }
-    </div>
-    )
+        <Banner />
+        {splash}
+      </div>
+    );
   } else {
     return (
       <div>
@@ -75,8 +78,6 @@ import Chat from './Chat';
       </div>
     );
   }
-}
+};
 
 export default Container;
-
-
