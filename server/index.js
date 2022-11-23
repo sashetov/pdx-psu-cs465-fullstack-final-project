@@ -30,6 +30,7 @@ app.get('/join', (req, res) => {
       .status(400)
       .send({ status: 'error', message: 'missing socket id parameter' }); // Bad request
   }
+
   let socket_id = req.query.socket_id;
   let playerName = req.query.playerName;
   console.log('players:', players);
@@ -37,6 +38,7 @@ app.get('/join', (req, res) => {
   let player = players[socket_id];
   console.log('player:', player);
   let gameId = player['gameId'];
+
   if (gameId && games[gameId].winner == null) {
     console.log(`rejoined game ${gameId}`);
     res.json(players[socket_id]); //rejoin previous unfinished game
@@ -88,6 +90,7 @@ app.get('/join', (req, res) => {
     console.log('players: ', players);
     res.json(players[socket_id]);
   }
+
 });
 
 let checkBoardForWinner = (gameId) => {
@@ -186,6 +189,8 @@ io.sockets.on('connection', (socket) => {
     symbol: null,
     gameId: null,
   };
+ 
+ 
   socket.on('move', (data) => {
     console.log('id:', id);
     console.log('data:', data);
@@ -270,12 +275,17 @@ io.sockets.on('connection', (socket) => {
               boardState: game['state'],
               gameWinner: winner,
             },
+            played: {
+              moved: players[id]['symbol'],
+              indexOf: moveId
+            }
           };
           let player1_socket = sockets[game['player1']];
           let player2_socket = sockets[game['player2']];
           player1_socket.emit('move_done', data);
           player2_socket.emit('move_done', data);
           console.log('move_done', data);
+          
           if (winner === 0 || winner === 1 || winner === 2) {
             // game is over, can delete game
             delete games[gameId];
@@ -285,6 +295,7 @@ io.sockets.on('connection', (socket) => {
     }
   });
 
+  
   socket.on('disconnect', () => {
     delete sockets[socket.id];
     delete players[socket.id];

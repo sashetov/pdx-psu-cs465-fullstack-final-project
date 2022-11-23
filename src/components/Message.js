@@ -17,7 +17,8 @@ function Message({ socket }) {
   }
   const MsgWindow = (
     <form
-        className='send-message-form msg '
+        className='send-message-form msg'
+
         onSubmit={handleSubmit}>
           <input 
             onChange={handleChange}

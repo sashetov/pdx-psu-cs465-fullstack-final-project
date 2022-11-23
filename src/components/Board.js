@@ -82,9 +82,10 @@ const Board = ({ socket }) => {
 
   socket.on('move_done', (data) => {
     console.log("From Server" + JSON.stringify(data));
+
+   
   })
  
-
   return (
     <div ref={reference} className="container-sm w-50">
       <div className="row">
@@ -108,17 +109,22 @@ const Board = ({ socket }) => {
               move(event, event.target.id);
             }
           }}
+
           aria-label="cell 1"
         ></div>
         <div
           className="col cell text-center"
           id="2"
           onClick={(event) => {
+
             // only mark and change turn when the square is empty
             if (boardState[event.target.id] === '') {
               move(event, event.target.id);
             }
           }}
+
+            aria-label="cell 2">   
+        </div>
           aria-label="cell 2"
         ></div>
       </div>
