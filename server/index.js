@@ -90,7 +90,6 @@ app.get('/join', (req, res) => {
     console.log('players: ', players);
     res.json(players[socket_id]);
   }
-
 });
 
 let checkBoardForWinner = (gameId) => {
@@ -189,8 +188,7 @@ io.sockets.on('connection', (socket) => {
     symbol: null,
     gameId: null,
   };
- 
- 
+
   socket.on('move', (data) => {
     console.log('id:', id);
     console.log('data:', data);
@@ -277,15 +275,15 @@ io.sockets.on('connection', (socket) => {
             },
             played: {
               moved: players[id]['symbol'],
-              indexOf: moveId
-            }
+              indexOf: moveId,
+            },
           };
           let player1_socket = sockets[game['player1']];
           let player2_socket = sockets[game['player2']];
           player1_socket.emit('move_done', data);
           player2_socket.emit('move_done', data);
           console.log('move_done', data);
-          
+
           if (winner === 0 || winner === 1 || winner === 2) {
             // game is over, can delete game
             delete games[gameId];
@@ -295,10 +293,23 @@ io.sockets.on('connection', (socket) => {
     }
   });
 
-  
   socket.on('disconnect', () => {
     delete sockets[socket.id];
     delete players[socket.id];
     socket.emit('client_disconnect', id);
   });
+});
+
+// For Form:
+app.get('/formSubmit', (req, res) => {
+  res.status(200).send('You submitted the form');
+});
+
+// For Buttons:
+app.get('/about', (req, res) => {
+  res.status(200).send('you clicked on about');
+});
+
+app.get('/connect', (req, res) => {
+  res.status(200).send('you clicked on conect');
 });
