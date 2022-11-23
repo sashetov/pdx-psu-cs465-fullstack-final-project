@@ -62,7 +62,7 @@ example of successful win:
 ## How to check if the game is ready and what your turn is:
 add a handler for event:
 ```
-    socket.on('opponentAvailable', changeBoardStateToReadyToPlay);
+window.socket.on('opponentAvailable', changeBoardStateToReadyToPlay);
 ```
 or something similar \
 the event data will contain something like this for player 1:
@@ -110,3 +110,62 @@ error code:
    4 - player attempting to move to a slot in the game that already has a symbol in it
    5 - player attempting to play out of turn
 ```
+\
+\
+## Sending chat messages to your opponent
+To send the chat message you need to use a socket that has already been confirmed to be in an active game with an opponent
+```
+window.socket.emit("chat", {"message": "whatever you want to say"})
+```
+\
+or something similar \
+you will get a notification in both tabs where you are testing under the `chat_done` event data\
+the event data will contain something like this for the player sending the message:
+```
+{
+  "status": "ok",
+  "msg": "sent message successfully to player",
+  "data": {
+    "message": "whatever you want to say",
+    "from": "John",
+    "to": "Tonya"
+  }
+}
+```
+and something like this for the player getting the message:
+```
+{
+  "status": "ok",
+  "msg": "you have a message",
+  "data": {
+    "message": "whatever you want to say",
+    "from": "John",
+    "to": "Tonya"
+  }
+}
+```
+\
+\
+## Error codes and errors coming back from backend on `chat` event
+You will find these error codes in the event data that comes back with the `chat_done` event coming from the socket, which looks something like this:
+```
+{
+  "status": "error",
+  "msg": "player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet",
+  "errorCode": 3,
+  "data": null
+}
+```
+You can use the statusCode to quickly figure out which error you are dealing with.\
+You can use the msg if you need a standard text to display in an error dialog or console.log\
+\
+\
+The possible error code values are:
+```
+error code:
+   1 - player attempting to move without being in a game, join this player to a game with GET to /join
+   3 - player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet
+   6 - chat message not provided, you need to provide it in the data for the socket under the key "message"
+```
+\
+\
