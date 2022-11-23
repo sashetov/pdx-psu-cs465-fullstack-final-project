@@ -46,12 +46,10 @@ h1 {
   width: 50% !important;
 }
 
-
 .chat {
   margin: 10px;
   border: 1px solid black;
   border-radius: 10px;
-
 }
 
 .msg {

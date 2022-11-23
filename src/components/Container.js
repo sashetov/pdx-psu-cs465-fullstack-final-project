@@ -2,9 +2,10 @@ import { render } from '@testing-library/react';
 import React, { useEffect, useState } from 'react';
 import Banner from './Banner';
 import Board from './Board';
-import Waiting from './Waiting'
+import Waiting from './Waiting';
 import Chat from './Chat';
-
+import Buttons from './Buttons';
+import Form from './Form';
 
 const Container = ({ socket }) => {
   const [joined, setJoined] = useState(false);
@@ -67,6 +68,7 @@ const Container = ({ socket }) => {
       <div>
         <Banner />
         {splash}
+        <Buttons />
       </div>
     );
   } else {
@@ -74,7 +76,8 @@ const Container = ({ socket }) => {
       <div>
         <Banner />
         {toRender}
-        <Chat socket={socket}/>
+        <Chat socket={socket} />
+        <Buttons />
       </div>
     );
   }
