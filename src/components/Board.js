@@ -94,7 +94,6 @@ const Board = ({ socket }) => {
     console.log('back in mark');
 
     // Checks to see if a player won
-    // TODO: Currently not working because it can't read null can we set it to -2 for null?
     console.log('win');
     console.log(win);
 

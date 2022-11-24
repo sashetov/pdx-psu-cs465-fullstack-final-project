@@ -2,8 +2,11 @@ import React from 'react';
 
 // TODO: Implement contact form
 function Form() {
+  console.log('in Form');
+
   const handleSubmit = (event) => {
     event.preventDefault();
+
     // handle submit here
   };
 
