@@ -17,7 +17,7 @@ function Form() {
         method="GET"
         action="/formSubmit"
       >
-        <h1 class="h1 mt-2 mb-4">Let's Connect!</h1>
+        <h2 class="h1 mt-2 mb-4">Let's Connect!</h2>
         <div class="form-group mx-auto my-2">
           <label class="py-2" for="name">
             Name

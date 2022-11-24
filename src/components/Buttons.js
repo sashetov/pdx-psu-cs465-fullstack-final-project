@@ -1,44 +1,7 @@
 import React from 'react';
-import Container from './Container';
 
 // set up buttons to navigate bewtween pages? Or we can do navbar. still thinking
-function Buttons({ howTo, about, connect, socket }) {
-  /// const [updater, setUpdate] = useState(0);
-
-  console.log('in Buttons');
-
-  // handles click of About button
-  const handleAbout = (event) => {
-    console.log('In handleAbout');
-
-    event.preventDefault();
-    about.current = true;
-    howTo.current = false;
-    connect.current = false;
-    return <Container socket={socket} />;
-  };
-
-  const handleHowToPlay = (event) => {
-    console.log('In handleHowToPlay');
-    event.preventDefault();
-    howTo.current = true;
-    about.current = false;
-    connect.current = false;
-    return <Container socket={socket} />;
-  };
-
-  // handles click of Connect button
-  const handleConnect = (event) => {
-    console.log('In handleConnect');
-    event.preventDefault();
-    connect.current = true;
-    howTo.current = false;
-    about.current = false;
-    return <Container socket={socket} />;
-  };
-
-  console.log('Exiting Buttons');
-
+function Buttons({ handleAbout, handleConnect, handleHowToPlay }) {
   return (
     <div className="nav-container mx-auto my-auto text-center">
       <button

@@ -4,108 +4,12 @@ import Banner from './Banner';
 import Board from './Board';
 import Waiting from './Waiting';
 import Chat from './Chat';
-import Buttons from './Buttons';
-import Form from './Form';
-import HowToPlay from './HowToPlay';
-import About from './About';
+import ButtonHandler from './ButtonHandler';
 
 const Container = ({ socket }) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
-
-  // To be passed to Buttons component:
-  const howTo = useRef(false);
-  const about = useRef(false);
-  const connect = useRef(false);
-  console.log('in Container');
-
-  function Linked() {
-    console.log('in Link');
-    console.log('current values of howTo, about, connect:');
-    console.log(`${howTo.current} ${about.current} ${connect.current}`);
-
-    if (howTo.current === true) {
-      console.log('howTo If statement');
-      //reset value
-      howTo.current = false;
-      return (
-        <>
-          <Banner />
-          <HowToPlay />
-          <Buttons
-            howTo={howTo}
-            about={about}
-            connect={connect}
-            socket={socket}
-          />
-        </>
-      );
-    } else if (about.current === true) {
-      console.log('about If statement');
-      //reset value
-      about.current = false;
-      return (
-        <>
-          <Banner />
-          <About />
-          <Buttons
-            howTo={howTo}
-            about={about}
-            connect={connect}
-            socket={socket}
-          />
-        </>
-      );
-    } else if (connect.current === true) {
-      //reset value
-      console.log('connect If statement');
-      connect.current = false;
-      return (
-        <>
-          <Banner />
-          <Form />
-          <Buttons
-            howTo={howTo}
-            about={about}
-            connect={connect}
-            socket={socket}
-          />
-        </>
-      );
-    } else if (!joined) {
-      console.log('Waiting for player');
-      return (
-        <>
-          <Banner />
-          {splash}
-          <Buttons
-            howTo={howTo}
-            about={about}
-            connect={connect}
-            socket={socket}
-          />
-        </>
-      );
-    } else if (joined) {
-      console.log('Else stetement');
-      return (
-        <>
-          <Banner />
-          {toRender}
-          <Chat socket={socket} />
-          <Buttons
-            howTo={howTo}
-            about={about}
-            connect={connect}
-            socket={socket}
-          />
-        </>
-      );
-    } else {
-    }
-  }
-
-  //setUpdater(updater + 1);y
+  const linked = useRef(false);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -160,8 +64,36 @@ const Container = ({ socket }) => {
     </form>
   );
 
-  const show = Linked();
-  return <div>{show}</div>;
+  if (!joined) {
+    return (
+      <div>
+        {linked === true ? (
+          <ButtonHandler linked={linked} />
+        ) : (
+          <div>
+            <Banner />
+            {splash}
+            <ButtonHandler linked={linked} />
+          </div>
+        )}
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        {linked === true ? (
+          <ButtonHandler linked={linked} />
+        ) : (
+          <div>
+            <Banner />
+            {toRender}
+            <Chat socket={socket} />
+            <ButtonHandler linked={linked} />
+          </div>
+        )}
+      </div>
+    );
+  }
 };
 
 export default Container;
