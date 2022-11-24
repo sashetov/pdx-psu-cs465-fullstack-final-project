@@ -1,9 +1,12 @@
 import React from 'react';
 
 // set up buttons to navigate bewtween pages? Or we can do navbar. still thinking
-function Buttons({ handleAbout, handleConnect, handleHowToPlay }) {
+function Buttons({ handleAbout, handleConnect, handleHowToPlay, handleHome }) {
   return (
     <div className="nav-container mx-auto my-auto text-center">
+      <button className="nav-btn" id="home" type="button" onClick={handleHome}>
+        Home
+      </button>
       <button
         className="nav-btn"
         id="about"

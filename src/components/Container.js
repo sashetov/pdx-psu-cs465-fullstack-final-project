@@ -4,12 +4,10 @@ import Banner from './Banner';
 import Board from './Board';
 import Waiting from './Waiting';
 import Chat from './Chat';
-import ButtonHandler from './ButtonHandler';
 
 const Container = ({ socket }) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
-  const linked = useRef(false);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -67,30 +65,16 @@ const Container = ({ socket }) => {
   if (!joined) {
     return (
       <div>
-        {linked === true ? (
-          <ButtonHandler linked={linked} />
-        ) : (
-          <div>
-            <Banner />
-            {splash}
-            <ButtonHandler linked={linked} />
-          </div>
-        )}
+        <Banner />
+        {splash}
       </div>
     );
   } else {
     return (
       <div>
-        {linked === true ? (
-          <ButtonHandler linked={linked} />
-        ) : (
-          <div>
-            <Banner />
-            {toRender}
-            <Chat socket={socket} />
-            <ButtonHandler linked={linked} />
-          </div>
-        )}
+        <Banner />
+        {toRender}
+        <Chat socket={socket} />
       </div>
     );
   }
