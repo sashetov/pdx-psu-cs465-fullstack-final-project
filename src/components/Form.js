@@ -1,32 +1,54 @@
 import React from 'react';
 
-// TODO: Implement contact form
+// Form in Connect Page
 function Form() {
   console.log('in Form');
 
-  const handleSubmit = (event, target) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
-    console.log(event.target.name.value);
-    console.log(event.target.email.value);
-    console.log(event.target.comments.value);
+
+    // Name and Email Entered
+    if (
+      event.target.name.value.length > 0 &&
+      event.target.email.value.length > 0
+    ) {
+      console.log('---- Form Submission Acceptable ----');
+      console.log('Name: ' + event.target.name.value);
+      console.log('Email: ' + event.target.email.value);
+      // Comment filled
+      if (event.target.comment !== null) {
+        console.log('Comment: ' + event.target.comment.value);
+      }
+      // Comment empty
+      else {
+        console.log('Comment: N/A');
+      }
+    }
+    // Empty Name or Email
+    else {
+      console.warn('You must enter your name and email to submit!');
+      window.alert('Please enter a valid name and email!');
+    }
   };
 
   return (
     <div className="container mx-auto my-auto text-center form">
-      <form className="form w-50 mx-auto mt-5 p-3" onSubmit={handleSubmit}>
+      <form
+        className="connect form w-50 mx-auto mt-5 p-3"
+        onSubmit={handleSubmit}
+      >
         <h2 className="h1 mt-2 mb-4">Let's Connect!</h2>
         <div className="form-group mx-auto my-2">
           <label className="py-2" for="name">
             Name
           </label>
-          <input type="text" className="form-control" id="name" required />
+          <input type="text" className="form-control" id="name" />
         </div>
         <div className="form-group mx-auto my-2">
           <label className="py-2" for="email">
             Email
           </label>
-          <input type="email" className="form-control" id="email" required />
+          <input type="email" className="form-control" id="email" />
         </div>
         <div className="form-group mx-auto my-2">
           <label className="py-2" for="comments">

@@ -26,6 +26,7 @@ const Board = ({ socket }) => {
   const move = (index) => {
     // Sends server location player wants to mark
     let win = -2;
+
     setMessage('');
     console.log(`In move():`);
     console.log('socket:');
@@ -49,6 +50,7 @@ const Board = ({ socket }) => {
         console.log('move is allowed');
         errorCode.current = 7; //success
         markSquare.current = true;
+
         win = data.data.gameWinner;
         console.log(`new board state: `);
         state = [...data.data.boardState];
@@ -89,6 +91,7 @@ const Board = ({ socket }) => {
 
     console.log(`Exiting mark and calling message_picker`);
 
+    // Determine user message to display
     message_picker();
 
     console.log('back in mark');
@@ -155,17 +158,16 @@ const Board = ({ socket }) => {
   // Updates user message if a game is over
   const winner_determined = () => {
     console.log('in winner determined');
-
     if (winner.current === -1) {
       setMessage('Error: One of the players is missing. Please join the game.');
     } else if (winner.current === 0) {
-      setMessage('First Player won!'); // TODO: get player names to display
+      setMessage(`Player 1 won!`);
     } else if (winner.current === 1) {
-      setMessage('Second Player won!'); // TODO: get player names to display
+      setMessage(`Player 2 won!`);
     } else if (winner.current === 2) {
       setMessage('Tied. Gameover');
     } else {
-      //setMessage(``);
+      setMessage(``);
     }
   };
 

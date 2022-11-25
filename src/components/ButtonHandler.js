@@ -9,13 +9,18 @@ import Container from './Container';
 function ButtonHandler({ socket }) {
   const [show, setShow] = useState(null);
   const linked = useRef(false);
-  console.log('in Buttons');
+  const socket_id = useRef('');
 
+  console.log('in Buttons');
+  console.log(socket);
   // handles click of Home button
   const handleHome = (event) => {
-    console.log('In handleAbout');
+    console.log('In handleHome');
     linked.current = true;
+    socket_id.current = socket.id;
     setShow(<Container socket={socket} />);
+    console.log(socket);
+    console.log(`id: ${socket_id.current}`);
   };
 
   // handles click of About button
@@ -55,7 +60,7 @@ function ButtonHandler({ socket }) {
   } else {
     return (
       <div>
-        <Container socket={socket} />
+        <Container socket={socket} socket_id={socket_id} />
         <Buttons
           handleAbout={handleAbout}
           handleHowToPlay={handleHowToPlay}

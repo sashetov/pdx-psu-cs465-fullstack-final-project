@@ -8,6 +8,7 @@ import Chat from './Chat';
 const Container = ({ socket }) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
+  const player_name = useRef('');
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -20,6 +21,7 @@ const Container = ({ socket }) => {
     fetch(url).then((response) => {
       console.log(response.json());
     });
+    player_name.current = event.target[0].value;
     setJoined(true);
     setToRender(Waiting);
   }

@@ -5,7 +5,7 @@ function About() {
 
   return (
     <div className="container mx-auto text-center">
-      <h2 className="display-1">About</h2>
+      <h1 className="about display-1">About</h1>
       <p>This is a CS465/565 Final Project by Ariel, Cera, and Alex</p>
       <p>
         We wanted to implement a game using Node.js, React.js, Express.js, and

@@ -299,17 +299,3 @@ io.sockets.on('connection', (socket) => {
     socket.emit('client_disconnect', id);
   });
 });
-
-// For Form:
-app.get('/formSubmit', (req, res) => {
-  res.status(200).send('You submitted the form');
-});
-
-// For Buttons:
-app.get('/about', (req, res) => {
-  res.status(200).send('you clicked on about');
-});
-
-app.get('/connect', (req, res) => {
-  res.status(200).send('you clicked on conect');
-});

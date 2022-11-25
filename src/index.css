@@ -68,3 +68,23 @@ h1 {
   margin: 10px;
   line-height: 50px;
 }
+
+.nav-btn {
+  font-family: 'dancing_scriptregular';
+  color: white;
+  height: 30px;
+  width: auto;
+  border: 1px solid lightblue;
+  border-radius: 5px;
+  background-color: #779ecb;
+  margin: 3px;
+  padding: 4px;
+}
+
+.connect {
+  font-family: 'dancing_scriptregular';
+}
+
+.about {
+  font-family: 'dancing_scriptregular';
+}
