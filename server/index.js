@@ -100,13 +100,11 @@ let checkBoardForWinner = (gameId) => {
   [   ]
   [   ]
   [   ]
-
   ['X', '', '', '', '', '', '', '', '']
   for
   [X  ]
   [   ]
   [   ]
-
   ['X', '', '', '', 'O', '', '', '', '']
   for
   [X  ]
@@ -373,5 +371,4 @@ io.sockets.on('connection', (socket) => {
     delete players[socket.id];
     socket.emit('client_disconnect', id);
   });
-
 });
