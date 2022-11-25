@@ -95,7 +95,14 @@ const Board = ({ socket }) => {
 
     // Checks to see if a player won
     // TODO: Currently not working because it can't read null can we set it to -2 for null?
+<<<<<<< HEAD
     if (win !== -2) {
+=======
+    console.log('win');
+    console.log(win);
+
+    if (win !== -2 && win !== null) {
+>>>>>>> origin/main
       console.log('game winner has a value: ' + win);
       if (win === -1) {
         winner.current = -1;

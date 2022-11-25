@@ -46,7 +46,6 @@ h1 {
   width: 50% !important;
 }
 
-
 .chat {
   font-family: 'dancing_scriptregular';
   background-color: whitesmoke;
@@ -54,7 +53,6 @@ h1 {
   margin: 10px;
   border: 1px solid #779ecb;
   border-radius: 10px;
-  box-shadow: 2px 2px 2px 2px #779ecb;
 }
 
 .msg {
