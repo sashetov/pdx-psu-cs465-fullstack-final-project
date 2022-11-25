@@ -48,10 +48,13 @@ h1 {
 
 
 .chat {
+  font-family: 'dancing_scriptregular';
+  background-color: whitesmoke;
+  color: #01060a;
   margin: 10px;
-  border: 1px solid black;
+  border: 1px solid #779ecb;
   border-radius: 10px;
-
+  box-shadow: 2px 2px 2px 2px #779ecb;
 }
 
 .msg {
@@ -69,4 +72,15 @@ h1 {
   background-color: lightblue;
   margin: 10px;
   line-height: 50px;
+}
+
+li  {
+  display: block !important;
+}
+
+.history {
+  display: block;
+  max-height: 100px;
+  overflow-y: auto;
+  
 }

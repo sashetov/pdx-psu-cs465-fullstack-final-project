@@ -7,9 +7,13 @@ function Message({ socket }) {
   let handleSubmit = (e) => {
     e.preventDefault();
     setMessage(e.target.value);
-    socket.emit('chat_msg', message);
-    console.log("Sending: " + message);
-  //  setMessage('');
+    let data = {
+      socket_id: socket.id,
+      message: message
+    }
+    socket.emit('chat', data);
+    console.log("Sending: " + data);
+    setMessage('');
   };
 
   let handleChange = (e) => {
