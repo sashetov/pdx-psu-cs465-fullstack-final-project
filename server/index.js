@@ -182,7 +182,8 @@ io.sockets.on('connection', (socket) => {
     ERR_BAD_MOVE_ID = 2,
     ERR_NO_OPPONENT_YET = 3,
     ERR_SLOT_TAKEN = 4,
-    ERR_MOVE_OUT_OF_TURN = 5;
+    ERR_MOVE_OUT_OF_TURN = 5,
+    ERR_CHAT_MSG_NOT_PROVIDED = 6;
   let id = socket.id;
   sockets[socket.id] = socket;
   players[socket.id] = {
@@ -295,23 +296,82 @@ io.sockets.on('connection', (socket) => {
     }
   });
 
+  socket.on('chat', (data) => {
+    data.socket_id = id;
+    let gameId = players[id].gameId,
+        game = games[gameId];
+    if (players[id].gameId === null) {
+      let data = {
+        status: 'error',
+        msg: 'player attempting to chat without being in a game, join this player to a game with GET to /join',
+        errorCode: ERR_GAME_NOT_STARTED,
+        data: null,
+      };
+      socket.emit('chat_done', data);
+      console.log('chat_done', data);
+    } else if (game['winner'] === -1) {
+      // error: game not fully initiallized yet
+      let data = {
+        status: 'error',
+        msg: 'player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet',
+        errorCode: ERR_NO_OPPONENT_YET,
+        data: null,
+      };
+      socket.emit('chat_done', data);
+      console.log('chat_done', data);
+    } else if ( Object.keys(data).indexOf("message") === -1){
+      let data = {
+        status: 'error',
+        msg: 'chat message not provided, you need to provide it in the data for the socket under the key "message"',
+        errorCode: ERR_CHAT_MSG_NOT_PROVIDED,
+        data: null,
+      };
+      socket.emit('chat_done', data);
+      console.log('chat_done', data);
+    } else {
+      let otherPlayerSocket = null;
+      let player1_socket = sockets[game['player1']];
+      let player2_socket = sockets[game['player2']];
+      if(player1_socket.id === id){
+        otherPlayerSocket = player2_socket;
+      }
+      else {
+        otherPlayerSocket = player1_socket;
+      }
+      let playerName = players[id].playerName;
+      let otherPlayerName = players[otherPlayerSocket.id].playerName;
+      console.log('gameId:', gameId);
+      console.log('game:', game);
+      console.log('playerName:', playerName);
+      console.log('otherPlayerName:', otherPlayerName);
+      let dataPlayer = {
+        status: 'ok',
+        msg: "sent message successfully to player",
+        data: {
+          message: data.message,
+          from: `${playerName}`,
+          to: `${otherPlayerName}`
+        }
+      }
+      let dataOther = {
+        status: 'ok',
+        "msg": "you have a message",
+        data: {
+          message: data.message,
+          from: `${playerName}`,
+          to: `${otherPlayerName}`
+        },
+      };
+      console.log('dataPlayer:', dataPlayer);
+      console.log('dataOther:', dataOther);
+      socket.emit('chat_done', dataPlayer);
+      otherPlayerSocket.emit('chat_done', dataOther);
+    }
+  });
   socket.on('disconnect', () => {
     delete sockets[socket.id];
     delete players[socket.id];
     socket.emit('client_disconnect', id);
   });
-});
 
-// For Form:
-app.get('/formSubmit', (req, res) => {
-  res.status(200).send('You submitted the form');
-});
-
-// For Buttons:
-app.get('/about', (req, res) => {
-  res.status(200).send('you clicked on about');
-});
-
-app.get('/connect', (req, res) => {
-  res.status(200).send('you clicked on conect');
 });
