@@ -31,5 +31,5 @@ describe("Banner Tests", () => {
 })
 
 describe("Board Tests", () => {
-  test(')
+  
 })
