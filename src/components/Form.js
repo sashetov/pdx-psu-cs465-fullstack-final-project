@@ -6,7 +6,7 @@ function Form() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    console.log(event);
     // Name and Email Entered
     if (
       event.target.name.value.length > 0 &&
@@ -16,13 +16,14 @@ function Form() {
       console.log('Name: ' + event.target.name.value);
       console.log('Email: ' + event.target.email.value);
       // Comment filled
-      if (event.target.comment !== null) {
-        console.log('Comment: ' + event.target.comment.value);
+      if (event.target.comments.value.length > 0) {
+        console.log(`Comments: ${event.target.comments.value}`);
       }
       // Comment empty
       else {
-        console.log('Comment: N/A');
+        console.log('Comments: N/A');
       }
+      window.alert(`Thank you for connecting ${event.target.name.value}!`);
     }
     // Empty Name or Email
     else {

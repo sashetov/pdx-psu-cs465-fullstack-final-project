@@ -12,8 +12,20 @@ function About() {
         Socket.io
       </p>
       <p>We decided on a Tic-Tac-Toe game</p>
+      <p>Our project code can be found in: </p>
+      <a href="https://github.com/gleason9113/465final" target="_blank">
+        Project
+      </a>
       <p>More about each of us can be found in:</p>
-      <p>Add links to each person's GitHub, website, or something</p>
+      <a href="https://github.com/C3ra906" target="_blank">
+        Cera's Github
+      </a>
+      <a href="" target="_blank">
+        Alex's Github
+      </a>
+      <a href="" target="_blank">
+        Ariel's Github
+      </a>
     </div>
   );
 }
