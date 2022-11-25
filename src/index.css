@@ -57,6 +57,7 @@ h1 {
   border-radius: 10px;
 }
 
+/* User message board */
 .message {
   font-family: 'dancing_scriptregular';
   color: #01060a;
@@ -69,6 +70,7 @@ h1 {
   line-height: 50px;
 }
 
+/* Navigation buttons */
 .nav-btn {
   font-family: 'dancing_scriptregular';
   color: white;
@@ -87,4 +89,28 @@ h1 {
 
 .about {
   font-family: 'dancing_scriptregular';
+}
+
+.play_again {
+  font-family: 'dancing_scriptregular';
+  color: white;
+  height: 30px;
+  width: auto;
+  border: 1px solid slateblue;
+  border-radius: 5px;
+  background-color: darkslateblue;
+  margin: 3px;
+  padding: 4px;
+}
+
+.reset_game {
+  font-family: 'dancing_scriptregular';
+  color: black;
+  height: 30px;
+  width: auto;
+  border: 1px solid green;
+  border-radius: 5px;
+  background-color: lightgreen;
+  margin: 3px;
+  padding: 4px;
 }
