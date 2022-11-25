@@ -142,13 +142,15 @@ let checkBoardForWinner = (gameId) => {
   let symbols = ['X', 'O'];
   for (let i = 0; i < symbols.length; i += 1) {
     let s = symbols[i];
+    // 0 1 2 3 4 5 6 7 8
+    // x o x o o x _ _ x 
     if (
       (state[0] === s && state[1] === s && state[2] === s) || //check rows
       (state[3] === s && state[4] === s && state[5] === s) || //check rows
       (state[6] === s && state[7] === s && state[8] === s) || //check rows
       (state[0] === s && state[3] === s && state[6] === s) || //check columns
       (state[1] === s && state[4] === s && state[7] === s) || //check columns
-      (state[2] === s && state[3] === s && state[6] === s) || //check columns
+      (state[2] === s && state[5] === s && state[8] === s) || //check columns
       (state[0] === s && state[4] === s && state[8] === s) || //check diagonals
       (state[2] === s && state[4] === s && state[6] === s) //check diagonals
     ) {
