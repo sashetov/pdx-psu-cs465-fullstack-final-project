@@ -27,7 +27,7 @@ const Board = ({ socket }) => {
   const move = (index) => {
     // Sends server location player wants to mark
     let win = -2;
-
+    setUpdate(update + 1);
     setMessage('');
     console.log(`In move():`);
     console.log('socket:');
@@ -37,6 +37,7 @@ const Board = ({ socket }) => {
 
     // Captures status message and errorCode from server
     socket.on('move_done', (data) => {
+      setUpdate(update + 1);
       console.log('In move_done');
       console.log('From Server' + JSON.stringify(data));
 
@@ -83,6 +84,7 @@ const Board = ({ socket }) => {
     // Marking square not allowed
     else {
       console.log('The move was disallowed. No state changes');
+      setUpdate(update + 1);
     }
 
     // Updates the board
