@@ -191,7 +191,8 @@ io.sockets.on('connection', (socket) => {
       let gameId = players[id].gameId,
         game = games[gameId],
         moveId = parseInt(data.move_id);
-      if (!Number.isInteger(moveId)) {
+      // check that moveId is not invalid (not a num or out of range)
+      if (!Number.isInteger(moveId) || moveId < 0 || moveId > 8) {
         let data = {
           status: 'error',
           errorCode: ERR_BAD_MOVE_ID,
