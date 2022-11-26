@@ -13,19 +13,27 @@ function About() {
       </p>
       <p>We decided on a Tic-Tac-Toe game</p>
       <p>Our project code can be found in: </p>
-      <a href="https://github.com/gleason9113/465final" target="_blank">
-        Project
-      </a>
+      <p>
+        <a href="https://github.com/gleason9113/465final" target="_blank">
+          Project
+        </a>
+      </p>
       <p>More about each of us can be found in:</p>
-      <a href="https://github.com/C3ra906" target="_blank">
-        Cera's Github
-      </a>
-      <a href="" target="_blank">
-        Alex's Github
-      </a>
-      <a href="" target="_blank">
-        Ariel's Github
-      </a>
+      <p>
+        <a href="https://github.com/C3ra906" target="_blank">
+          Cera's Github
+        </a>
+      </p>
+      <p>
+        <a href="" target="_blank">
+          Alex's Github
+        </a>
+      </p>
+      <p>
+        <a href="" target="_blank">
+          Ariel's Github
+        </a>
+      </p>
     </div>
   );
 }
