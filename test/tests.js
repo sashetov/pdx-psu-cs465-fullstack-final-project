@@ -36,18 +36,18 @@ testBothJoinSuccessfully = (done) => {
     }).catch(err => done(err));
     let bothDone = 0;
     sockets[0].on("opponentAvailable", (data) => {
-      //{"status":"ok","msg":"you have an opponent","data":{"isYourTurn":true}}
       data.status.should.be.equal("ok");
       data.msg.should.be.equal("you have an opponent");
       data.data.isYourTurn.should.be.equal(true); // for player 1
+      data.data.opponentName.should.be.equal("player2"); // for player 1
       bothDone++;
       if(bothDone === 2) done();
     });
     sockets[1].on("opponentAvailable", (data) => {
-      //{"status":"ok","msg":"you have an opponent","data":{"isYourTurn":false}}
       data.status.should.be.equal("ok");
       data.msg.should.be.equal("you have an opponent");
       data.data.isYourTurn.should.be.equal(false); // for player 1
+      data.data.opponentName.should.be.equal("player1"); // for player 1
       bothDone++;
       if(bothDone === 2) done();
     });
