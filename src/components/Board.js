@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const Board = ({ socket, first_player, second_player }) => {
+const Board = ({ socket, first_player, second_player, newGame }) => {
   // Hooks
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
   const [message, setMessage] = useState('');
@@ -151,6 +151,7 @@ const Board = ({ socket, first_player, second_player }) => {
     markSquare.current = false;
     errorCode.current = -1;
     winner.current = -2;
+    newGame.current = false;
 
     setBoard([...empty_board]);
     setMessage(``);

@@ -5,12 +5,10 @@ import Board from './Board';
 import Waiting from './Waiting';
 import Chat from './Chat';
 
-const Container = ({ socket }) => {
+const Container = ({ socket, first_player, second_player, newGame }) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
   const player_name = useRef('');
-  const first_player = useRef('');
-  const second_player = useRef('');
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -42,12 +40,13 @@ const Container = ({ socket }) => {
         second_player.current = player_name.current;
         first_player.current = data.data.opponentName;
       }
-
+      newGame.current = true;
       setToRender(
         <Board
           socket={socket}
           first_player={first_player}
           second_player={second_player}
+          newGame={newGame}
         />
       );
     }
