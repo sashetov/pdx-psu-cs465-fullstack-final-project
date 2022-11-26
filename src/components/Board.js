@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const Board = ({ socket }) => {
+const Board = ({ socket, first_player, second_player }) => {
   // Hooks
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
   const [message, setMessage] = useState('');
@@ -15,8 +15,6 @@ const Board = ({ socket }) => {
 
   // useEffect works after render
   useEffect(() => {
-    console.log('in useEffect');
-
     console.log('socket:', socket);
     window.socket = socket;
   }, [socket]);
@@ -29,61 +27,45 @@ const Board = ({ socket }) => {
     let win = -2;
     setUpdate(update + 1);
     setMessage('');
-    console.log(`In move():`);
-    console.log('socket:');
-    console.log(socket);
 
     socket.emit('move', { move_id: index });
 
     // Captures status message and errorCode from server
     socket.on('move_done', (data) => {
       setUpdate(update + 1);
-      console.log('In move_done');
       console.log('From Server' + JSON.stringify(data));
 
       let state = [...boardState];
 
       // Receives status and errorCode from the server for use on client side
       if (data.status === 'error') {
-        console.log('client received from server an error:' + data.msg);
         errorCode.current = data.errorCode;
         markSquare.current = false;
       } else if (data.status === 'success') {
-        console.log('move is allowed');
         errorCode.current = 7; //success
         markSquare.current = true;
-
         win = data.data.gameWinner;
-        console.log(`new board state: `);
         state = [...data.data.boardState];
-        console.log(state);
       } else {
         console.log('unknown error occured w/ client side move_done');
-        console.log('client received from server an error:' + data.msg);
         errorCode.current = -1;
         markSquare.current = false;
       }
-
-      console.log(`Exiting move_done and calling mark`);
-
       mark(state, win);
     });
   };
 
   // Marks the square if appropriate and updates boardState
   const mark = (state, win) => {
-    console.log(`In mark():`);
-    console.log(`client side errorCode set to ${errorCode.current}`);
-    console.log(`markSquare set to ${markSquare.current}`);
-
     // Marking square allowed
     if (markSquare.current === true) {
       //re-render
+      console.log('The move is valid');
       setUpdate(update + 1);
     }
     // Marking square not allowed
     else {
-      console.log('The move was disallowed. No state changes');
+      console.log('The move is invalid');
       setUpdate(update + 1);
     }
 
@@ -92,19 +74,11 @@ const Board = ({ socket }) => {
     console.log('Updated board:');
     console.log(state);
 
-    console.log(`Exiting mark and calling message_picker`);
-
     // Determine user message to display
     message_picker();
 
-    console.log('back in mark');
-
     // Checks to see if a player won
-    console.log('win');
-    console.log(win);
-
     if (win !== -2 && win !== null) {
-      console.log('game winner has a value: ' + win);
       if (win === -1) {
         winner.current = -1;
         console.log(
@@ -112,16 +86,14 @@ const Board = ({ socket }) => {
         );
       } else if (win === 0) {
         winner.current = 0;
-        console.log('First Player won!'); // TODO: get player names to display
+        console.log(`${first_player.current} won!`); // TODO: get player names to display
       } else if (win === 1) {
         winner.current = 1;
-        console.log('Second Player won!'); // TODO: get player names to display
+        console.log(`${second_player.current} won!`); // TODO: get player names to display
       } else if (win === 2) {
         winner.current = 2;
         console.log('Tied. Gameover');
       }
-
-      console.log('exiting mark and calling winner_determined');
 
       winner_determined();
       // TODO: ASk to replay or go back to previous screen
@@ -135,19 +107,14 @@ const Board = ({ socket }) => {
   const message_picker = () => {
     console.log('in message');
     if (errorCode.current === 1) {
-      console.log(`errorCode is : ${errorCode.current}`);
       setMessage(`You are not in a game. Please join.`);
     } else if (errorCode.current === 2) {
-      console.log(`errorCode is : ${errorCode.current}`);
       setMessage(`Invalid move id`);
     } else if (errorCode.current === 3) {
-      console.log(`errorCode is : ${errorCode.current}`);
       setMessage(`You do not have an opponent. Please wait.`);
     } else if (errorCode.current === 4) {
-      console.log(`errorCode is : ${errorCode.current}`);
       setMessage(`That square is taken! Please try another square.`);
     } else if (errorCode.current === 5) {
-      console.log(`errorCode is : ${errorCode.current}`);
       setMessage(`You can't play out of turn! Wait for your opponent to play.`);
     } else if (errorCode.current === 7) {
       setMessage(`Move was a success`);
@@ -160,13 +127,12 @@ const Board = ({ socket }) => {
 
   // Updates user message if a game is over
   const winner_determined = () => {
-    console.log('in winner determined');
     if (winner.current === -1) {
       setMessage('Error: One of the players is missing. Please join the game.');
     } else if (winner.current === 0) {
-      setMessage(`Player 1 won!`);
+      setMessage(`${first_player.current} won!`);
     } else if (winner.current === 1) {
-      setMessage(`Player 2 won!`);
+      setMessage(`${second_player.current} won!`);
     } else if (winner.current === 2) {
       setMessage('Tied. Gameover');
     } else {

@@ -9,6 +9,8 @@ const Container = ({ socket }) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
   const player_name = useRef('');
+  const first_player = useRef('');
+  const second_player = useRef('');
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -21,14 +23,33 @@ const Container = ({ socket }) => {
     fetch(url).then((response) => {
       console.log(response.json());
     });
+    // Store player's name
     player_name.current = event.target[0].value;
+
     setJoined(true);
     setToRender(Waiting);
   }
 
   socket.on('opponentAvailable', (data) => {
     if (data.status === 'ok') {
-      setToRender(<Board socket={socket} />);
+      // Determine if you are the first player
+      if (data.data.isYourTurn === true) {
+        first_player.current = player_name.current;
+        second_player.current = data.data.opponentName;
+      }
+      // Not the first player
+      else {
+        second_player.current = player_name.current;
+        first_player.current = data.data.opponentName;
+      }
+
+      setToRender(
+        <Board
+          socket={socket}
+          first_player={first_player}
+          second_player={second_player}
+        />
+      );
     }
   });
 
