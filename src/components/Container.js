@@ -38,7 +38,16 @@ const Container = ({ socket }) => {
       class="form w-50 mx-auto mt-5 p-3"
       method="get"
       onSubmit={(event) => {
-        handleSubmit(event);
+        // Player name entered
+        console.log(event);
+        if (event.target.name.value.length > 0) {
+          handleSubmit(event);
+        }
+        // Player name not entered
+        else {
+          console.warn('You must enter your name to play!');
+          window.alert('Please enter a name to join!');
+        }
       }}
     >
       <div class="form-group mx-auto my-2">
