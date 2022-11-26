@@ -375,3 +375,8 @@ io.sockets.on('connection', (socket) => {
   });
 
 });
+let closeServer = () => {
+  server.close();
+  io.close();
+};
+module.exports = {server,closeServer}
