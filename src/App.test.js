@@ -37,11 +37,7 @@ describe("Board Tests", () => {
     expect(view).toMatchSnapshot();
   })
 
-  test("Calling move function triggers a socket emit event", () => {
-    let socket = new MockedSocket();
-    const view = render(<Board socket={socket} />);
-
-  })
+  
 })
 
 describe("Container Tests", () => {

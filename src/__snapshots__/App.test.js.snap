@@ -17,6 +17,7 @@ Object {
             id="0"
           />
           <div
+            aria-label="cell 1"
             class="col cell text-center"
             id="1"
           />
@@ -87,6 +88,7 @@ Object {
           id="0"
         />
         <div
+          aria-label="cell 1"
           class="col cell text-center"
           id="1"
         />
