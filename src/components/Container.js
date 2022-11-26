@@ -1,15 +1,15 @@
 import { render } from '@testing-library/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Banner from './Banner';
 import Board from './Board';
 import Waiting from './Waiting';
 import Chat from './Chat';
-import Buttons from './Buttons';
-import Form from './Form';
 
 const Container = ({ socket }) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
+  const player_name = useRef('');
+
   function handleSubmit(event) {
     event.preventDefault();
     let id = socket.id;
@@ -21,6 +21,7 @@ const Container = ({ socket }) => {
     fetch(url).then((response) => {
       console.log(response.json());
     });
+    player_name.current = event.target[0].value;
     setJoined(true);
     setToRender(Waiting);
   }
@@ -68,7 +69,6 @@ const Container = ({ socket }) => {
       <div>
         <Banner />
         {splash}
-        <Buttons />
       </div>
     );
   } else {
@@ -77,7 +77,6 @@ const Container = ({ socket }) => {
         <Banner />
         {toRender}
         <Chat socket={socket} />
-        <Buttons />
       </div>
     );
   }

@@ -11,6 +11,7 @@ const Board = ({ socket }) => {
   const markSquare = useRef(false);
   const errorCode = useRef(-1);
   const winner = useRef(-2);
+  const button = useRef();
 
   // useEffect works after render
   useEffect(() => {
@@ -26,6 +27,7 @@ const Board = ({ socket }) => {
   const move = (index) => {
     // Sends server location player wants to mark
     let win = -2;
+
     setMessage('');
     console.log(`In move():`);
     console.log('socket:');
@@ -49,6 +51,7 @@ const Board = ({ socket }) => {
         console.log('move is allowed');
         errorCode.current = 7; //success
         markSquare.current = true;
+
         win = data.data.gameWinner;
         console.log(`new board state: `);
         state = [...data.data.boardState];
@@ -89,12 +92,12 @@ const Board = ({ socket }) => {
 
     console.log(`Exiting mark and calling message_picker`);
 
+    // Determine user message to display
     message_picker();
 
     console.log('back in mark');
 
     // Checks to see if a player won
-    // TODO: Currently not working because it can't read null can we set it to -2 for null?
     console.log('win');
     console.log(win);
 
@@ -156,19 +159,71 @@ const Board = ({ socket }) => {
   // Updates user message if a game is over
   const winner_determined = () => {
     console.log('in winner determined');
-
     if (winner.current === -1) {
       setMessage('Error: One of the players is missing. Please join the game.');
     } else if (winner.current === 0) {
-      setMessage('First Player won!'); // TODO: get player names to display
+      setMessage(`Player 1 won!`);
     } else if (winner.current === 1) {
-      setMessage('Second Player won!'); // TODO: get player names to display
+      setMessage(`Player 2 won!`);
     } else if (winner.current === 2) {
       setMessage('Tied. Gameover');
     } else {
-      //setMessage(``);
+      setMessage(``);
     }
   };
+
+  // Handles Reset Button Click
+  const handleReset = (event) => {
+    event.preventDefault();
+
+    // Reset all variables and states managed on front-end
+    const empty_board = ['', '', '', '', '', '', '', '', ''];
+    const restart = 'Please reset the game with same players and same game id';
+    reference.curret = null;
+    markSquare.current = false;
+    errorCode.current = -1;
+    winner.current = -2;
+
+    setBoard([...empty_board]);
+    setMessage(``);
+    setUpdate(0);
+
+    console.log('everything reset');
+    console.log(
+      `message: ${message} board: ${boardState} reference: ${reference.current} markSquare: ${markSquare.current} errorCode: ${errorCode.current} winner: ${winner.current}`
+    );
+    // Ask back-end to restart the game
+    socket.emit('restart', restart);
+  };
+
+  // Buttons
+  const reset_button = (
+    <button
+      className="col reset-button"
+      id="reset_game"
+      type="button"
+      onClick={handleReset}
+    >
+      Reset Game
+    </button>
+  );
+
+  const replay_button = (
+    <button
+      className="col reset-button"
+      id="play_again"
+      type="button"
+      onClick={handleReset}
+    >
+      Play Again
+    </button>
+  );
+
+  if (winner.current === 0 || winner.current === 1 || winner.current === 2) {
+    button.current = replay_button;
+  } else {
+    button.current = reset_button;
+  }
 
   // renders the board
   return (
@@ -299,6 +354,7 @@ const Board = ({ socket }) => {
           {message}
         </div>
       </div>
+      <div className="row">{button.current}</div>
     </div>
   );
 };

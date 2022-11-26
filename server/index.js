@@ -143,7 +143,7 @@ let checkBoardForWinner = (gameId) => {
   for (let i = 0; i < symbols.length; i += 1) {
     let s = symbols[i];
     // 0 1 2 3 4 5 6 7 8
-    // x o x o o x _ _ x 
+    // x o x o o x _ _ x
     if (
       (state[0] === s && state[1] === s && state[2] === s) || //check rows
       (state[3] === s && state[4] === s && state[5] === s) || //check rows
@@ -299,7 +299,7 @@ io.sockets.on('connection', (socket) => {
   socket.on('chat', (data) => {
     data.socket_id = id;
     let gameId = players[id].gameId,
-        game = games[gameId];
+      game = games[gameId];
     if (players[id].gameId === null) {
       let data = {
         status: 'error',
@@ -319,7 +319,7 @@ io.sockets.on('connection', (socket) => {
       };
       socket.emit('chat_done', data);
       console.log('chat_done', data);
-    } else if ( Object.keys(data).indexOf("message") === -1){
+    } else if (Object.keys(data).indexOf('message') === -1) {
       let data = {
         status: 'error',
         msg: 'chat message not provided, you need to provide it in the data for the socket under the key "message"',
@@ -332,10 +332,9 @@ io.sockets.on('connection', (socket) => {
       let otherPlayerSocket = null;
       let player1_socket = sockets[game['player1']];
       let player2_socket = sockets[game['player2']];
-      if(player1_socket.id === id){
+      if (player1_socket.id === id) {
         otherPlayerSocket = player2_socket;
-      }
-      else {
+      } else {
         otherPlayerSocket = player1_socket;
       }
       let playerName = players[id].playerName;
@@ -346,20 +345,20 @@ io.sockets.on('connection', (socket) => {
       console.log('otherPlayerName:', otherPlayerName);
       let dataPlayer = {
         status: 'ok',
-        msg: "sent message successfully to player",
+        msg: 'sent message successfully to player',
         data: {
           message: data.message,
           from: `${playerName}`,
-          to: `${otherPlayerName}`
-        }
-      }
+          to: `${otherPlayerName}`,
+        },
+      };
       let dataOther = {
         status: 'ok',
-        "msg": "you have a message",
+        msg: 'you have a message',
         data: {
           message: data.message,
           from: `${playerName}`,
-          to: `${otherPlayerName}`
+          to: `${otherPlayerName}`,
         },
       };
       console.log('dataPlayer:', dataPlayer);
@@ -373,7 +372,6 @@ io.sockets.on('connection', (socket) => {
     delete players[socket.id];
     socket.emit('client_disconnect', id);
   });
-
 });
 let closeServer = () => {
   server.close();
