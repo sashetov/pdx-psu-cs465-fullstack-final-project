@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
-import React, { useEffect, useRef, useState } from 'react';
+
+import React, { useState } from 'react';
 
 function Message({ socket }) {
   const [ message, setMessage ] = useState(null);
@@ -7,9 +7,12 @@ function Message({ socket }) {
   let handleSubmit = (e) => {
     e.preventDefault();
     setMessage(e.target.value);
-    socket.emit('chat_msg', message);
-    console.log("Sending: " + message);
-  //  setMessage('');
+    let data = {
+      socket_id: socket.id,
+      message: message
+    }
+    socket.emit('chat', data);
+    setMessage('');
   };
 
   let handleChange = (e) => {

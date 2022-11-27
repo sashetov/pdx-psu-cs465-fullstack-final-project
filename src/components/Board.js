@@ -233,6 +233,7 @@ const Board = ({
               move(event.target.id);
             }
           }}
+          aria-label="cell 1"
         >
           {boardState[1]}
         </div>
