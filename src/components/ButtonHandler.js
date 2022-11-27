@@ -17,7 +17,7 @@ function ButtonHandler({ socket }) {
   // handles click of Home button
   const handleHome = () => {
     linked.current = true;
-    if (newGame.current === false) {
+    if (newGame.current === true) {
       setShow(
         <Container
           socket={socket}
