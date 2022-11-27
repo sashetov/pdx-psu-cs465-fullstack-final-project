@@ -5,36 +5,59 @@ const http = require('http'),
 const fs = require('fs');
 const server = http.Server(app).listen(8080);
 const io = socketIo(server);
-const sockets = {};
-let players = {};
-let games = [];
+const sockets = {}; // this will store all the sockets
+let players = {}; // this will store the players objects
+let games = []; // this will store the games objects
+// we need to serve static css and js files for react:
 app.use(express.static(__dirname + '/../build/'));
 app.use(express.static(__dirname + '/../node_modules/'));
 app.get('/', (req, res) => {
+  /*
+  this route will serve the static index.html file that loads up the react app
+  */
   const stream = fs.createReadStream(__dirname + '/../build/index.html');
   stream.pipe(res);
 });
 app.get('/join', (req, res) => {
+  /*
+  this route will allow you to join a game
+  you will need to provide two parameters in the URL as a GET request:
+  socket_id=
+  playerName=
+  where socket_id is the socket's id
+  and playerName is the player's name
+  the route will send back a 400 response with an error message if either of
+  these params are missing
+  on success you will get a responses sent back with 200 status and data
+  that looks like these:
+  {playerName: 'player1', symbol: 'X', gameId: 0}
+  {playerName: 'player2', symbol: '0', gameId: 0}
+  */
   let params = Object.keys(req.query);
-  if (params.indexOf('playerName') === -1) {
-    res
-      .status(400)
-      .send({ status: 'error', message: 'missing player name parameter' }); // Bad request
+  if (params.indexOf('playerName') === -1) { // Bad request
+    res.status(400).send({
+      status: 'error',
+      message: 'missing player name parameter'
+    });
   }
-  if (params.indexOf('socket_id') === -1) {
-    res
-      .status(400)
-      .send({ status: 'error', message: 'missing socket id parameter' }); // Bad request
+  if (params.indexOf('socket_id') === -1) { // Bad request
+    res.status(400).send({
+      status: 'error',
+      message: 'missing socket id parameter'
+    });
   }
   let socket_id = req.query.socket_id;
   let playerName = req.query.playerName;
   let player = players[socket_id];
   let gameId = player['gameId'];
   if (gameId && games[gameId].winner == null) {
-    res.json(players[socket_id]); //rejoin previous unfinished game
+    // rejoin previous unfinished game
+    res.json(players[socket_id]);
   } else {
     // create new game since old one is finished or never started
     players[socket_id].playerName = playerName; //set name
+    // go through each of the games and try to find an empty slot or start
+    // a new game:
     for (let i = 0; i < games.length; i += 1) {
       let game = games[i];
       if (game['player2'] === null) {
@@ -43,9 +66,15 @@ app.get('/join', (req, res) => {
         game['winner'] = null; // set game to "in play" from "invalid" state
         players[socket_id]['symbol'] = 'O'; // player 2 is always 0
         gameId = i;
-        players[socket_id]['gameId'] = gameId; // set gameId so client knows its ok to proceed
+        // set gameId so client knows its ok to proceed
+        players[socket_id]['gameId'] = gameId;
         let player1_socket = sockets[game['player1']];
         let player2_socket = sockets[game['player2']];
+        // since its player 2 that means the game is ready and we need to
+        // notify both clients that they have an opponent
+        // we want to emit data on both sockets but with slightly different
+        // messages, including information on whether its your turn or not
+        // and also that the opponent is available
         let data1 = {
           status: 'ok',
           msg: 'you have an opponent',
@@ -70,40 +99,52 @@ app.get('/join', (req, res) => {
       if (gameId !== null) break;
     }
     if (gameId === null) {
-      // initialize new game
+      // initialize new game, for the first player only, since the opponent is
+      // not yet available
+      // we create a placeholder in each game for a winner id
+      // winner id's are as follows:
+      //   0 means player 1 won
+      //   1 means player 2 won
+      //   2 means there is a draw
+      //   null means the game is still in play
+      //   -1 means error because game doesn't have both players yet
+      // we also create a placeholder for who is the next player
+      //   0 means player 1
+      //   1 means player 2
+      //  we always start with player 1
       games.push({
         player1: socket_id,
         player2: null,
-        winner: -1, // 0 means player1, 1 means player 2, 2 means draw, null means still in play, -1 means error because game doesn't have both players yet
+        winner: -1, // doesn't have both players yet
         state: ['', '', '', '', '', '', '', '', ''], // board state
-        nextPlayer: 0, // 0 means player 1, 1 means player 2 - we always start with player 1
+        nextPlayer: 0
       });
       gameId = games.length - 1;
       players[socket_id]['symbol'] = 'X'; // player 1 is always X
-      players[socket_id]['gameId'] = gameId; // set gameId so client knows its ok to proceed
+      // set gameId so client knows its ok to proceed:
+      players[socket_id]['gameId'] = gameId;
     }
     res.json(players[socket_id]);
   }
 });
 let checkBoardForWinner = (gameId) => {
   /*
-  state looks like
+  this function gates a gameId , gets the game, if it exists and then
+  checks all the positions in the board state to see if there is a winner,
+  a draw or if the game is still in play
+  state is an array of strings with length 9
+  for example:
   ['', '', '', '', '', '', '', '', '']
-  for
   [   ]
   [   ]
   [   ]
-  ['X', '', '', '', '', '', '', '', '']
-  for
-  [X  ]
-  [   ]
-  [   ]
+  and 
   ['X', '', '', '', 'O', '', '', '', '']
-  for
+  to
   [X  ]
   [ O ]
   [   ]
-  etc
+  , etc
   Returns status code for winner of a particular gameId game:
     -1 means error because game doesn't have both players yet
     0 means player 1 won
@@ -160,21 +201,33 @@ let checkBoardForWinner = (gameId) => {
   return winner;
 };
 io.sockets.on('connection', (socket) => {
+  // here we set up the socket on the server side and the relevant listeners
+  // and emits.
+  // there are two listeners: chat, move
+  // and when the processing of either is done, we emit: chat_done and
+  // move_done, respectively
+  // there are 6 possible errors:
   const ERR_GAME_NOT_STARTED = 1,
     ERR_BAD_MOVE_ID = 2,
     ERR_NO_OPPONENT_YET_OR_GAME_OVER = 3,
     ERR_SLOT_TAKEN = 4,
     ERR_MOVE_OUT_OF_TURN = 5,
     ERR_CHAT_MSG_NOT_PROVIDED = 6;
+  // which we return as status codes to the client, along with an informative
+  // error message
   let id = socket.id;
   sockets[socket.id] = socket;
+  // instantiate empty player object for this socket:
   players[socket.id] = {
     playerName: null, // not yet known, has to be set by GET to /join
     symbol: null,
     gameId: null,
   };
-  socket.on('move', (data) => {
+  socket.on('move', (data) => { // move listener
     data.socket_id = id;
+    // handle a couple of error condtions before actually making move
+    // errors are only sent back on the current socket
+    // success notifications are sent on both sockets for that game
     if (players[id].gameId === null) {
       let data = {
         status: 'error',
@@ -238,6 +291,7 @@ io.sockets.on('connection', (socket) => {
           };
           socket.emit('move_done', data);
         } else {
+          // WE GOT TO THE SUCCESS CONDITION - SEND ON BOTH SOCKETS
           game['state'][moveId] = players[id]['symbol']; // do the move
           game['nextPlayer'] = otherPlayer; // switch next player turn
           winner = checkBoardForWinner(gameId);
@@ -253,6 +307,7 @@ io.sockets.on('connection', (socket) => {
               indexOf: moveId,
             },
           };
+          // SEND ON BOTH SOCKETS
           let player1_socket = sockets[game['player1']];
           let player2_socket = sockets[game['player2']];
           player1_socket.emit('move_done', data);
@@ -266,10 +321,15 @@ io.sockets.on('connection', (socket) => {
     }
   });
   socket.on('chat', (data) => {
+    // chat socket listener
     data.socket_id = id;
     let gameId = players[id].gameId,
       game = games[gameId];
+    // again, handle some errors first and send error notification
+    // only on current socket,
+    // on success send notification on both sockets
     if (players[id].gameId === null) {
+      // attempting to chat without having joined a game, send back error
       let data = {
         status: 'error',
         msg: 'player attempting to chat without being in a game, join this player to a game with GET to /join',
@@ -287,6 +347,7 @@ io.sockets.on('connection', (socket) => {
       };
       socket.emit('chat_done', data);
     } else if (Object.keys(data).indexOf('message') === -1) {
+      // bad parameters sent, no message provided
       let data = {
         status: 'error',
         msg: 'chat message not provided, you need to provide it in the data for the socket under the key "message"',
@@ -295,6 +356,7 @@ io.sockets.on('connection', (socket) => {
       };
       socket.emit('chat_done', data);
     } else {
+      // SUCCESS CONDITION REACHED
       let otherPlayerSocket = null;
       let player1_socket = sockets[game['player1']];
       let player2_socket = sockets[game['player2']];
@@ -305,6 +367,7 @@ io.sockets.on('connection', (socket) => {
       }
       let playerName = players[id].playerName;
       let otherPlayerName = players[otherPlayerSocket.id].playerName;
+      // SEND NOTIFICATION TO BOTH SOCKETS
       let dataPlayer = {
         status: 'ok',
         msg: 'sent message successfully to player',
@@ -328,13 +391,17 @@ io.sockets.on('connection', (socket) => {
     }
   });
   socket.on('disconnect', () => {
+    // disconnect handler
+    // deletes the socket and player of current player
+    // TODO: wipe associated game as well
     delete sockets[socket.id];
     delete players[socket.id];
     socket.emit('client_disconnect', id);
   });
 });
 let closeServer = () => {
+  // this function is used by mocha to stop the server during testing
   server.close();
   io.close();
 };
-module.exports = {server,closeServer}
+module.exports = {server,closeServer} // exports for mocha mostly
