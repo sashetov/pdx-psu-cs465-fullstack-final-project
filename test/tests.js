@@ -98,15 +98,15 @@ testJoinPlayer56Success = (done) => {
   setTimeout(()=>{
     let socket_id1 = sockets[4].id;
     let socket_id2 = sockets[5].id;
-    const url1 = `${baseUrl}/join?socket_id=${socket_id1}&playerName=player4`
-    const url2 = `${baseUrl}/join?socket_id=${socket_id2}&playerName=player5`
+    const url1 = `${baseUrl}/join?socket_id=${socket_id1}&playerName=player5`
+    const url2 = `${baseUrl}/join?socket_id=${socket_id2}&playerName=player6`
     axios.get(url1).then(res1 => {
       res1.status.should.be.equal(200);
-      res1.data.playerName.should.be.equal("player4");
+      res1.data.playerName.should.be.equal("player5");
       res1.data.symbol.should.be.equal("X");
       axios.get(url2).then(res2 => {
         res2.status.should.be.equal(200);
-        res2.data.playerName.should.be.equal("player5");
+        res2.data.playerName.should.be.equal("player6");
         res2.data.symbol.should.be.equal("O");
       }).catch(err => done(err))
     }).catch(err => done(err));
@@ -114,16 +114,16 @@ testJoinPlayer56Success = (done) => {
     sockets[4].on("opponentAvailable", (data) => {
       data.status.should.be.equal("ok");
       data.msg.should.be.equal("you have an opponent");
-      data.data.isYourTurn.should.be.equal(true); // for player 4
-      data.data.opponentName.should.be.equal("player5"); // for player 4
+      data.data.isYourTurn.should.be.equal(true); // for player 5
+      data.data.opponentName.should.be.equal("player6"); // for player 5
       bothDone++;
       if(bothDone === 2) done();
     });
     sockets[5].on("opponentAvailable", (data) => {
       data.status.should.be.equal("ok");
       data.msg.should.be.equal("you have an opponent");
-      data.data.isYourTurn.should.be.equal(false); // for player 5
-      data.data.opponentName.should.be.equal("player4"); // for player 5
+      data.data.isYourTurn.should.be.equal(false); // for player 6
+      data.data.opponentName.should.be.equal("player5"); // for player 6
       bothDone++;
       if(bothDone === 2) done();
     });
@@ -383,8 +383,29 @@ player1SendChatMessageTest = (done) => {
   };
   sockets[0].once("chat_done", handler);
   sockets[0].emit("chat", {"message": "hey player 2, what is up?"});
-}
-;
+},
+player5SendChatMessageTest = (done) => {
+  let bothDone = 0, handler1 = (data) => {
+    data.status.should.be.equal("ok");
+    data.msg.should.be.equal("sent message successfully to player");
+    data.data.message.should.be.equal("hey player 6, what is up?");
+    data.data.from.should.be.equal("player5");
+    data.data.to.should.be.equal("player6");
+    bothDone++;
+    if(bothDone === 2) done();
+  }, handler2 = (data) => {
+    data.status.should.be.equal("ok");
+    data.msg.should.be.equal("you have a message");
+    data.data.message.should.be.equal("hey player 6, what is up?");
+    data.data.from.should.be.equal("player5");
+    data.data.to.should.be.equal("player6");
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[4].once("chat_done", handler1);
+  sockets[5].once("chat_done", handler2);
+  sockets[4].emit("chat", {"message": "hey player 6, what is up?"});
+};
 describe("Start",()=>{
   before(startApp);
   it("start", (done)=>{done();});
@@ -416,6 +437,7 @@ describe("Play game tests", ()=>{
 });
 describe("Chat tests", ()=>{
   it("player 1 send chat message test - fails because game is over", player1SendChatMessageTest);
+  it("player 5 send chat message test - success", player5SendChatMessageTest);
 });
 describe("End",()=>{
   after(stopApp);
