@@ -197,7 +197,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
   // renders the board
   return (
     <div ref={reference} className="container-sm w-50">
-      <div className="row">
+      <div className="row" aria-label="row-0">
         <div
           className="col cell text-center"
           id="0"
@@ -238,7 +238,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
           {boardState[2]}
         </div>
       </div>
-      <div className="row text-center">
+      <div className="row text-center" aria-label="row-1">
         <div
           className="col cell text-center"
           id="3"
@@ -248,6 +248,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
               move(event.target.id);
             }
           }}
+          aria-label="cell 3"
         >
           {boardState[3]}
         </div>
@@ -260,6 +261,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
               move(event.target.id);
             }
           }}
+          aria-label="cell 4"
         >
           {boardState[4]}
         </div>
@@ -272,11 +274,12 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
               move(event.target.id);
             }
           }}
+          aria-label="cell 5"
         >
           {boardState[5]}
         </div>
       </div>
-      <div className="row">
+      <div className="row" aria-label="row-2">
         <div
           className="col cell text-center"
           id="6"
@@ -286,6 +289,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
               move(event.target.id);
             }
           }}
+          aria-label="cell 6"
         >
           {boardState[6]}
         </div>
@@ -298,6 +302,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
               move(event.target.id);
             }
           }}
+          aria-label="cell 7"
         >
           {boardState[7]}
         </div>
@@ -310,6 +315,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
               move(event.target.id);
             }
           }}
+          aria-label="cell 8"
         >
           {boardState[8]}
         </div>
