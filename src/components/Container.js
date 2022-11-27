@@ -40,7 +40,7 @@ const Container = ({ socket, first_player, second_player, newGame }) => {
         second_player.current = player_name.current;
         first_player.current = data.data.opponentName;
       }
-      newGame.current = true;
+      newGame.current = false;
       setToRender(
         <Board
           socket={socket}

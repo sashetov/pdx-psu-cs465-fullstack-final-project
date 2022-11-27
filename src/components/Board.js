@@ -20,6 +20,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
   }, [socket]);
 
   // Functions
+  newGame.current = false;
 
   // Sends the server which square was clicked. Server determines validity.
   const move = (index) => {
@@ -151,7 +152,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
     markSquare.current = false;
     errorCode.current = -1;
     winner.current = -2;
-    newGame.current = false;
+    newGame.current = true;
 
     setBoard([...empty_board]);
     setMessage(``);
@@ -161,6 +162,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
     console.log(
       `message: ${message} board: ${boardState} reference: ${reference.current} markSquare: ${markSquare.current} errorCode: ${errorCode.current} winner: ${winner.current}`
     );
+
     // Ask back-end to restart the game
     socket.emit('restart', restart);
   };

@@ -16,6 +16,7 @@ function ButtonHandler({ socket }) {
 
   // handles click of Home button
   const handleHome = () => {
+    console.log(`in handle home. newGame is ${newGame.current}`);
     linked.current = true;
     if (newGame.current === true) {
       setShow(
