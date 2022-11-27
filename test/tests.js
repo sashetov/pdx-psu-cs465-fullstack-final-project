@@ -405,7 +405,30 @@ player5SendChatMessageTest = (done) => {
   sockets[4].once("chat_done", handler1);
   sockets[5].once("chat_done", handler2);
   sockets[4].emit("chat", {"message": "hey player 6, what is up?"});
-};
+},
+player6SendChatMessageTest = (done) => {
+  let bothDone = 0, handler1 = (data) => {
+    data.status.should.be.equal("ok");
+    data.msg.should.be.equal("sent message successfully to player");
+    data.data.message.should.be.equal("sup player 5, im good.");
+    data.data.from.should.be.equal("player6");
+    data.data.to.should.be.equal("player5");
+    bothDone++;
+    if(bothDone === 2) done();
+  }, handler2 = (data) => {
+    data.status.should.be.equal("ok");
+    data.msg.should.be.equal("you have a message");
+    data.data.message.should.be.equal("sup player 5, im good.");
+    data.data.from.should.be.equal("player6");
+    data.data.to.should.be.equal("player5");
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[5].once("chat_done", handler1);
+  sockets[4].once("chat_done", handler2);
+  sockets[5].emit("chat", {"message": "sup player 5, im good."});
+}
+  ;
 describe("Start",()=>{
   before(startApp);
   it("start", (done)=>{done();});
@@ -438,6 +461,7 @@ describe("Play game tests", ()=>{
 describe("Chat tests", ()=>{
   it("player 1 send chat message test - fails because game is over", player1SendChatMessageTest);
   it("player 5 send chat message test - success", player5SendChatMessageTest);
+  it("player 6 send chat message test - success", player6SendChatMessageTest);
 });
 describe("End",()=>{
   after(stopApp);
