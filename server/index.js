@@ -198,11 +198,11 @@ io.sockets.on('connection', (socket) => {
           data: null,
         };
         socket.emit('move_done', data);
-      } else if (game['winner'] === -1) {
+      } else if (!game || game['winner'] === -1) {
         // error: game not fully initiallized yet
         let data = {
           status: 'error',
-          msg: 'player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet',
+          msg: 'player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over',
           errorCode: ERR_NO_OPPONENT_YET_OR_GAME_OVER,
           data: null,
         };
@@ -284,7 +284,7 @@ io.sockets.on('connection', (socket) => {
       let data = {
         status: 'error',
         msg: 'player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over',
-        errorCode: ERR_NO_OPPONENT_YET,
+        errorCode: ERR_NO_OPPONENT_YET_OR_GAME_OVER,
         data: null,
       };
       socket.emit('chat_done', data);
