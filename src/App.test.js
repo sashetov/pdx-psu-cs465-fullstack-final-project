@@ -4,13 +4,12 @@
 
 //Testing for App.js file
 import React from 'react';
-import ReactDOM from 'react-dom';
+
 import '@testing-library/jest-dom/extend-expect';
 import { cleanup, render, screen, } from '@testing-library/react';
 import Banner from './components/Banner';
 import Board from './components/Board';
 import Chat from './components/Chat';
-import App from './App';
 import MockedSocket from 'socket.io-mock';
 
 afterEach(cleanup);
@@ -105,9 +104,6 @@ describe("Board Tests", () => {
   })
 })
 
-describe("Container Tests", () => {
-  
-})
 
 describe("Chat Tests", () => {
   test("Checks that Chat component contains a Title component", () => {
@@ -128,6 +124,6 @@ describe("Chat Tests", () => {
     expect(history.getAttribute('aria-label')).toBe('chat-history');
   })
 
-  
+
 
 })
