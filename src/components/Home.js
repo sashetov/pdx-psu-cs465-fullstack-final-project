@@ -3,7 +3,13 @@ import Banner from './Banner';
 import Board from './Board';
 import Chat from './Chat';
 
-const Home = ({ socket, newGame, first_player, second_player }) => {
+const Home = ({
+  socket,
+  newGame,
+  first_player,
+  second_player,
+  gameFinished,
+}) => {
   return (
     <div>
       <Banner />
@@ -12,8 +18,9 @@ const Home = ({ socket, newGame, first_player, second_player }) => {
         first_player={first_player}
         second_player={second_player}
         newGame={newGame}
+        gameFinished={gameFinished}
       />
-      <Chat socket={socket} />
+      {gameFinished.current === true ? <Chat socket={socket} /> : <></>}
     </div>
   );
 };

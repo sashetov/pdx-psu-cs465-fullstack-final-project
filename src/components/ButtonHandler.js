@@ -13,6 +13,7 @@ function ButtonHandler({ socket }) {
   const newGame = useRef(true);
   const first_player = useRef('');
   const second_player = useRef('');
+  const gameFinished = useRef(false);
 
   // handles click of Home button
   const handleHome = () => {
@@ -25,6 +26,7 @@ function ButtonHandler({ socket }) {
           newGame={newGame}
           first_player={first_player}
           second_player={second_player}
+          gameFinished={gameFinished}
         />
       );
     } else {
@@ -34,6 +36,7 @@ function ButtonHandler({ socket }) {
           newGame={newGame}
           first_player={first_player}
           second_player={second_player}
+          gameFinished={gameFinished}
         />
       );
     }
@@ -45,6 +48,7 @@ function ButtonHandler({ socket }) {
     setShow(<About />);
   };
 
+  // handles click of How To Play button
   const handleHowToPlay = () => {
     linked.current = true;
     setShow(<HowToPlay />);
@@ -82,6 +86,7 @@ function ButtonHandler({ socket }) {
           first_player={first_player}
           second_player={second_player}
           newGame={newGame}
+          gameFinished={gameFinished}
         />
       </div>
     );

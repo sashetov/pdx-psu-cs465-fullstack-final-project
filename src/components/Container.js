@@ -5,7 +5,13 @@ import Board from './Board';
 import Waiting from './Waiting';
 import Chat from './Chat';
 
-const Container = ({ socket, first_player, second_player, newGame }) => {
+const Container = ({
+  socket,
+  first_player,
+  second_player,
+  newGame,
+  gameFinished,
+}) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
   const player_name = useRef('');
@@ -47,6 +53,7 @@ const Container = ({ socket, first_player, second_player, newGame }) => {
           first_player={first_player}
           second_player={second_player}
           newGame={newGame}
+          gameFinished={gameFinished}
         />
       );
     }
@@ -105,7 +112,6 @@ const Container = ({ socket, first_player, second_player, newGame }) => {
       <div>
         <Banner />
         {toRender}
-        <Chat socket={socket} />
       </div>
     );
   }

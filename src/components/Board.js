@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Chat from './Chat';
 
-const Board = ({ socket, first_player, second_player, newGame }) => {
+const Board = ({
+  socket,
+  first_player,
+  second_player,
+  newGame,
+  gameFinished,
+}) => {
   // Hooks
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
   const [message, setMessage] = useState('');
@@ -95,6 +102,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
         winner.current = 2;
         console.log('Tied. Gameover');
       }
+      setUpdate(update + 1);
 
       winner_determined();
       // TODO: ASk to replay or go back to previous screen
@@ -124,6 +132,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
     } else {
       setMessage(``);
     }
+    setUpdate(update + 1);
   };
 
   // Updates user message if a game is over
@@ -139,6 +148,8 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
     } else {
       setMessage(``);
     }
+    gameFinished.current = true;
+    setUpdate(update + 1);
   };
 
   // Handles Reset Button Click
@@ -326,6 +337,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
         </div>
       </div>
       <div className="row">{button.current}</div>
+      {gameFinished.current === false ? <Chat socket={socket} /> : <></>}
     </div>
   );
 };
