@@ -4,13 +4,12 @@
 1. You will need to build the frontend files first.
 You can do that with:
 ### `npm run build-react`
-
 2. After that you will have start the express app, which uses these static resources:
 ### `npm start`
-
 or if you want to do both at once:
-
 ### `npm run build-react && npm start`
+3. To run the backend tests do:
+### `npm run test-backend`
 
 ## How to test /join from frontend:
 open two tabs \

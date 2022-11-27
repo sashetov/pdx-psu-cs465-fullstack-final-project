@@ -85,7 +85,6 @@ app.get('/join', (req, res) => {
     res.json(players[socket_id]);
   }
 });
-
 let checkBoardForWinner = (gameId) => {
   /*
   state looks like
@@ -162,11 +161,10 @@ let checkBoardForWinner = (gameId) => {
     winner = 2; // draw
   return winner;
 };
-
 io.sockets.on('connection', (socket) => {
   const ERR_GAME_NOT_STARTED = 1,
     ERR_BAD_MOVE_ID = 2,
-    ERR_NO_OPPONENT_YET = 3,
+    ERR_NO_OPPONENT_YET_OR_GAME_OVER = 3,
     ERR_SLOT_TAKEN = 4,
     ERR_MOVE_OUT_OF_TURN = 5,
     ERR_CHAT_MSG_NOT_PROVIDED = 6;
@@ -191,7 +189,8 @@ io.sockets.on('connection', (socket) => {
       let gameId = players[id].gameId,
         game = games[gameId],
         moveId = parseInt(data.move_id);
-      if (!Number.isInteger(moveId)) {
+      // check that moveId is not invalid (not a num or out of range)
+      if (!Number.isInteger(moveId) || moveId < 0 || moveId > 8) {
         let data = {
           status: 'error',
           errorCode: ERR_BAD_MOVE_ID,
@@ -199,12 +198,12 @@ io.sockets.on('connection', (socket) => {
           data: null,
         };
         socket.emit('move_done', data);
-      } else if (game['winner'] === -1) {
+      } else if (!game || game['winner'] === -1) {
         // error: game not fully initiallized yet
         let data = {
           status: 'error',
-          msg: 'player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet',
-          errorCode: ERR_NO_OPPONENT_YET,
+          msg: 'player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over',
+          errorCode: ERR_NO_OPPONENT_YET_OR_GAME_OVER,
           data: null,
         };
         socket.emit('move_done', data);
@@ -280,12 +279,12 @@ io.sockets.on('connection', (socket) => {
         data: null,
       };
       socket.emit('chat_done', data);
-    } else if (game['winner'] === -1) {
-      // error: game not fully initiallized yet
+    } else if (!game || game['winner'] === -1) {
+      // error: game not fully initiallized yet/game over
       let data = {
         status: 'error',
-        msg: 'player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet',
-        errorCode: ERR_NO_OPPONENT_YET,
+        msg: 'player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over',
+        errorCode: ERR_NO_OPPONENT_YET_OR_GAME_OVER,
         data: null,
       };
       socket.emit('chat_done', data);
