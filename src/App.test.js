@@ -5,8 +5,7 @@
 //Testing for App.js file
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import userEvent from '@testing-library/user-event'
-import { cleanup, render, screen, within, fireEvent } from '@testing-library/react';
+import { cleanup, render, screen, } from '@testing-library/react';
 import Banner from './components/Banner';
 import Board from './components/Board';
 import App from './App';
@@ -41,7 +40,7 @@ describe("Board Tests", () => {
 })
 
 describe("Container Tests", () => {
-
+  
 })
 
 describe("Chat Tests", () => {
