@@ -201,3 +201,33 @@ error code:
    3 - player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over
    6 - chat message not provided, you need to provide it in the data for the socket under the key "message"
 ```
+
+## /comments endpoint
+### POST to /comments to save the comment
+You need to provide the post data as an application/json, for example, like this:
+```
+async function postData(url = '', data = {}) {
+  const response = await fetch(url, {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(data)
+  });
+  return response.json();
+}
+const data = {
+  name: event.target.name.value,
+  email: event.target.email.value,
+  comments: event.target.comments.value
+};
+postData('/comments', data).then((data) => {
+  window.alert(`Thank you for connecting ${event.target.name.value}!`);
+});
+```
+the response of this POST will be a JSON array of all comments objects
+### GET to /comments endpoint
+the response of this POST will be a JSON array of all comments objects
