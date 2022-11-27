@@ -5,7 +5,7 @@ import Board from './Board';
 import Waiting from './Waiting';
 import Chat from './Chat';
 
-const Container = ({ socket }) => {
+const Container = ({ socket, first_player, second_player, newGame }) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
   const player_name = useRef('');
@@ -21,14 +21,34 @@ const Container = ({ socket }) => {
     fetch(url).then((response) => {
       console.log(response.json());
     });
+    // Store player's name
     player_name.current = event.target[0].value;
+
     setJoined(true);
     setToRender(Waiting);
   }
 
   socket.on('opponentAvailable', (data) => {
     if (data.status === 'ok') {
-      setToRender(<Board socket={socket} />);
+      // Determine if you are the first player
+      if (data.data.isYourTurn === true) {
+        first_player.current = player_name.current;
+        second_player.current = data.data.opponentName;
+      }
+      // Not the first player
+      else {
+        second_player.current = player_name.current;
+        first_player.current = data.data.opponentName;
+      }
+      newGame.current = true;
+      setToRender(
+        <Board
+          socket={socket}
+          first_player={first_player}
+          second_player={second_player}
+          newGame={newGame}
+        />
+      );
     }
   });
 
@@ -38,7 +58,16 @@ const Container = ({ socket }) => {
       class="form w-50 mx-auto mt-5 p-3"
       method="get"
       onSubmit={(event) => {
-        handleSubmit(event);
+        // Player name entered
+        console.log(event);
+        if (event.target.name.value.length > 0) {
+          handleSubmit(event);
+        }
+        // Player name not entered
+        else {
+          console.warn('You must enter your name to play!');
+          window.alert('Please enter a name to join!');
+        }
       }}
     >
       <div class="form-group mx-auto my-2">
