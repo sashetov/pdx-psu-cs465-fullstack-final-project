@@ -48,7 +48,8 @@ eslint for linting
 
 
 ## Tutoaials Used:
-I did get some tips on how to write the backend portion from this tutorial: https://www.cometchat.com/tutorials/how-to-build-a-chat-app-with-socket-io-node-js
+I did get some tips on how to write the backend portion from this tutorial:\
+[cometchat: how to build a chat app with socket.io/node.js](https://www.cometchat.com/tutorials/how-to-build-a-chat-app-with-socket-io-node-js)
 
 ## How to test /join from frontend:
 open two tabs \
@@ -64,7 +65,7 @@ and respectively
 ```
 on success you will get responses console.logged out like:
 ```
-  {playerName: 'player1', symbol: '0', gameId: 0}
+  {playerName: 'player1', symbol: 'X', gameId: 0}
   {playerName: 'player2', symbol: '0', gameId: 0}
 ```
 in some cases the response may be an erro ( such as 400 response if you didn't send in the query params correctly) \
@@ -129,7 +130,7 @@ You will find these error codes in the event data that comes back with the `move
 ```
 {
   "status": "error",
-  "msg": "player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet",
+  "msg": "player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over",
   "errorCode": 3,
   "data": null
 }
@@ -143,7 +144,7 @@ The possible error code values are:
 error code:
    1 - player attempting to move without being in a game, join this player to a game with GET to /join
    2 - you did not provide a valid move id, you need to provide data that looks like {move_id: move_id}, where move_id is an interger that corresponds to an index in the board array
-   3 - player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet
+   3 - player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over
    4 - player attempting to move to a slot in the game that already has a symbol in it
    5 - player attempting to play out of turn
 ```
@@ -184,7 +185,7 @@ You will find these error codes in the event data that comes back with the `chat
 ```
 {
   "status": "error",
-  "msg": "player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet",
+  "msg": "player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is ove",
   "errorCode": 3,
   "data": null
 }
@@ -197,6 +198,6 @@ The possible error code values are:
 ```
 error code:
    1 - player attempting to move without being in a game, join this player to a game with GET to /join
-   3 - player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet
+   3 - player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over
    6 - chat message not provided, you need to provide it in the data for the socket under the key "message"
 ```
