@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Chat from './Chat';
 
-const Board = ({ socket, first_player, second_player, newGame }) => {
+const Board = ({
+  socket,
+  first_player,
+  second_player,
+  newGame,
+  gameFinished,
+}) => {
   // Hooks
   const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
   const [message, setMessage] = useState('');
@@ -20,6 +27,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
   }, [socket]);
 
   // Functions
+  newGame.current = false;
 
   // Sends the server which square was clicked. Server determines validity.
   const move = (index) => {
@@ -94,6 +102,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
         winner.current = 2;
         console.log('Tied. Gameover');
       }
+      setUpdate(update + 1);
 
       winner_determined();
       // TODO: ASk to replay or go back to previous screen
@@ -123,6 +132,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
     } else {
       setMessage(``);
     }
+    setUpdate(update + 1);
   };
 
   // Updates user message if a game is over
@@ -138,6 +148,8 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
     } else {
       setMessage(``);
     }
+    gameFinished.current = true;
+    setUpdate(update + 1);
   };
 
   // Handles Reset Button Click
@@ -151,7 +163,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
     markSquare.current = false;
     errorCode.current = -1;
     winner.current = -2;
-    newGame.current = false;
+    newGame.current = true;
 
     setBoard([...empty_board]);
     setMessage(``);
@@ -161,6 +173,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
     console.log(
       `message: ${message} board: ${boardState} reference: ${reference.current} markSquare: ${markSquare.current} errorCode: ${errorCode.current} winner: ${winner.current}`
     );
+
     // Ask back-end to restart the game
     socket.emit('restart', restart);
   };
@@ -325,6 +338,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
         </div>
       </div>
       <div className="row">{button.current}</div>
+      {gameFinished.current === false ? <Chat socket={socket} /> : <></>}
     </div>
   );
 };

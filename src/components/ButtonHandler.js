@@ -5,6 +5,7 @@ import About from './About';
 import Buttons from './Buttons';
 import Container from './Container';
 import Home from './Home';
+import Comments from './Comments';
 
 // set up buttons to navigate bewtween pages? Or we can do navbar. still thinking
 function ButtonHandler({ socket }) {
@@ -13,9 +14,11 @@ function ButtonHandler({ socket }) {
   const newGame = useRef(true);
   const first_player = useRef('');
   const second_player = useRef('');
+  const gameFinished = useRef(false);
 
   // handles click of Home button
   const handleHome = () => {
+    console.log(`in handle home. newGame is ${newGame.current}`);
     linked.current = true;
     if (newGame.current === true) {
       setShow(
@@ -24,6 +27,7 @@ function ButtonHandler({ socket }) {
           newGame={newGame}
           first_player={first_player}
           second_player={second_player}
+          gameFinished={gameFinished}
         />
       );
     } else {
@@ -33,6 +37,7 @@ function ButtonHandler({ socket }) {
           newGame={newGame}
           first_player={first_player}
           second_player={second_player}
+          gameFinished={gameFinished}
         />
       );
     }
@@ -44,6 +49,7 @@ function ButtonHandler({ socket }) {
     setShow(<About />);
   };
 
+  // handles click of How To Play button
   const handleHowToPlay = () => {
     linked.current = true;
     setShow(<HowToPlay />);
@@ -55,6 +61,12 @@ function ButtonHandler({ socket }) {
     setShow(<Form />);
   };
 
+  // handles click of Comment button
+  const handleComments = () => {
+    linked.current = true;
+    setShow(<Comments />);
+  };
+
   if (linked.current === true) {
     return (
       <div>
@@ -63,6 +75,7 @@ function ButtonHandler({ socket }) {
           handleHowToPlay={handleHowToPlay}
           handleConnect={handleConnect}
           handleHome={handleHome}
+          handleComments={handleComments}
         />
         <>{show}</>
       </div>
@@ -75,12 +88,14 @@ function ButtonHandler({ socket }) {
           handleHowToPlay={handleHowToPlay}
           handleConnect={handleConnect}
           handleHome={handleHome}
+          handleComments={handleComments}
         />
         <Container
           socket={socket}
           first_player={first_player}
           second_player={second_player}
           newGame={newGame}
+          gameFinished={gameFinished}
         />
       </div>
     );

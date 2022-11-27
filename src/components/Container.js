@@ -1,11 +1,15 @@
-import { render } from '@testing-library/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Banner from './Banner';
 import Board from './Board';
 import Waiting from './Waiting';
-import Chat from './Chat';
 
-const Container = ({ socket, first_player, second_player, newGame }) => {
+const Container = ({
+  socket,
+  first_player,
+  second_player,
+  newGame,
+  gameFinished,
+}) => {
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
   const player_name = useRef('');
@@ -40,13 +44,14 @@ const Container = ({ socket, first_player, second_player, newGame }) => {
         second_player.current = player_name.current;
         first_player.current = data.data.opponentName;
       }
-      newGame.current = true;
+      newGame.current = false;
       setToRender(
         <Board
           socket={socket}
           first_player={first_player}
           second_player={second_player}
           newGame={newGame}
+          gameFinished={gameFinished}
         />
       );
     }
@@ -105,7 +110,6 @@ const Container = ({ socket, first_player, second_player, newGame }) => {
       <div>
         <Banner />
         {toRender}
-        <Chat socket={socket} />
       </div>
     );
   }
