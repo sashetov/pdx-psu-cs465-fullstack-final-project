@@ -7,6 +7,23 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'merriweather_sansitalic';
+  src: url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff2') format('woff2'),
+       url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'merriweather_sansregular';
+  src: url('./fonts/merriweathersans-variablefont_wght-webfont.woff2') format('woff2'),
+       url('./fonts/merriweathersans-variablefont_wght-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
 html,
 body {
   height: 100%;
@@ -19,7 +36,7 @@ body {
 }
 
 h1 {
-  font-family: 'dancing_scriptregular';
+  font-family: 'merriweather_sansregular';
 }
 
 .btn {
@@ -28,7 +45,7 @@ h1 {
 }
 
 .cell {
-  font-family: 'dancing_scriptregular';
+  font-family: 'merriweather_sansitalic';
   color: #01060a;
   height: 100px;
   box-shadow: 2px 2px 2px 2px #779ecb;
@@ -47,7 +64,7 @@ h1 {
 }
 
 .chat {
-  font-family: 'dancing_scriptregular';
+  font-family: 'merriweather_sansregular';
   background-color: whitesmoke;
   color: #01060a;
   margin: 10px;
@@ -61,7 +78,7 @@ h1 {
 }
 
 .message {
-  font-family: 'dancing_scriptregular';
+  font-family: 'merriweather_sansregular';
   color: #01060a;
   height: 100px;
   box-shadow: 2px 2px 2px 2px #779ecb;
