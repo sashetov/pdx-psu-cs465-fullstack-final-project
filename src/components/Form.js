@@ -18,6 +18,23 @@ function Form() {
       // Comment filled
       if (event.target.comments.value.length > 0) {
         console.log(`Comments: ${event.target.comments.value}`);
+
+        // posts comment
+        let url = new URL('http://localhost:8080/comments'),
+          params = {
+            name: event.target.name.value,
+            email: event.target.email.value,
+            comments: event.target.comments.value,
+          };
+        Object.keys(params).forEach((key) =>
+          url.searchParams.append(key, params[key])
+        );
+
+        fetch(url)
+          .then((response) => {
+            console.log(response.json());
+          })
+          .catch((err) => console.error(`Error: ${err.message}`));
       }
       // Comment empty
       else {

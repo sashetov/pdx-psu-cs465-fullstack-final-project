@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import Banner from './Banner';
 import Board from './Board';
-import Chat from './Chat';
 
 const Home = ({
   socket,
@@ -20,7 +19,6 @@ const Home = ({
         newGame={newGame}
         gameFinished={gameFinished}
       />
-      {gameFinished.current === true ? <Chat socket={socket} /> : <></>}
     </div>
   );
 };

@@ -1,9 +1,7 @@
-import { render } from '@testing-library/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Banner from './Banner';
 import Board from './Board';
 import Waiting from './Waiting';
-import Chat from './Chat';
 
 const Container = ({
   socket,
