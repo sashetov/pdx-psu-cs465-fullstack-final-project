@@ -164,7 +164,7 @@ let checkBoardForWinner = (gameId) => {
 io.sockets.on('connection', (socket) => {
   const ERR_GAME_NOT_STARTED = 1,
     ERR_BAD_MOVE_ID = 2,
-    ERR_NO_OPPONENT_YET = 3,
+    ERR_NO_OPPONENT_YET_OR_GAME_OVER = 3,
     ERR_SLOT_TAKEN = 4,
     ERR_MOVE_OUT_OF_TURN = 5,
     ERR_CHAT_MSG_NOT_PROVIDED = 6;
@@ -203,7 +203,7 @@ io.sockets.on('connection', (socket) => {
         let data = {
           status: 'error',
           msg: 'player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet',
-          errorCode: ERR_NO_OPPONENT_YET,
+          errorCode: ERR_NO_OPPONENT_YET_OR_GAME_OVER,
           data: null,
         };
         socket.emit('move_done', data);
@@ -279,11 +279,11 @@ io.sockets.on('connection', (socket) => {
         data: null,
       };
       socket.emit('chat_done', data);
-    } else if (game['winner'] === -1) {
-      // error: game not fully initiallized yet
+    } else if (!game || game['winner'] === -1) {
+      // error: game not fully initiallized yet/game over
       let data = {
         status: 'error',
-        msg: 'player attempting to play in a game that is not fully initialized yet - you dont have an opponent yet',
+        msg: 'player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over',
         errorCode: ERR_NO_OPPONENT_YET,
         data: null,
       };

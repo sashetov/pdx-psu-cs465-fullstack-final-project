@@ -336,7 +336,18 @@ testPlayers12Player1WindsMove5 = (done) => {
   // X O O
   // - X -
   // - - X
+},
+player1SendChatMessageTest = (done) => {
+  let handler = (data) => {
+    data.status.should.be.equal("error");
+    data.msg.should.be.equal("player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over");
+    data.errorCode.should.be.equal(3);
+    done();
+  };
+  sockets[0].once("chat_done", handler);
+  sockets[0].emit("chat", {"message": "hey player 2, what is up?"});
 }
+
 ;
 describe("Start",()=>{
   before(startApp);
@@ -365,6 +376,9 @@ describe("Play game tests", ()=>{
   it("player 1 and 2 play until player 1 wins move 3", testPlayers12Player1WindsMove3);
   it("player 1 and 2 play until player 1 wins move 4", testPlayers12Player1WindsMove4);
   it("player 1 and 2 play until player 1 wins move 5", testPlayers12Player1WindsMove5);
+});
+describe("Chat tests", ()=>{
+  it("player 1 send chat message test - fails because game is over", player1SendChatMessageTest);
 });
 describe("End",()=>{
   after(stopApp);
