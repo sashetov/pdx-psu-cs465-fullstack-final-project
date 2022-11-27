@@ -132,7 +132,7 @@ testPlayer4Move10Fail= (done) => {
   });
   sockets[3].emit("move", {"move_id": 10});
 },
-testPlayers34DrawConditionMove1 = (done) => {
+testPlayers34DrawConditionMove2 = (done) => {
   let bothDone = 0, handler = (data) => {
     data.status.should.be.equal("success");
     data.msg.should.be.equal("player moved to position 4");
@@ -149,7 +149,7 @@ testPlayers34DrawConditionMove1 = (done) => {
   // - - -
 
 },
-testPlayers34DrawConditionMove2 = (done) => {
+testPlayers34DrawConditionMove3 = (done) => {
   let bothDone = 0, handler = (data) => {
     data.status.should.be.equal("success");
     data.msg.should.be.equal("player moved to position 3");
@@ -165,7 +165,7 @@ testPlayers34DrawConditionMove2 = (done) => {
   // x o -
   // - - -
 },
-testPlayers34DrawConditionMove3 = (done) => {
+testPlayers34DrawConditionMove4 = (done) => {
   let bothDone = 0, handler = (data) => {
     data.status.should.be.equal("success");
     data.msg.should.be.equal("player moved to position 6");
@@ -181,7 +181,7 @@ testPlayers34DrawConditionMove3 = (done) => {
   // x o -
   // o - -
 },
-testPlayers34DrawConditionMove4 = (done) => {
+testPlayers34DrawConditionMove5 = (done) => {
   let bothDone = 0, handler = (data) => {
     data.status.should.be.equal("success");
     data.msg.should.be.equal("player moved to position 2");
@@ -197,7 +197,7 @@ testPlayers34DrawConditionMove4 = (done) => {
   // x o -
   // o - -
 },
-testPlayers34DrawConditionMove5 = (done) => {
+testPlayers34DrawConditionMove6 = (done) => {
   let bothDone = 0, handler = (data) => {
     data.status.should.be.equal("success");
     data.msg.should.be.equal("player moved to position 1");
@@ -213,7 +213,7 @@ testPlayers34DrawConditionMove5 = (done) => {
   // x o -
   // o - -
 },
-testPlayers34DrawConditionMove6 = (done) => {
+testPlayers34DrawConditionMove7 = (done) => {
   let bothDone = 0, handler = (data) => {
     data.status.should.be.equal("success");
     data.msg.should.be.equal("player moved to position 7");
@@ -229,7 +229,7 @@ testPlayers34DrawConditionMove6 = (done) => {
   // x o -
   // o x -
 },
-testPlayers34DrawConditionMove7 = (done) => {
+testPlayers34DrawConditionMove8 = (done) => {
   let bothDone = 0, handler = (data) => {
     data.status.should.be.equal("success");
     data.msg.should.be.equal("player moved to position 5");
@@ -245,7 +245,7 @@ testPlayers34DrawConditionMove7 = (done) => {
   // x o o
   // o x -
 }
-testPlayers34DrawConditionMove8 = (done) => {
+testPlayers34DrawConditionMove9 = (done) => {
   let bothDone = 0, handler = (data) => {
     data.status.should.be.equal("success");
     data.msg.should.be.equal("player moved to position 8");
@@ -260,7 +260,84 @@ testPlayers34DrawConditionMove8 = (done) => {
   // x o x
   // x o o
   // o x x
-};
+},
+testPlayers12Player1WindsMove1 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 0");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","","","","","","","",""]');
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[0].once("move_done", handler);
+  sockets[1].once("move_done", handler);
+  sockets[0].emit("move", {"move_id": 0});
+  // X - -
+  // - - -
+  // - - -
+},
+testPlayers12Player1WindsMove2 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 1");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","O","","","","","","",""]');
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[0].once("move_done", handler);
+  sockets[1].once("move_done", handler);
+  sockets[1].emit("move", {"move_id": 1});
+  // X O -
+  // - - -
+  // - - -
+},
+testPlayers12Player1WindsMove3 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 4");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","O","","","X","","","",""]');
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[0].once("move_done", handler);
+  sockets[1].once("move_done", handler);
+  sockets[0].emit("move", {"move_id": 4});
+  // X O -
+  // - X -
+  // - - -
+},
+testPlayers12Player1WindsMove4 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 2");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","O","O","","X","","","",""]');
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[0].once("move_done", handler);
+  sockets[1].once("move_done", handler);
+  sockets[1].emit("move", {"move_id": 2});
+  // X O O
+  // - X -
+  // - - -
+},
+testPlayers12Player1WindsMove5 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 8");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","O","O","","X","","","","X"]');
+    data.data.gameWinner.should.be.equal(0); // PLAYER 1 WINS CONDITION
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[0].once("move_done", handler);
+  sockets[1].once("move_done", handler);
+  sockets[0].emit("move", {"move_id": 8});
+  // X O O
+  // - X -
+  // - - X
+}
+;
 describe("Start",()=>{
   before(startApp);
   it("start", (done)=>{done();});
@@ -275,7 +352,6 @@ describe("Play game tests", ()=>{
   it("player 3 moves to position 0 successfully", testPlayer3Move0Sucess);
   it("player 4 fails to move position 0", testPlayer4Move0Fail);
   it("player 4 fails to move position 10", testPlayer4Move10Fail);
-  it("player 3 and 4 keep playing valid moves until draw, move 1", testPlayers34DrawConditionMove1);
   it("player 3 and 4 keep playing valid moves until draw, move 2", testPlayers34DrawConditionMove2);
   it("player 3 and 4 keep playing valid moves until draw, move 3", testPlayers34DrawConditionMove3);
   it("player 3 and 4 keep playing valid moves until draw, move 4", testPlayers34DrawConditionMove4);
@@ -283,6 +359,12 @@ describe("Play game tests", ()=>{
   it("player 3 and 4 keep playing valid moves until draw, move 6", testPlayers34DrawConditionMove6);
   it("player 3 and 4 keep playing valid moves until draw, move 7", testPlayers34DrawConditionMove7);
   it("player 3 and 4 keep playing valid moves until draw, move 8", testPlayers34DrawConditionMove8);
+  it("player 3 and 4 keep playing valid moves until draw, move 9", testPlayers34DrawConditionMove9);
+  it("player 1 and 2 play until player 1 wins move 1", testPlayers12Player1WindsMove1);
+  it("player 1 and 2 play until player 1 wins move 2", testPlayers12Player1WindsMove2);
+  it("player 1 and 2 play until player 1 wins move 3", testPlayers12Player1WindsMove3);
+  it("player 1 and 2 play until player 1 wins move 4", testPlayers12Player1WindsMove4);
+  it("player 1 and 2 play until player 1 wins move 5", testPlayers12Player1WindsMove5);
 });
 describe("End",()=>{
   after(stopApp);
