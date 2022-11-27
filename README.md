@@ -11,6 +11,45 @@ or if you want to do both at once:
 3. To run the backend tests do:
 ### `npm run test-backend`
 
+## Libraries used:
+You can see the libraries used in package.json, but the main ones are:
+```
+"@testing-library/jest-dom": "^5.16.5",
+"@testing-library/react": "^13.4.0",
+"@testing-library/user-event": "^13.5.0",
+"axios": "^1.2.0",
+"bootstrap": "^5.2.2",
+"express": "4.16.4",
+"mocha": "^10.1.0",
+"prettier": "^2.7.1",
+"react": "^18.2.0",
+"react-dom": "^18.2.0",
+"react-scripts": "^5.0.1",
+"should": "^13.2.3",
+"socket.io": "^4.5.3",
+"socket.io-client": "^4.5.3",
+"web-vitals": "^2.1.4"
+"eslint": "^8.24.0",
+"eslint-config-airbnb-base": "^15.0.0",
+"eslint-config-standard": "^17.0.0",
+"eslint-plugin-import": "^2.26.0",
+"eslint-plugin-n": "^15.3.0",
+"eslint-plugin-promise": "^6.0.1",
+"eslint-plugin-react": "^7.31.8",
+"nodemon": "^2.0.20"
+```
+we do use two different test frameworks:\
+jest for the frontend,\
+mocha and should for the backend\
+both front and backend use socket.io\
+the backend uses express\
+the frontend uses react and bootstrap\
+eslint for linting
+
+
+## Tutoaials Used:
+I did get some tips on how to write the backend portion from this tutorial: https://www.cometchat.com/tutorials/how-to-build-a-chat-app-with-socket-io-node-js
+
 ## How to test /join from frontend:
 open two tabs \
 open devtools in both tabs \
