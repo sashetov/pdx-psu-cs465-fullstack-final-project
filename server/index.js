@@ -8,9 +8,12 @@ const io = socketIo(server);
 const sockets = {}; // this will store all the sockets
 let players = {}; // this will store the players objects
 let games = []; // this will store the games objects
+let comments = []; // this will store the comments objects
 // we need to serve static css and js files for react:
 app.use(express.static(__dirname + '/../build/'));
 app.use(express.static(__dirname + '/../node_modules/'));
+// use json for POST
+app.use(express.json());
 app.get('/', (req, res) => {
   /*
   this route will serve the static index.html file that loads up the react app
@@ -126,6 +129,38 @@ app.get('/join', (req, res) => {
     }
     res.json(players[socket_id]);
   }
+});
+// POST to this URL to save comments
+// the correct parameters you need as application/json data are:
+//  name, email, comments
+// if any of those parameters are missing a 400 error will be returned
+// the data gets stored in the comments
+app.post('/comments', (req, res) => {
+  let data = req.body;
+  let keys = Object.keys(data);
+  if( keys.indexOf("name") === -1 ) {
+    res.status(400).send({
+      status: 'error',
+      message: 'missing name parameter'
+    });
+  }
+  if( keys.indexOf("email") === -1 ) {
+    res.status(400).send({
+      status: 'error',
+      message: 'missing email parameter'
+    });
+  }
+  if( keys.indexOf("comments") === -1 ) {
+    res.status(400).send({
+      status: 'error',
+      message: 'missing email parameter'
+    });
+  }
+  comments.push(data);
+  res.json(comments);
+});
+app.get('/comments', (req, res) => {
+  res.json(comments);
 });
 let checkBoardForWinner = (gameId) => {
   /*
