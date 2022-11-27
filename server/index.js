@@ -85,7 +85,6 @@ app.get('/join', (req, res) => {
     res.json(players[socket_id]);
   }
 });
-
 let checkBoardForWinner = (gameId) => {
   /*
   state looks like
@@ -162,7 +161,6 @@ let checkBoardForWinner = (gameId) => {
     winner = 2; // draw
   return winner;
 };
-
 io.sockets.on('connection', (socket) => {
   const ERR_GAME_NOT_STARTED = 1,
     ERR_BAD_MOVE_ID = 2,

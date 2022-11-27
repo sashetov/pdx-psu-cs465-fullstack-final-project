@@ -131,10 +131,136 @@ testPlayer4Move10Fail= (done) => {
     done()
   });
   sockets[3].emit("move", {"move_id": 10});
+},
+testPlayers34DrawConditionMove1 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 4");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","","","","O","","","",""]');
+    should(data.data.gameWinner).not.be.ok;
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[3].once("move_done", handler);
+  sockets[2].once("move_done", handler);
+  sockets[3].emit("move", {"move_id": 4});
+  // x - -
+  // - o -
+  // - - -
+
+},
+testPlayers34DrawConditionMove2 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 3");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","","","X","O","","","",""]');
+    should(data.data.gameWinner).not.be.ok;
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[3].once("move_done", handler);
+  sockets[2].once("move_done", handler);
+  sockets[2].emit("move", {"move_id": 3});
+  // x - -
+  // x o -
+  // - - -
+},
+testPlayers34DrawConditionMove3 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 6");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","","","X","O","","O","",""]');
+    should(data.data.gameWinner).not.be.ok;
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[2].once("move_done", handler);
+  sockets[3].once("move_done", handler);
+  sockets[3].emit("move", {"move_id": 6});
+  // x - -
+  // x o -
+  // o - -
+},
+testPlayers34DrawConditionMove4 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 2");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","","X","X","O","","O","",""]');
+    should(data.data.gameWinner).not.be.ok;
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[2].once("move_done", handler);
+  sockets[3].once("move_done", handler);
+  sockets[2].emit("move", {"move_id": 2});
+  // x - x
+  // x o -
+  // o - -
+},
+testPlayers34DrawConditionMove5 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 1");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","O","X","X","O","","O","",""]');
+    should(data.data.gameWinner).not.be.ok;
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[2].once("move_done", handler);
+  sockets[3].once("move_done", handler);
+  sockets[3].emit("move", {"move_id": 1});
+  // x o x
+  // x o -
+  // o - -
+},
+testPlayers34DrawConditionMove6 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 7");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","O","X","X","O","","O","X",""]');
+    should(data.data.gameWinner).not.be.ok;
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[2].once("move_done", handler);
+  sockets[3].once("move_done", handler);
+  sockets[2].emit("move", {"move_id": 7});
+  // x o x
+  // x o -
+  // o x -
+},
+testPlayers34DrawConditionMove7 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 5");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","O","X","X","O","O","O","X",""]');
+    should(data.data.gameWinner).not.be.ok;
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[2].once("move_done", handler);
+  sockets[3].once("move_done", handler);
+  sockets[3].emit("move", {"move_id": 5});
+  // x o x
+  // x o o
+  // o x -
 }
-;
-
-
+testPlayers34DrawConditionMove8 = (done) => {
+  let bothDone = 0, handler = (data) => {
+    data.status.should.be.equal("success");
+    data.msg.should.be.equal("player moved to position 8");
+    should(JSON.stringify(data.data.boardState)).be.equal('["X","O","X","X","O","O","O","X","X"]');
+    data.data.gameWinner.should.be.equal(2); // DRAW CONDITION
+    bothDone++;
+    if(bothDone === 2) done();
+  };
+  sockets[2].once("move_done", handler);
+  sockets[3].once("move_done", handler);
+  sockets[2].emit("move", {"move_id": 8});
+  // x o x
+  // x o o
+  // o x x
+};
 describe("Start",()=>{
   before(startApp);
   it("start", (done)=>{done();});
@@ -149,8 +275,15 @@ describe("Play game tests", ()=>{
   it("player 3 moves to position 0 successfully", testPlayer3Move0Sucess);
   it("player 4 fails to move position 0", testPlayer4Move0Fail);
   it("player 4 fails to move position 10", testPlayer4Move10Fail);
+  it("player 3 and 4 keep playing valid moves until draw, move 1", testPlayers34DrawConditionMove1);
+  it("player 3 and 4 keep playing valid moves until draw, move 2", testPlayers34DrawConditionMove2);
+  it("player 3 and 4 keep playing valid moves until draw, move 3", testPlayers34DrawConditionMove3);
+  it("player 3 and 4 keep playing valid moves until draw, move 4", testPlayers34DrawConditionMove4);
+  it("player 3 and 4 keep playing valid moves until draw, move 5", testPlayers34DrawConditionMove5);
+  it("player 3 and 4 keep playing valid moves until draw, move 6", testPlayers34DrawConditionMove6);
+  it("player 3 and 4 keep playing valid moves until draw, move 7", testPlayers34DrawConditionMove7);
+  it("player 3 and 4 keep playing valid moves until draw, move 8", testPlayers34DrawConditionMove8);
 });
-
 describe("End",()=>{
   after(stopApp);
   it("end", (done)=>{done();});
