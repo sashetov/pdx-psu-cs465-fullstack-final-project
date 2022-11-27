@@ -47,7 +47,6 @@ app.get('/join', (req, res) => {
         let player1_socket = sockets[game['player1']];
         let player2_socket = sockets[game['player2']];
         let data1 = {
-<<<<<<< HEAD
           status: 'ok',
           msg: 'you have an opponent',
           data: {
@@ -60,20 +59,6 @@ app.get('/join', (req, res) => {
           status: 'ok',
           msg: 'you have an opponent',
           data: {
-=======
-          status: 'ok',
-          msg: 'you have an opponent',
-          data: {
-            // first player goes first
-            isYourTurn: true,
-            opponentName: players[player2_socket.id].playerName
-          },
-        };
-        let data2 = {
-          status: 'ok',
-          msg: 'you have an opponent',
-          data: {
->>>>>>> main
             // second player does not go first
             isYourTurn: false,
             opponentName: players[player1_socket.id].playerName
