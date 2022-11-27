@@ -220,6 +220,7 @@ const Board = ({ socket, first_player, second_player, newGame }) => {
               move(event.target.id);
             }
           }}
+          aria-label="cell 1"
         >
           {boardState[1]}
         </div>

@@ -5,7 +5,7 @@ import Message from './Message';
 
 function Chat({socket}) {
   return (
-    <div className="container mx-auto text-center chat">
+    <div className="container mx-auto text-center chat w-50">
       <Title />
       <History socket={socket}/>
       <Message socket={socket}/>
