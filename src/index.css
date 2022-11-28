@@ -9,20 +9,22 @@
 
 @font-face {
   font-family: 'merriweather_sansitalic';
-  src: url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff2') format('woff2'),
-       url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff') format('woff');
+  src: url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff2')
+      format('woff2'),
+    url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff')
+      format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'merriweather_sansregular';
-  src: url('./fonts/merriweathersans-variablefont_wght-webfont.woff2') format('woff2'),
-       url('./fonts/merriweathersans-variablefont_wght-webfont.woff') format('woff');
+  src: url('./fonts/merriweathersans-variablefont_wght-webfont.woff2')
+      format('woff2'),
+    url('./fonts/merriweathersans-variablefont_wght-webfont.woff')
+      format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 html,
 body {
@@ -90,7 +92,7 @@ h1 {
   line-height: 50px;
 }
 
-li  {
+li {
   display: block !important;
 }
 
@@ -98,7 +100,7 @@ li  {
   display: block;
   max-height: 100px;
   overflow-y: auto;
-} 
+}
 /* Navigation buttons */
 .nav-btn {
   font-family: 'dancing_scriptregular';
@@ -112,12 +114,17 @@ li  {
   padding: 4px;
 }
 
-.connect {
+.connect_header {
   font-family: 'dancing_scriptregular';
 }
 
 .about {
   font-family: 'dancing_scriptregular';
+}
+
+.howtoplay_header {
+  font-family: 'dancing_scriptregular';
+  font-size: 20px;
 }
 
 .play_again {
