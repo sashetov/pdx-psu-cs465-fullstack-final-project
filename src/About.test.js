@@ -84,7 +84,6 @@ test('Buttons render correctly', () => {
   const home = screen.getByTestId('home_button');
   const about = screen.getByTestId('about_button');
   const howTo = screen.getByTestId('howToPlay_button');
-  const connect = screen.getByTestId('connect_button');
   const comment = screen.getByTestId('comment');
 
   // interaction
