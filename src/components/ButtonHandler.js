@@ -5,7 +5,6 @@ import About from './About';
 import Buttons from './Buttons';
 import Container from './Container';
 import Home from './Home';
-import Comments from './Comments';
 
 // set up buttons to navigate bewtween pages? Or we can do navbar. still thinking
 function ButtonHandler({ socket }) {
@@ -61,12 +60,6 @@ function ButtonHandler({ socket }) {
     setShow(<Form />);
   };
 
-  // handles click of Comment button
-  const handleComments = () => {
-    linked.current = true;
-    setShow(<Comments />);
-  };
-
   if (linked.current === true) {
     return (
       <div>
@@ -75,7 +68,6 @@ function ButtonHandler({ socket }) {
           handleHowToPlay={handleHowToPlay}
           handleConnect={handleConnect}
           handleHome={handleHome}
-          handleComments={handleComments}
         />
         <>{show}</>
       </div>
@@ -88,7 +80,6 @@ function ButtonHandler({ socket }) {
           handleHowToPlay={handleHowToPlay}
           handleConnect={handleConnect}
           handleHome={handleHome}
-          handleComments={handleComments}
         />
         <Container
           socket={socket}

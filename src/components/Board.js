@@ -18,7 +18,6 @@ const Board = ({
   const markSquare = useRef(false);
   const errorCode = useRef(-1);
   const winner = useRef(-2);
-  const button = useRef();
 
   // useEffect works after render
   useEffect(() => {
@@ -151,61 +150,6 @@ const Board = ({
     gameFinished.current = true;
     setUpdate(update + 1);
   };
-
-  // Handles Reset Button Click
-  const handleReset = (event) => {
-    event.preventDefault();
-
-    // Reset all variables and states managed on front-end
-    const empty_board = ['', '', '', '', '', '', '', '', ''];
-    const restart = 'Please reset the game with same players and same game id';
-    reference.curret = null;
-    markSquare.current = false;
-    errorCode.current = -1;
-    winner.current = -2;
-    newGame.current = true;
-
-    setBoard([...empty_board]);
-    setMessage(``);
-    setUpdate(0);
-
-    console.log('everything reset');
-    console.log(
-      `message: ${message} board: ${boardState} reference: ${reference.current} markSquare: ${markSquare.current} errorCode: ${errorCode.current} winner: ${winner.current}`
-    );
-
-    // Ask back-end to restart the game
-    socket.emit('restart', restart);
-  };
-
-  // Buttons
-  const reset_button = (
-    <button
-      className="col reset-button"
-      id="reset_game"
-      type="button"
-      onClick={handleReset}
-    >
-      Reset Game
-    </button>
-  );
-
-  const replay_button = (
-    <button
-      className="col reset-button"
-      id="play_again"
-      type="button"
-      onClick={handleReset}
-    >
-      Play Again
-    </button>
-  );
-
-  if (winner.current === 0 || winner.current === 1 || winner.current === 2) {
-    button.current = replay_button;
-  } else {
-    button.current = reset_button;
-  }
 
   // renders the board
   return (
@@ -343,7 +287,6 @@ const Board = ({
           {message}
         </div>
       </div>
-      <div className="row">{button.current}</div>
       {gameFinished.current === false ? <Chat socket={socket} /> : <></>}
     </div>
   );
