@@ -2,51 +2,79 @@
 
 ## How to run app:
 
-1. You will need to build the frontend files first.
-   You can do that with:
+### 0. Install the needed packages:
 
-### `npm run build-react`
+```
+npm i
+```
 
-2. After that you will have start the express app, which uses these static resources:
+### 1. You will need to build the frontend files first.
 
-### `npm start`
+You can do that with:
+
+```
+npm run build-react
+```
+
+### 2. After that you will have start the express app, which uses these static resources:
+
+```
+npm start
+```
 
 or if you want to do both at once:
 
-### `npm run build-react && npm start`
+```
+npm run build-react && npm start
+```
 
-3. To run the backend tests do:
+### 3. To run the backend tests do:
 
-### `npm run test-backend`
+```
+npm run test-backend
+```
+
+### 4. To run the frontend tests do:
+
+```
+npm run test-react
+```
 
 ## Libraries used:
 
 You can see the libraries used in package.json, but the main ones are:
 
 ```
-"@testing-library/jest-dom": "^5.16.5",
-"@testing-library/react": "^13.4.0",
-"@testing-library/user-event": "^13.5.0",
-"axios": "^1.2.0",
-"bootstrap": "^5.2.2",
-"express": "4.16.4",
-"mocha": "^10.1.0",
-"prettier": "^2.7.1",
-"react": "^18.2.0",
-"react-dom": "^18.2.0",
-"react-scripts": "^5.0.1",
-"should": "^13.2.3",
-"socket.io": "^4.5.3",
-"socket.io-client": "^4.5.3",
-"web-vitals": "^2.1.4"
-"eslint": "^8.24.0",
-"eslint-config-airbnb-base": "^15.0.0",
-"eslint-config-standard": "^17.0.0",
-"eslint-plugin-import": "^2.26.0",
-"eslint-plugin-n": "^15.3.0",
-"eslint-plugin-promise": "^6.0.1",
-"eslint-plugin-react": "^7.31.8",
-"nodemon": "^2.0.20"
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.2.0",
+    "bootstrap": "^5.2.2",
+    "express": "^4.16.4",
+    "jest": "^27.5.1",
+    "mocha": "^10.1.0",
+    "npm": "^9.1.2",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "should": "^13.2.3",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4",
+    "socket.io-mock": "^1.3.2",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.31.8",
+    "nodemon": "^2.0.20"
+  },
 ```
 
 we do use two different test frameworks:\
@@ -57,12 +85,23 @@ the backend uses express\
 the frontend uses react and bootstrap\
 eslint for linting
 
-## Tutoaials Used:
+## Tutorials Used:
 
-I did get some tips on how to write the backend portion from this tutorial:\
 [cometchat: how to build a chat app with socket.io/node.js](https://www.cometchat.com/tutorials/how-to-build-a-chat-app-with-socket-io-node-js)
+[node.js-socket.io-tic-tac-toe](https://codesandbox.io/s/2zx1nj2lqp)
+[tic-tac-toe-cool-math-in-react-js](https://www.golangprograms.com/tic-tac-toe-cool-math-in-react-js.html)
+[build-multiplayer-realtime-tic-tac-toe-game-with-socketio-and-vue](https://dev.to/nilmadhabmondal/build-multiplayer-realtime-tic-tac-toe-game-with-socketio-and-vue-5clp)
+[oreilly react tutorial](https://learning.oreilly.com/videos/react-the/9781801812603/9781801812603-video1_1/)
+[hooks-effect](https://reactjs.org/docs/hooks-effect.html)
+[passing-socket-io-object-between-react-components](https://copyprogramming.com/tutorial/passing-socket-io-object-between-react-components)
+[how-to-send-data-to-socket-io-from-react](https://copyprogramming.com/howto/how-to-send-data-to-socket-io-from-react)
+[introduction-to-socket-io-in-nodejs-with-simple-example](https://medium.com/deep-tour-of-node-js/introduction-to-socket-io-in-nodejs-with-simple-example-74214e6c1da7)
+[https://borzecki.github.io/blog/jest-event-emitters](https://borzecki.github.io/blog/jest-event-emitters)
+[https://stackoverflow.com/questions/56978283/unit-testing-react-click-outside-component-using-jest-and-react-testing-library](https://stackoverflow.com/questions/56978283/unit-testing-react-click-outside-component-using-jest-and-react-testing-library)
+[https://testing-library.com/docs/user-event/setup/](https://testing-library.com/docs/user-event/setup/)
+[how-to-mock-socket-io-client-using-jest-react-testing-library](https://stackoverflow.com/questions/58211676/how-to-mock-socket-io-client-using-jest-react-testing-library)
 
-## How to test /join from frontend:
+## Test /join endpoint from browser:
 
 open two tabs \
 open devtools in both tabs \
@@ -248,7 +287,7 @@ error code:
    6 - chat message not provided, you need to provide it in the data for the socket under the key "message"
 ```
 
-## /comments endpoint
+## Test /comments endpoint
 
 ### POST to /comments to save the comment
 

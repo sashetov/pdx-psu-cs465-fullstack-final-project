@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 function Message({ socket }) {
-  const [ message, setMessage ] = useState(null);
+  const [ message, setMessage ] = useState('');
 
   let handleSubmit = (e) => {
     e.preventDefault();
