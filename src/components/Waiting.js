@@ -1,4 +1,5 @@
 import React from 'react';
+import Cog from './Cog';
  
 
 function Waiting() {
@@ -6,7 +7,8 @@ function Waiting() {
     <div className="container mx-auto text-center waiting">
       <div>
         <h1 className="display-1">Waiting for opponent...</h1>
-      </div>  
+      </div> 
+      <Cog /> 
     </div>
   );
 }

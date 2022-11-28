@@ -20,7 +20,7 @@ const History = ({socket}) => {
   )
 
   return (
-    <div className="history">
+    <div className="history" aria-label="chat-history">
       <ul>
         {chatHistory}
       </ul>
