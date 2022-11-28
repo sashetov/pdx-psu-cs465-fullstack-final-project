@@ -1,8 +1,7 @@
 import React from 'react';
 
+// Renders "About" page
 function About() {
-  console.log('in About');
-
   return (
     <div className="container mx-auto text-center">
       <h1 className="about display-1" data-testid="about">

@@ -101,7 +101,14 @@ li {
   max-height: 100px;
   overflow-y: auto;
 }
+
 /* Navigation buttons */
+.nav-container {
+  font-family: 'dancing_scriptregular';
+  margin: auto;
+  text-align: center;
+}
+
 .nav-btn {
   font-family: 'dancing_scriptregular';
   color: white;
@@ -109,7 +116,7 @@ li {
   width: auto;
   border: 1px solid lightblue;
   border-radius: 5px;
-  background-color: #779ecb;
+  background-color: #012146;
   margin: 3px;
   padding: 4px;
 }

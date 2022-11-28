@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Page to Explain how to play the game
+// Renders HowToPlay page, explaining the game mechanics
 function HowToPlay() {
   const horizontal_wins = ` X | X | X       |   |          |   |   
 -----------   -----------    -----------

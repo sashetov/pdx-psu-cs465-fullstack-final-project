@@ -2,9 +2,9 @@ import React from 'react';
 
 // Form in Connect Page
 function Form() {
+  // Handles form submit
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
     // Name and Email Entered
     if (
       event.target.name.value.length > 0 &&
@@ -13,17 +13,19 @@ function Form() {
       console.log('---- Form Submission Acceptable ----');
       console.log('Name: ' + event.target.name.value);
       console.log('Email: ' + event.target.email.value);
+
       // Comment filled
       if (event.target.comments.value.length > 0) {
         console.log(`Comments: ${event.target.comments.value}`);
 
-        // posts comment
         const url = 'http://localhost:8080/comments';
         const data = {
           name: event.target.name.value,
           email: event.target.email.value,
           comments: event.target.comments.value,
         };
+
+        // Handles POST to /comments
         const postData = async (url, data) => {
           try {
             const response = await fetch(url, {
