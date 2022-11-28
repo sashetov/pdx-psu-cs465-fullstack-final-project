@@ -28,7 +28,9 @@ function HowToPlay() {
 
   return (
     <div className="container mx-auto text-left">
-      <h1 className="display-1 text-center">How to Play Tic-Tac-Toe</h1>
+      <h1 className="display-1 text-center" data-testid="how_to_header">
+        How to Play Tic-Tac-Toe
+      </h1>
       <p>This game is played with two players</p>
       <div>
         <p>Rules:</p>

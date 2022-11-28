@@ -1,6 +1,12 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import About from './components/About';
+import HowToPlay from './components/HowToPlay';
+import Form from './components/Form';
+import Home from './compoenents/Home';
+import Buttons from './components/Buttons';
+import ButtonHandler from './components/ButtonHandler';
+import Board from './components/Board';
 
 test('About page renders correctly', () => {
   // render About on virtual dom
@@ -44,4 +50,59 @@ test('About page renders correctly', () => {
   expect(alex_git).toHaveAttribute('target', '_blank');
   expect(ariel_git).toHaveAttribute('href', 'https://github.com/gleason9113');
   expect(ariel_git).toHaveAttribute('target', '_blank');
+});
+
+test('How To Play page renders correctly', () => {
+  // render About on virtual dom
+  render(<HowToPlay />);
+
+  // elements to test
+  const heading = screen.getByTestId('how_to_header');
+
+  // interaction
+
+  // expected results
+  expect(heading).toHaveTextContent('How To Play Tic-Tac-Toe');
+});
+
+test('Connect page renders correctly', () => {
+  // render About on virtual dom
+  render(<Form />);
+
+  // elements to test
+
+  // interaction
+
+  // expected results
+});
+
+test('Buttons render correctly', () => {
+  // render About on virtual dom
+  render(<Buttons />);
+
+  // elements to test
+  const home = screen.getByTestId('home_button');
+  const about = screen.getByTestId('about_button');
+  const howTo = screen.getByTestId('howToPlay_button');
+  const connect = screen.getByTestId('connect_button');
+  const comment = screen.getByTestId('comment');
+
+  // interaction
+  fireEvent.click(home);
+  fireEvent.click(about);
+  fireEvent.click(howTo);
+  fireEvent.click(comment);
+
+  // expected results
+});
+
+test('ButtonHandler render correctly', () => {
+  // render About on virtual dom
+  render(<ButtonHandler />);
+
+  // elements to test
+
+  // interaction
+
+  // expected results
 });

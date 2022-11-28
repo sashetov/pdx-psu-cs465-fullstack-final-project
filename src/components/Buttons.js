@@ -10,7 +10,13 @@ function Buttons({
 }) {
   return (
     <div className="nav-container mx-auto my-auto text-center">
-      <button className="nav-btn" id="home" type="button" onClick={handleHome}>
+      <button
+        className="nav-btn"
+        id="home"
+        type="button"
+        onClick={handleHome}
+        data-testid="home_button"
+      >
         Home
       </button>
       <button
@@ -18,6 +24,7 @@ function Buttons({
         id="about"
         type="button"
         onClick={handleAbout}
+        data-testid="about_button"
       >
         About
       </button>
@@ -26,6 +33,7 @@ function Buttons({
         id="connect"
         type="button"
         onClick={handleConnect}
+        data-testid="connect_button"
       >
         Connect
       </button>
@@ -34,6 +42,7 @@ function Buttons({
         id="how"
         type="button"
         onClick={handleHowToPlay}
+        data-testid="howToPlay_button"
       >
         How To Play
       </button>
@@ -42,6 +51,7 @@ function Buttons({
         id="comment_posts"
         type="button"
         onClick={handleComments}
+        data-testid="comments_button"
       >
         Comments
       </button>
