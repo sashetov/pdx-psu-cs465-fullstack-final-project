@@ -34,10 +34,10 @@ function HowToPlay() {
       >
         How to Play Tic-Tac-Toe
       </h1>
-      <p>This game is played with two players</p>
+      <p data-testid="two_players">This game is played with two players</p>
       <div>
-        <p>Rules:</p>
-        <ul>
+        <p data-testid="rules">Rules:</p>
+        <ul data-testid="list_of_rules">
           <li>
             The first player enter their name to connect will be 'Player 1'
           </li>
@@ -68,23 +68,23 @@ function HowToPlay() {
         </ul>
       </div>
       <div>
-        <p>Example Wins:</p>
+        <p data-testid="wins">Example Wins:</p>
         <p>
-          <pre>{horizontal_wins}</pre>
+          <pre data-testid="h_wins">{horizontal_wins}</pre>
         </p>
         <p></p>
         <p>
-          <pre>{vertical_wins}</pre>
+          <pre data-testid="v_wins">{vertical_wins}</pre>
         </p>
         <p></p>
         <p>
-          <pre>{diagonal_wins}</pre>
+          <pre data-testid="d_wins">{diagonal_wins}</pre>
         </p>
       </div>
       <div>
-        <p>Example Tied Condition:</p>
+        <p data-testid="ties">Example Tied Conditions:</p>
         <p>
-          <pre>{tied}</pre>
+          <pre data-testid="tied">{tied}</pre>
         </p>
       </div>
     </div>
