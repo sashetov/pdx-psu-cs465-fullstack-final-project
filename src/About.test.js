@@ -1,4 +1,5 @@
 import { render, fireEvent, screen, within } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom/extend-expect';
 import About from './components/About';
 import HowToPlay from './components/HowToPlay';
@@ -9,6 +10,99 @@ import ButtonHandler from './components/ButtonHandler';
 import Board from './components/Board';
 import Comments from './components/Comments';
 
+// Tests Buttons
+test('Buttons function correctly', () => {
+  //this one passes
+  // Mock functions
+  const handleHome = jest.fn();
+  const handleAbout = jest.fn();
+  const handleConnect = jest.fn();
+  const handleHowToPlay = jest.fn();
+  const handleComments = jest.fn();
+
+  // render About on virtual dom
+  render(
+    <Buttons
+      handleHome={handleHome}
+      handleAbout={handleAbout}
+      handleConnect={handleConnect}
+      handleHowToPlay={handleHowToPlay}
+      handleComments={handleComments}
+    />
+  );
+
+  // buttons to test
+  const home = screen.getByTestId('home_button');
+  const about = screen.getByTestId('about_button');
+  const howTo = screen.getByTestId('howToPlay_button');
+  const connect = screen.getByTestId('connect_button');
+  const comment = screen.getByTestId('comment_button');
+
+  // interaction
+  fireEvent.click(home);
+  fireEvent.click(about);
+  fireEvent.click(howTo);
+  fireEvent.click(connect);
+  fireEvent.click(comment);
+
+  // expected results
+  expect(home).toBeDefined();
+  expect(about).toBeDefined();
+  expect(howTo).toBeDefined();
+  expect(connect).toBeDefined();
+  expect(comment).toBeDefined();
+
+  expect(handleHome).toHaveBeenCalledTimes(1);
+  expect(handleAbout).toHaveBeenCalledTimes(1);
+  expect(handleHowToPlay).toHaveBeenCalledTimes(1);
+  expect(handleConnect).toHaveBeenCalledTimes(1);
+  expect(handleComments).toHaveBeenCalledTimes(1);
+});
+
+// Test Home Button rendering Home
+test('Home render correctly when Home button clicked', () => {
+  // Mock functions
+  const handleHome = jest.fn();
+  const handleAbout = jest.fn();
+  const handleConnect = jest.fn();
+  const handleHowToPlay = jest.fn();
+  const handleComments = jest.fn();
+
+  // render About on virtual dom
+  const home_render = renderer
+    .create(<Buttons handleHome={handleHome} />)
+    .toJSON();
+
+  // expected results
+  expect(home_render).toMatchSnapshot();
+});
+
+test('About render correctly when About button clicked', () => {
+  // Mock functions
+  const handleHome = jest.fn();
+  const handleAbout = jest.fn();
+  const handleConnect = jest.fn();
+  const handleHowToPlay = jest.fn();
+  const handleComments = jest.fn();
+
+  // render About on virtual dom
+  const about_render = renderer
+    .create(
+      <Buttons
+        handleHome={handleHome}
+        handleAbout={handleAbout}
+        handleConnect={handleConnect}
+        handleHowToPlay={handleHowToPlay}
+        handleComments={handleComments}
+      />
+    )
+    .toJSON();
+
+  // expected results
+  expect(about_render).toMatchSnapshot();
+});
+
+// Tests About page rendering
 test('About page renders correctly', () => {
   // this one passes
   // render About on virtual dom
@@ -54,9 +148,10 @@ test('About page renders correctly', () => {
   expect(ariel_git).toHaveAttribute('target', '_blank');
 });
 
+// Tests How To Play page rendering
 test('How To Play page renders correctly', () => {
   // variables for easy testing
-  const horizontal_wins = ` X | X | X | | | | ----------- ----------- ----------- | | X | X | X | | ----------- ----------- ----------- | | | | X | X | X `;
+  const horizontal_wins = `X | X | X | | | | ----------- ----------- ----------- | | X | X | X | | ----------- ----------- ----------- | | | | X | X | X`;
 
   const vertical_wins = ` O |   |         | O |          |   | O 
    -----------   -----------    -----------
@@ -103,115 +198,6 @@ test('How To Play page renders correctly', () => {
   expect(v_wins).toHaveTextContent(vertical_wins);
   expect(d_wins).toHaveTextContent(diagonal_wins);
   expect(tied).toHaveTextContent(tie_con);
-});
-
-test('Buttons function correctly', () => {
-  //this one passes
-  // Mock functions
-  const handleHome = jest.fn();
-  const handleAbout = jest.fn();
-  const handleConnect = jest.fn();
-  const handleHowToPlay = jest.fn();
-  const handleComments = jest.fn();
-
-  // render About on virtual dom
-  render(
-    <Buttons
-      handleHome={handleHome}
-      handleAbout={handleAbout}
-      handleConnect={handleConnect}
-      handleHowToPlay={handleHowToPlay}
-      handleComments={handleComments}
-    />
-  );
-
-  // buttons to test
-  const home = screen.getByTestId('home_button');
-  const about = screen.getByTestId('about_button');
-  const howTo = screen.getByTestId('howToPlay_button');
-  const connect = screen.getByTestId('connect_button');
-  const comment = screen.getByTestId('comment_button');
-
-  // interaction
-  fireEvent.click(home);
-  fireEvent.click(about);
-  fireEvent.click(howTo);
-  fireEvent.click(connect);
-  fireEvent.click(comment);
-
-  // expected results
-  expect(home).toBeDefined();
-  expect(about).toBeDefined();
-  expect(howTo).toBeDefined();
-  expect(connect).toBeDefined();
-  expect(comment).toBeDefined();
-
-  expect(handleHome).toHaveBeenCalledTimes(1); //TODO apparently this isnt correct
-  expect(handleAbout).toHaveBeenCalledTimes(1);
-  expect(handleHowToPlay).toHaveBeenCalledTimes(1);
-  expect(handleConnect).toHaveBeenCalledTimes(1);
-  expect(handleComments).toHaveBeenCalledTimes(1);
-});
-
-test('About render correctly when About button clicked', () => {
-  // Mock functions
-  const handleHome = jest.fn();
-  const handleAbout = jest.fn();
-  const handleConnect = jest.fn();
-  const handleHowToPlay = jest.fn();
-  const handleComments = jest.fn();
-
-  // render About on virtual dom
-  render(
-    <Buttons
-      handleHome={handleHome}
-      handleAbout={handleAbout}
-      handleConnect={handleConnect}
-      handleHowToPlay={handleHowToPlay}
-      handleComments={handleComments}
-    />
-  );
-
-  // buttons to test
-  const about = screen.getByTestId('about_button');
-  const heading = screen.getByTestId('about');
-  const p1 = screen.getByTestId('p1');
-  const p2 = screen.getByTestId('p2');
-  const p3 = screen.getByTestId('p3');
-  const p4 = screen.getByTestId('p4');
-  const project = screen.getByTestId('link-project');
-  const cera_git = screen.getByTestId('cera-git');
-  const alex_git = screen.getByTestId('alex-git');
-  const ariel_git = screen.getByTestId('ariel-git');
-
-  // interaction
-  fireEvent.click(about);
-
-  // expected results
-  expect(about).toBeDefined();
-
-  expect(handleAbout).toHaveBeenCalledTimes(1);
-
-  expect(heading).toHaveTextContent('About');
-  expect(p1).toHaveTextContent(
-    'This is a CS465/565 Final Project by Ariel, Cera, and Alex'
-  );
-  expect(p2).toHaveTextContent(
-    'We wanted to implement a game using Node.js, React.js, Express.js, and Socket.io'
-  );
-  expect(p3).toHaveTextContent('We decided on a Tic-Tac-Toe game');
-  expect(p4).toHaveTextContent('Our project code can be found in:');
-  expect(project).toHaveAttribute(
-    'href',
-    'https://github.com/gleason9113/465final'
-  );
-  expect(project).toHaveAttribute('target', '_blank');
-  expect(cera_git).toHaveAttribute('href', 'https://github.com/C3ra906');
-  expect(cera_git).toHaveAttribute('target', '_blank');
-  expect(alex_git).toHaveAttribute('href', 'https://github.com/sashetov');
-  expect(alex_git).toHaveAttribute('target', '_blank');
-  expect(ariel_git).toHaveAttribute('href', 'https://github.com/gleason9113');
-  expect(ariel_git).toHaveAttribute('target', '_blank');
 });
 
 test('Connect page renders correctly', () => {

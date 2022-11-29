@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About render correctly when About button clicked 1`] = `
+<div
+  className="nav-container"
+>
+  <button
+    className="nav-btn"
+    data-testid="home_button"
+    id="home"
+    onClick={[MockFunction]}
+    type="button"
+  >
+    Home
+  </button>
+  <button
+    className="nav-btn"
+    data-testid="about_button"
+    id="about"
+    onClick={[MockFunction]}
+    type="button"
+  >
+    About
+  </button>
+  <button
+    className="nav-btn"
+    data-testid="connect_button"
+    id="connect"
+    onClick={[MockFunction]}
+    type="button"
+  >
+    Connect
+  </button>
+  <button
+    className="nav-btn"
+    data-testid="howToPlay_button"
+    id="how"
+    onClick={[MockFunction]}
+    type="button"
+  >
+    How To Play
+  </button>
+  <button
+    className="nav-btn"
+    data-testid="comment_button"
+    id="comments"
+    onClick={[MockFunction]}
+    type="button"
+  >
+    Comments
+  </button>
+</div>
+`;
+
+exports[`Home render correctly when Home button clicked 1`] = `
+<div
+  className="nav-container"
+>
+  <button
+    className="nav-btn"
+    data-testid="home_button"
+    id="home"
+    onClick={[MockFunction]}
+    type="button"
+  >
+    Home
+  </button>
+  <button
+    className="nav-btn"
+    data-testid="about_button"
+    id="about"
+    type="button"
+  >
+    About
+  </button>
+  <button
+    className="nav-btn"
+    data-testid="connect_button"
+    id="connect"
+    type="button"
+  >
+    Connect
+  </button>
+  <button
+    className="nav-btn"
+    data-testid="howToPlay_button"
+    id="how"
+    type="button"
+  >
+    How To Play
+  </button>
+  <button
+    className="nav-btn"
+    data-testid="comment_button"
+    id="comments"
+    type="button"
+  >
+    Comments
+  </button>
+</div>
+`;

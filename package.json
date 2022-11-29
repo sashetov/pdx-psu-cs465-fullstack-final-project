@@ -17,6 +17,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
+    "react-test-renderer": "^18.2.0",
     "run-parallel": "^1.2.0",
     "should": "^13.2.3",
     "socket.io": "^4.5.4",
