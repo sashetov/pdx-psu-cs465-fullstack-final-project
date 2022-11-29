@@ -31,14 +31,26 @@ function Comments() {
 
   return (
     <div className="comments_container">
-      <h1 className="comments_header" data-testid="comments">
+      <h1
+        className="comments_header"
+        data-testid="comments_header"
+        aria-label="comments header"
+      >
         Comments
       </h1>
-      <p className="comments_explain" data-testid="comments">
+      <p
+        className="comments_explain"
+        data-testid="comments_explain"
+        aria-label="how to post comments"
+      >
         You can leave us comments by filling out the form in the Connect page!
       </p>
       <pre>
-        <div className="comments_display">
+        <div
+          className="comments_display"
+          data-testid="comments_display"
+          aria-label="comment board"
+        >
           {comment_received.current === false
             ? `No comments received`
             : `${comments}`}

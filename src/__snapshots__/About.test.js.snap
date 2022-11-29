@@ -81,6 +81,110 @@ exports[`About render to match snapshot 1`] = `
 </div>
 `;
 
+exports[`ButtonHanddler render to match snapshot 1`] = `
+<div>
+  <div
+    className="nav-container"
+  >
+    <button
+      className="nav-btn"
+      data-testid="home_button"
+      id="home"
+      onClick={[Function]}
+      type="button"
+    >
+      Home
+    </button>
+    <button
+      className="nav-btn"
+      data-testid="about_button"
+      id="about"
+      onClick={[Function]}
+      type="button"
+    >
+      About
+    </button>
+    <button
+      className="nav-btn"
+      data-testid="connect_button"
+      id="connect"
+      onClick={[Function]}
+      type="button"
+    >
+      Connect
+    </button>
+    <button
+      className="nav-btn"
+      data-testid="howToPlay_button"
+      id="how"
+      onClick={[Function]}
+      type="button"
+    >
+      How To Play
+    </button>
+    <button
+      className="nav-btn"
+      data-testid="comment_button"
+      id="comments"
+      onClick={[Function]}
+      type="button"
+    >
+      Comments
+    </button>
+  </div>
+  <div>
+    <div
+      className="container mx-auto text-center"
+    >
+      <h1
+        className="display-1"
+      >
+        Tic-Tac-Toe
+      </h1>
+    </div>
+    <form
+      class="form w-50 mx-auto mt-5 p-3"
+      id="player"
+      method="get"
+      onSubmit={[Function]}
+    >
+      <div
+        class="form-group mx-auto my-2"
+      >
+        <label
+          class="py-2"
+          for="name"
+        >
+          Please enter player name:
+        </label>
+        <input
+          class="form-control"
+          id="name"
+          name="name"
+          type="text"
+        />
+      </div>
+      <div
+        class="row form-group mx-auto mb-2"
+      >
+        <input
+          class="col btn btn-primary my-2 px-5"
+          name="submit"
+          type="submit"
+          value="Play"
+        />
+        <input
+          class="col btn btn-secondary mx-1 my-2 px-5"
+          name="reset"
+          type="reset"
+          value="Reset"
+        />
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
 exports[`Buttons render to match snapshot 1`] = `
 <div
   className="nav-container"
@@ -130,6 +234,127 @@ exports[`Buttons render to match snapshot 1`] = `
   >
     Comments
   </button>
+</div>
+`;
+
+exports[`Comments render to match snapshot 1`] = `
+<div
+  className="comments_container"
+>
+  <h1
+    aria-label="comments header"
+    className="comments_header"
+    data-testid="comments_header"
+  >
+    Comments
+  </h1>
+  <p
+    aria-label="how to post comments"
+    className="comments_explain"
+    data-testid="comments_explain"
+  >
+    You can leave us comments by filling out the form in the Connect page!
+  </p>
+  <pre>
+    <div
+      aria-label="comment board"
+      className="comments_display"
+      data-testid="comments_display"
+    >
+      No comments received
+    </div>
+  </pre>
+</div>
+`;
+
+exports[`Connect render to match snapshot 1`] = `
+<div
+  className="container mx-auto my-auto text-center"
+>
+  <form
+    className="connect_form form w-50 mx-auto mt-5 p-3"
+    onSubmit={[Function]}
+  >
+    <h1
+      className="mt-2 mb-4 connect_header"
+    >
+      Let's Connect!
+    </h1>
+    <div
+      className="form-group mx-auto my-2"
+    >
+      <label
+        className="py-2"
+        data-testid="name-label"
+        for="name"
+      >
+        Name
+      </label>
+      <input
+        aria-label="name"
+        className="form-control"
+        data-testid="name"
+        id="name"
+        type="text"
+      />
+    </div>
+    <div
+      className="form-group mx-auto my-2"
+    >
+      <label
+        className="py-2"
+        data-testid="email-label"
+        for="email"
+      >
+        Email
+      </label>
+      <input
+        aria-label="email"
+        className="form-control"
+        data-testid="email"
+        id="email"
+        type="email"
+      />
+    </div>
+    <div
+      className="form-group mx-auto my-2"
+    >
+      <label
+        className="py-2"
+        data-testid="comments-label"
+        for="comments"
+      >
+        Comments
+      </label>
+      <textarea
+        aria-label="comments"
+        className="form-control"
+        data-testid="comments"
+        id="comments"
+        rows="4"
+      />
+    </div>
+    <div
+      className="row form-group mx-auto mb-2"
+    >
+      <input
+        aria-label="submit"
+        className="col btn btn-primary my-2 px-5"
+        data-testid="submit"
+        name="submit"
+        type="submit"
+        value="Submit"
+      />
+      <input
+        aria-label="reset"
+        className="col btn btn-secondary mx-1 my-2 px-5"
+        data-testid="reset"
+        name="reset"
+        type="reset"
+        value="Reset"
+      />
+    </div>
+  </form>
 </div>
 `;
 

@@ -1,4 +1,10 @@
-import { render, fireEvent, screen, within } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  screen,
+  within,
+  userEvent,
+} from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom/extend-expect';
 import MockedSocket from 'socket.io-mock';
@@ -7,9 +13,23 @@ import HowToPlay from './components/HowToPlay';
 import Form from './components/Form';
 import Home from './components/Home';
 import Buttons from './components/Buttons';
-import ButtonHandler from './components/ButtonHandler';
 import Board from './components/Board';
 import Comments from './components/Comments';
+import ButtonHandler from './components/ButtonHandler';
+
+// Tests ButtonHandler render to match snapshot
+test('ButtonHanddler render to match snapshot', () => {
+  // Mock socket
+  const socket = new MockedSocket();
+
+  // render
+  const buttonHandler = renderer
+    .create(<ButtonHandler socket={socket} />)
+    .toJSON();
+
+  // expected results
+  expect(buttonHandler).toMatchSnapshot();
+});
 
 // Tests Buttons
 test('Buttons function correctly', () => {
@@ -60,7 +80,7 @@ test('Buttons function correctly', () => {
   expect(handleComments).toHaveBeenCalledTimes(1);
 });
 
-// Buttons render correctly
+// Buttons render to match snapshot
 test('Buttons render to match snapshot', () => {
   // Mock functions
   const handleHome = jest.fn();
@@ -132,7 +152,7 @@ test('About page renders correctly', () => {
   expect(ariel_git).toHaveAttribute('target', '_blank');
 });
 
-// About render correctly
+// About render to match snapshot
 test('About render to match snapshot', () => {
   // render
   const about = renderer.create(<About />).toJSON();
@@ -143,27 +163,7 @@ test('About render to match snapshot', () => {
 
 // Tests How To Play page rendering
 test('How To Play page renders correctly', () => {
-  // variables for easy testing
-  const horizontal_wins = `X | X | X | | | | ----------- ----------- ----------- | | X | X | X | | ----------- ----------- ----------- | | | | X | X | X`;
-
-  const vertical_wins = ` O |   |         | O |          |   | O 
-   -----------   -----------    -----------
-    O |   |         | O |          |   | O
-   -----------   -----------    -----------
-    O |   |         | O |          |   | O`;
-
-  const diagonal_wins = ` X |   |         |   | O
-   -----------   -----------
-      | X |         | O |   
-   -----------   -----------
-      |   | X     O |   |    `;
-
-  const tie_con = ` X | O | X     X | O | O      X | X | O
-   -----------   -----------    -----------
-    X | X | O     X | O | X      O | O | X
-   -----------   -----------    -----------
-    O | O | X     O | X | X      X | X | O `;
-  // render About on virtual dom
+  // render HowToPlay on virtual dom
   render(<HowToPlay />);
 
   // elements to test
@@ -175,10 +175,6 @@ test('How To Play page renders correctly', () => {
   const rule_list = getAllByRole('listitem');
   const wins = screen.getByTestId('wins');
   const ties = screen.getByTestId('ties');
-  const h_wins = screen.getByTestId('h_wins');
-  const v_wins = screen.getByTestId('v_wins');
-  const d_wins = screen.getByTestId('d_wins');
-  const tied = screen.getByTestId('tied');
 
   // expected results
   expect(rule_list.length).toBe(9); // possible issue
@@ -187,13 +183,9 @@ test('How To Play page renders correctly', () => {
   expect(rules).toHaveTextContent('Rules:');
   expect(wins).toHaveTextContent('Example Wins:');
   expect(ties).toHaveTextContent('Example Tied Conditions:');
-  expect(h_wins).toHaveTextContent(horizontal_wins);
-  expect(v_wins).toHaveTextContent(vertical_wins);
-  expect(d_wins).toHaveTextContent(diagonal_wins);
-  expect(tied).toHaveTextContent(tie_con);
 });
 
-// HowToPlay render correctly
+// HowToPlay render to match snapshot
 test('HowToPlay render to match snapshot', () => {
   // render
   const howTo = renderer.create(<HowToPlay />).toJSON();
@@ -202,10 +194,10 @@ test('HowToPlay render to match snapshot', () => {
   expect(howTo).toMatchSnapshot();
 });
 
-// Home render correctly
+// Home render to match snapshot
 test('Home render to match snapshot', () => {
   const socket = new MockedSocket();
-  const newGame = false;
+  const newGame = true;
   const first_player = 'A';
   const second_player = 'B';
   const gameFinished = false;
@@ -227,7 +219,7 @@ test('Home render to match snapshot', () => {
 });
 
 test('Connect page renders correctly', () => {
-  // render About on virtual dom
+  // render Form on virtual dom
   render(<Form />);
 
   // elements to test
@@ -243,14 +235,52 @@ test('Connect page renders correctly', () => {
   const handleSubmit = jest.fn();
 
   // interaction
-  fireEvent.click(submit);
   fireEvent.click(reset);
+  userEvent.click(submit);
 
   // expected results
+  expect(submit).toBeDefined();
+  expect(reset).toBeDefined();
+
+  expect(handleSubmit).toHaveBeenCalledTimes(1);
+
   expect(name_label).toHaveTextContent('Name');
   expect(email_label).toHaveTextContent('Email');
   expect(comments_label).toHaveTextContent('Comments');
-  expect(submit).toBeDefined();
-  expect(reset).toBeDefined();
-  expect(handleSubmit).toHaveBeenCalledTimes(1);
+});
+
+// Connect render to match snapshot
+test('Connect render to match snapshot', () => {
+  // render
+  const connect = renderer.create(<Form />).toJSON();
+
+  // expected results
+  expect(connect).toMatchSnapshot();
+});
+
+// Comments render to match snapshot
+test('Comments render to match snapshot', () => {
+  // render
+  const comments = renderer.create(<Comments />).toJSON();
+
+  // expected results
+  expect(comments).toMatchSnapshot();
+});
+
+// Comments page renders correctly without any comments
+test('Comments page renders corretly without any comments', () => {
+  // render About on virtual dom
+  render(<Comments />);
+
+  // elements to test
+  const header = screen.getByTestId('comments_header');
+  const explain = screen.getByTestId('comments_explain');
+  const display = screen.getByTestId('comments_display');
+
+  // expected results
+  expect(header).toHaveTextContent('Comments');
+  expect(explain).toHaveTextContent(
+    'You can leave us comments by filling out the form in the Connect page!'
+  );
+  expect(display).toHaveTextContent('No comments received');
 });
