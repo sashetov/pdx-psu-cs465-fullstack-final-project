@@ -30,9 +30,15 @@ function Comments() {
   }, []);
 
   return (
-    <div className="container mx-auto my-auto text-center">
+    <div className="comments_container">
+      <h1 className="comments_header" data-testid="comments">
+        Comments
+      </h1>
+      <p className="comments_explain" data-testid="comments">
+        You can leave us comments by filling out the form in the Connect page!
+      </p>
       <div>
-        <pre>
+        <pre className="comments_display">
           {comment_received.current === false
             ? `No comments received`
             : `${comments}`}

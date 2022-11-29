@@ -63,7 +63,7 @@ function Form() {
         className="connect_form form w-50 mx-auto mt-5 p-3"
         onSubmit={handleSubmit}
       >
-        <h1 className="h1 mt-2 mb-4 connect_header">Let's Connect!</h1>
+        <h1 className="mt-2 mb-4 connect_header">Let's Connect!</h1>
         <div className="form-group mx-auto my-2">
           <label className="py-2" for="name">
             Name

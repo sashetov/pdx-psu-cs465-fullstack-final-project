@@ -27,7 +27,7 @@ function HowToPlay() {
  O | O | X     O | X | X      X | X | O `;
 
   return (
-    <div className="container mx-auto text-left">
+    <div className="howtoplay_container">
       <h1
         className="display-1 text-center howtoplay_header"
         data-testid="how_to_header"
