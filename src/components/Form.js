@@ -65,22 +65,40 @@ function Form() {
       >
         <h1 className="mt-2 mb-4 connect_header">Let's Connect!</h1>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="name">
+          <label className="py-2" for="name" data-testid="name-label">
             Name
           </label>
-          <input type="text" className="form-control" id="name" />
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            aria-label="name"
+            data-testid="name"
+          />
         </div>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="email">
+          <label className="py-2" for="email" data-testid="email-label">
             Email
           </label>
-          <input type="email" className="form-control" id="email" />
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            aria-label="email"
+            data-testid="email"
+          />
         </div>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="comments">
+          <label className="py-2" for="comments" data-testid="comments-label">
             Comments
           </label>
-          <textarea className="form-control" id="comments" rows="4"></textarea>
+          <textarea
+            className="form-control"
+            id="comments"
+            rows="4"
+            aria-label="comments"
+            data-testid="comments"
+          ></textarea>
         </div>
         <div className="row form-group mx-auto mb-2">
           <input
@@ -88,12 +106,16 @@ function Form() {
             type="submit"
             name="submit"
             value="Submit"
+            aria-label="submit"
+            data-testid="submit"
           />
           <input
             className="col btn btn-secondary mx-1 my-2 px-5"
             type="reset"
             name="reset"
             value="Reset"
+            aria-label="reset"
+            data-testid="reset"
           />
         </div>
       </form>

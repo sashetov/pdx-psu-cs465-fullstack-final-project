@@ -37,13 +37,13 @@ function Comments() {
       <p className="comments_explain" data-testid="comments">
         You can leave us comments by filling out the form in the Connect page!
       </p>
-      <div>
-        <pre className="comments_display">
+      <pre>
+        <div className="comments_display">
           {comment_received.current === false
             ? `No comments received`
             : `${comments}`}
-        </pre>
-      </div>
+        </div>
+      </pre>
     </div>
   );
 }

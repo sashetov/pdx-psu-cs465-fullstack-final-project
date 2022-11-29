@@ -100,6 +100,7 @@ eslint for linting
 [https://stackoverflow.com/questions/56978283/unit-testing-react-click-outside-component-using-jest-and-react-testing-library](https://stackoverflow.com/questions/56978283/unit-testing-react-click-outside-component-using-jest-and-react-testing-library)
 [https://testing-library.com/docs/user-event/setup/](https://testing-library.com/docs/user-event/setup/)
 [how-to-mock-socket-io-client-using-jest-react-testing-library](https://stackoverflow.com/questions/58211676/how-to-mock-socket-io-client-using-jest-react-testing-library)
+[Fetch and display data from API in React js](https://www.codingdeft.com/posts/react-fetch-data-api/)
 
 ## Test /join endpoint from browser:
 

@@ -4,7 +4,11 @@ import React from 'react';
 function About() {
   return (
     <div className="container mx-auto text-center">
-      <h1 className="about display-1" data-testid="about">
+      <h1
+        className="about display-1"
+        data-testid="about"
+        araia-label="about heading"
+      >
         About
       </h1>
       <p data-testid="p1">
@@ -22,6 +26,7 @@ function About() {
           target="_blank"
           rel="noreferrer"
           data-testid="link-project"
+          araia-label="github link code"
         >
           Project
         </a>
@@ -33,6 +38,7 @@ function About() {
           target="_blank"
           rel="noreferrer"
           data-testid="cera-git"
+          araia-label="github link cera"
         >
           Cera's Github
         </a>
@@ -43,6 +49,7 @@ function About() {
           target="_blank"
           rel="noreferrer"
           data-testid="alex-git"
+          araia-label="github link alex"
         >
           Alex's Github
         </a>
@@ -53,6 +60,7 @@ function About() {
           target="_blank"
           rel="noreferrer"
           data-testid="ariel-git"
+          araia-label="github link ariel"
         >
           Ariel's Github
         </a>

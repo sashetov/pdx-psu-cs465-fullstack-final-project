@@ -55,11 +55,7 @@ test('About page renders correctly', () => {
 
 test('How To Play page renders correctly', () => {
   // variables for easy testing
-  const horizontal_wins = ` X | X | X       |   |          |   |   
-   -----------   -----------    -----------
-      |   |       X | X | X        |   |
-   -----------   -----------    -----------
-      |   |         |   |        X | X | X `;
+  const horizontal_wins = ` X | X | X | | | | ----------- ----------- ----------- | | X | X | X | | ----------- ----------- ----------- | | | | X | X | X`;
 
   const vertical_wins = ` O |   |         | O |          |   | O 
    -----------   -----------    -----------
@@ -97,7 +93,7 @@ test('How To Play page renders correctly', () => {
 
   // expected results
   expect(rule_list.length).toBe(9);
-  expect(heading).toHaveTextContent('How To Play Tic-Tac-Toe');
+  expect(heading).toHaveTextContent('How to Play Tic-Tac-Toe');
   expect(two).toHaveTextContent('This game is played with two players');
   expect(rules).toHaveTextContent('Rules:');
   expect(wins).toHaveTextContent('Example Wins:');
@@ -127,7 +123,7 @@ test('Buttons function correctly', () => {
   fireEvent.click(comment);
 
   // expected results
-  expect(home).toHaveBeenCalledTimes(1);
+  expect(home).toHaveBeenCalledTimes(1); //TODO apparently this isnt correct
   expect(about).toHaveBeenCalledTimes(1);
   expect(howTo).toHaveBeenCalledTimes(1);
   expect(connect).toHaveBeenCalledTimes(1);
@@ -176,24 +172,26 @@ test('About render correctly when About button clicked', () => {
   expect(ariel_git).toHaveAttribute('target', '_blank');
 });
 
-test('ButtonHandler render correctly', () => {
-  // render About on virtual dom
-  render(<ButtonHandler />);
-
-  // elements to test
-
-  // interaction
-
-  // expected results
-});
-
 test('Connect page renders correctly', () => {
   // render About on virtual dom
   render(<Form />);
 
   // elements to test
+  const name = screen.getByTestId('name');
+  const name_label = screen.getByTestId('name-label');
+  const email = screen.getByTestId('email');
+  const email_label = screen.getByTestId('email-label');
+  const comments = screen.getByTestId('comments');
+  const comments_label = screen.getByTestId('comments-label');
+  const submit = screen.getByTestId('submit');
+  const reset = screen.getByTestId('reset');
 
   // interaction
+  fireEvent.click(submit);
+  fireEvent.click(reset);
 
   // expected results
+  expect(name_label).toHaveTextContent('Name');
+  expect(email_label).toHaveTextContent('Email');
+  expect(comments_label).toHaveTextContent('Comments');
 });

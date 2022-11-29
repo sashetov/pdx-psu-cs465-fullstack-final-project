@@ -69,23 +69,23 @@ function HowToPlay() {
       </div>
       <div>
         <p data-testid="wins">Example Wins:</p>
-        <p>
-          <pre data-testid="h_wins">{horizontal_wins}</pre>
-        </p>
+        <pre data-testid="h_wins">
+          <p>{horizontal_wins}</p>
+        </pre>
         <p></p>
-        <p>
-          <pre data-testid="v_wins">{vertical_wins}</pre>
-        </p>
+        <pre data-testid="v_wins">
+          <p>{vertical_wins}</p>
+        </pre>
         <p></p>
-        <p>
-          <pre data-testid="d_wins">{diagonal_wins}</pre>
-        </p>
+        <pre data-testid="d_wins">
+          <p>{diagonal_wins}</p>
+        </pre>
       </div>
       <div>
         <p data-testid="ties">Example Tied Conditions:</p>
-        <p>
-          <pre data-testid="tied">{tied}</pre>
-        </p>
+        <pre data-testid="tied">
+          <p>{tied}</p>
+        </pre>
       </div>
     </div>
   );
