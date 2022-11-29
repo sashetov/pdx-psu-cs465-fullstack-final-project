@@ -1,7 +1,13 @@
 import React from 'react';
 
 // Buttons for navigating between different pages
-function Buttons({ handleAbout, handleConnect, handleHowToPlay, handleHome }) {
+function Buttons({
+  handleAbout,
+  handleConnect,
+  handleHowToPlay,
+  handleHome,
+  handleComments,
+}) {
   return (
     <div className="nav-container">
       <button
@@ -39,6 +45,15 @@ function Buttons({ handleAbout, handleConnect, handleHowToPlay, handleHome }) {
         data-testid="howToPlay_button"
       >
         How To Play
+      </button>
+      <button
+        className="nav-btn"
+        id="comments"
+        type="button"
+        onClick={handleComments}
+        data-testid="comment_button"
+      >
+        Comments
       </button>
     </div>
   );
