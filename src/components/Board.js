@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chat from './Chat';
 
+// Renders the Tic-Tac-Toe board that interacts with a user
 const Board = ({
   socket,
   first_player,
@@ -9,41 +10,43 @@ const Board = ({
   gameFinished,
 }) => {
   // Hooks
-  const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
-  const [message, setMessage] = useState('');
-  const [update, setUpdate] = useState(0);
-
-  // Variables and constants
+  const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']); // holds the board state
+  const [message, setMessage] = useState(''); // used for user message display
+  const [update, setUpdate] = useState(0); // used to re-render the page
   const reference = useRef(null);
-  const markSquare = useRef(false);
-  const errorCode = useRef(-1);
-  const winner = useRef(-2);
-  const button = useRef();
+  const markSquare = useRef(false); // variable to hold whether move was allowed/disallowed
+  const errorCode = useRef(-1); // variable to hold error code from the backend
+  const winner = useRef(-2); // variable to hold who won from the backend
+
+  newGame.current = false; // Already in a game
 
   // useEffect works after render
   useEffect(() => {
-    console.log('socket:', socket);
+    // Shows to console our current socket
     window.socket = socket;
+    console.log('socket:', socket);
   }, [socket]);
 
   // Functions
-  newGame.current = false;
-
-  // Sends the server which square was clicked. Server determines validity.
+  // Communicates to the backend server which square was clicked. Server determines validity of the move.
   const move = (index) => {
-    // Sends server location player wants to mark
-    let win = -2;
-    setUpdate(update + 1);
-    setMessage('');
+    let win = -2; // -2 means no one has won or tied
+    setMessage(''); // Resets user message to nothing
 
+    // Re-render the board
+    setUpdate(update + 1);
+
+    // Sends server index of the square clicked
     socket.emit('move', { move_id: index });
 
     // Captures status message and errorCode from server
     socket.on('move_done', (data) => {
-      setUpdate(update + 1);
-      console.log('From Server' + JSON.stringify(data));
-
       let state = [...boardState];
+
+      setUpdate(update + 1);
+
+      // Displays on console the server emitted data
+      console.log('From Server' + JSON.stringify(data));
 
       // Receives status and errorCode from the server for use on client side
       if (data.status === 'error') {
@@ -55,9 +58,9 @@ const Board = ({
         win = data.data.gameWinner;
         state = [...data.data.boardState];
       } else {
-        console.log('unknown error occured w/ client side move_done');
-        errorCode.current = -1;
-        markSquare.current = false;
+        console.log('unknown error occured w/ client side move_done'); //error not matching error codes have occurred
+        errorCode.current = -1; //resets value to default
+        markSquare.current = false; //resets value to default
       }
       mark(state, win);
     });
@@ -65,28 +68,30 @@ const Board = ({
 
   // Marks the square if appropriate and updates boardState
   const mark = (state, win) => {
-    // Marking square allowed
+    // Marking the square allowed
     if (markSquare.current === true) {
-      //re-render
       console.log('The move is valid');
+
       setUpdate(update + 1);
     }
     // Marking square not allowed
     else {
       console.log('The move is invalid');
+
       setUpdate(update + 1);
     }
 
-    // Updates the board
+    // Updates the board on client side and displays in console
     setBoard([...state]);
     console.log('Updated board:');
     console.log(state);
 
-    // Determine user message to display
+    // Determines user message to display
     message_picker();
 
-    // Checks to see if a player won
+    // Checks to see if a player won and gives appropriate console message
     if (win !== -2 && win !== null) {
+      // Server determined a player is missing
       if (win === -1) {
         winner.current = -1;
         console.log(
@@ -94,25 +99,26 @@ const Board = ({
         );
       } else if (win === 0) {
         winner.current = 0;
-        console.log(`${first_player.current} won!`); // TODO: get player names to display
+        console.log(`${first_player.current} won!`);
       } else if (win === 1) {
         winner.current = 1;
-        console.log(`${second_player.current} won!`); // TODO: get player names to display
+        console.log(`${second_player.current} won!`);
       } else if (win === 2) {
         winner.current = 2;
         console.log('Tied. Gameover');
       }
+
       setUpdate(update + 1);
 
+      // Determine appropriate user message to display
       winner_determined();
-      // TODO: ASk to replay or go back to previous screen
     }
 
     errorCode.current = -1; // reset errorCode
     markSquare.current = false; // reset markSquare
   };
 
-  // User messages after a move
+  // Determines appropriate user messages after a move
   const message_picker = () => {
     console.log('in message');
     if (errorCode.current === 1) {
@@ -135,7 +141,7 @@ const Board = ({
     setUpdate(update + 1);
   };
 
-  // Updates user message if a game is over
+  // Determines appropriate user messages after the game is over
   const winner_determined = () => {
     if (winner.current === -1) {
       setMessage('Error: One of the players is missing. Please join the game.');
@@ -151,61 +157,6 @@ const Board = ({
     gameFinished.current = true;
     setUpdate(update + 1);
   };
-
-  // Handles Reset Button Click
-  const handleReset = (event) => {
-    event.preventDefault();
-
-    // Reset all variables and states managed on front-end
-    const empty_board = ['', '', '', '', '', '', '', '', ''];
-    const restart = 'Please reset the game with same players and same game id';
-    reference.curret = null;
-    markSquare.current = false;
-    errorCode.current = -1;
-    winner.current = -2;
-    newGame.current = true;
-
-    setBoard([...empty_board]);
-    setMessage(``);
-    setUpdate(0);
-
-    console.log('everything reset');
-    console.log(
-      `message: ${message} board: ${boardState} reference: ${reference.current} markSquare: ${markSquare.current} errorCode: ${errorCode.current} winner: ${winner.current}`
-    );
-
-    // Ask back-end to restart the game
-    socket.emit('restart', restart);
-  };
-
-  // Buttons
-  const reset_button = (
-    <button
-      className="col reset-button"
-      id="reset_game"
-      type="button"
-      onClick={handleReset}
-    >
-      Reset Game
-    </button>
-  );
-
-  const replay_button = (
-    <button
-      className="col reset-button"
-      id="play_again"
-      type="button"
-      onClick={handleReset}
-    >
-      Play Again
-    </button>
-  );
-
-  if (winner.current === 0 || winner.current === 1 || winner.current === 2) {
-    button.current = replay_button;
-  } else {
-    button.current = reset_button;
-  }
 
   // renders the board
   return (
@@ -343,7 +294,6 @@ const Board = ({
           {message}
         </div>
       </div>
-      <div className="row">{button.current}</div>
       {gameFinished.current === false ? <Chat socket={socket} /> : <></>}
     </div>
   );

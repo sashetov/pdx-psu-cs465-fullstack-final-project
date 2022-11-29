@@ -7,19 +7,21 @@ import Container from './Container';
 import Home from './Home';
 import Comments from './Comments';
 
-// set up buttons to navigate bewtween pages? Or we can do navbar. still thinking
+// Handles button clicks and rendering of appropriate pages
 function ButtonHandler({ socket }) {
-  const [show, setShow] = useState(null);
-  const linked = useRef(false);
-  const newGame = useRef(true);
-  const first_player = useRef('');
-  const second_player = useRef('');
-  const gameFinished = useRef(false);
+  // Hooks
+  const [show, setShow] = useState(null); // variable for which page to render
+  const linked = useRef(false); // variable for whether a button is clicked
+  const newGame = useRef(true); // variable for whether this a new game or the game has already started
+  const first_player = useRef(''); // variable for the name of the first player
+  const second_player = useRef(''); // variable for the name of the second player
+  const gameFinished = useRef(false); // variable for whether the game has finished (controls whether chat component is shown)
 
   // handles click of Home button
   const handleHome = () => {
-    console.log(`in handle home. newGame is ${newGame.current}`);
     linked.current = true;
+
+    // Game hasn't started
     if (newGame.current === true) {
       setShow(
         <Container
@@ -30,7 +32,9 @@ function ButtonHandler({ socket }) {
           gameFinished={gameFinished}
         />
       );
-    } else {
+    }
+    // In a game
+    else {
       setShow(
         <Home
           socket={socket}
@@ -49,7 +53,7 @@ function ButtonHandler({ socket }) {
     setShow(<About />);
   };
 
-  // handles click of How To Play button
+  // handles click of HowToPlay button
   const handleHowToPlay = () => {
     linked.current = true;
     setShow(<HowToPlay />);
@@ -67,6 +71,7 @@ function ButtonHandler({ socket }) {
     setShow(<Comments />);
   };
 
+  // render pages
   if (linked.current === true) {
     return (
       <div>

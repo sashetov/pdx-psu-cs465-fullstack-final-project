@@ -2,11 +2,9 @@ import React from 'react';
 
 // Form in Connect Page
 function Form() {
-  console.log('in Form');
-
+  // Handles form submit
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event);
     // Name and Email Entered
     if (
       event.target.name.value.length > 0 &&
@@ -15,29 +13,39 @@ function Form() {
       console.log('---- Form Submission Acceptable ----');
       console.log('Name: ' + event.target.name.value);
       console.log('Email: ' + event.target.email.value);
+
       // Comment filled
       if (event.target.comments.value.length > 0) {
         console.log(`Comments: ${event.target.comments.value}`);
 
-        // posts comment
-        let url = new URL('http://localhost:8080/comments'),
-          params = {
-            name: event.target.name.value,
-            email: event.target.email.value,
-            comments: event.target.comments.value,
-          };
-        Object.keys(params).forEach((key) =>
-          url.searchParams.append(key, params[key])
-        );
+        const url = 'http://localhost:8080/comments';
+        const data = {
+          name: event.target.name.value,
+          email: event.target.email.value,
+          comments: event.target.comments.value,
+        };
 
-        fetch(url)
-          .then((response) => {
+        // Handles POST to /comments
+        const postData = async (url, data) => {
+          try {
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              credentials: 'same-origin',
+              referrerPolicy: 'no-referrer',
+              redirect: 'follow',
+              body: JSON.stringify(data),
+            });
             console.log(response.json());
-          })
-          .catch((err) => console.error(`Error: ${err.message}`));
-      }
-      // Comment empty
-      else {
+          } catch (error) {
+            console.error(error);
+          }
+        };
+
+        postData(url, data);
+
+        // Comment empty
+      } else {
         console.log('Comments: N/A');
       }
       window.alert(`Thank you for connecting ${event.target.name.value}!`);
@@ -50,29 +58,47 @@ function Form() {
   };
 
   return (
-    <div className="container mx-auto my-auto text-center form">
+    <div className="container mx-auto my-auto text-center">
       <form
-        className="connect form w-50 mx-auto mt-5 p-3"
+        className="connect_form form w-50 mx-auto mt-5 p-3"
         onSubmit={handleSubmit}
       >
-        <h2 className="h1 mt-2 mb-4">Let's Connect!</h2>
+        <h1 className="mt-2 mb-4 connect_header">Let's Connect!</h1>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="name">
+          <label className="py-2" for="name" data-testid="name-label">
             Name
           </label>
-          <input type="text" className="form-control" id="name" />
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            aria-label="name"
+            data-testid="name"
+          />
         </div>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="email">
+          <label className="py-2" for="email" data-testid="email-label">
             Email
           </label>
-          <input type="email" className="form-control" id="email" />
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            aria-label="email"
+            data-testid="email"
+          />
         </div>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="comments">
+          <label className="py-2" for="comments" data-testid="comments-label">
             Comments
           </label>
-          <textarea className="form-control" id="comments" rows="4"></textarea>
+          <textarea
+            className="form-control"
+            id="comments"
+            rows="4"
+            aria-label="comments"
+            data-testid="comments"
+          ></textarea>
         </div>
         <div className="row form-group mx-auto mb-2">
           <input
@@ -80,12 +106,16 @@ function Form() {
             type="submit"
             name="submit"
             value="Submit"
+            aria-label="submit"
+            data-testid="submit"
           />
           <input
             className="col btn btn-secondary mx-1 my-2 px-5"
             type="reset"
             name="reset"
             value="Reset"
+            aria-label="reset"
+            data-testid="reset"
           />
         </div>
       </form>

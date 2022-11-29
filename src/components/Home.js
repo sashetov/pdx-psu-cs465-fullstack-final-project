@@ -2,6 +2,7 @@ import React from 'react';
 import Banner from './Banner';
 import Board from './Board';
 
+// Renders Home page
 const Home = ({
   socket,
   newGame,

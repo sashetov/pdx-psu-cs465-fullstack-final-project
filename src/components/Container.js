@@ -10,9 +10,10 @@ const Container = ({
   newGame,
   gameFinished,
 }) => {
+  // Hooks
   const [joined, setJoined] = useState(false);
   const [toRender, setToRender] = useState(null);
-  const player_name = useRef('');
+  const player_name = useRef(''); // variable to hold player's name
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -34,17 +35,17 @@ const Container = ({
 
   socket.on('opponentAvailable', (data) => {
     if (data.status === 'ok') {
-      // Determine if you are the first player
+      // Determine if the user is the first player
       if (data.data.isYourTurn === true) {
         first_player.current = player_name.current;
         second_player.current = data.data.opponentName;
       }
-      // Not the first player
+      // The user is the first player
       else {
         second_player.current = player_name.current;
         first_player.current = data.data.opponentName;
       }
-      newGame.current = false;
+      newGame.current = false; // user in game now
       setToRender(
         <Board
           socket={socket}
@@ -64,7 +65,6 @@ const Container = ({
       method="get"
       onSubmit={(event) => {
         // Player name entered
-        console.log(event);
         if (event.target.name.value.length > 0) {
           handleSubmit(event);
         }

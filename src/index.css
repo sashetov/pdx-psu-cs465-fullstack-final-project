@@ -9,20 +9,22 @@
 
 @font-face {
   font-family: 'merriweather_sansitalic';
-  src: url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff2') format('woff2'),
-       url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff') format('woff');
+  src: url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff2')
+      format('woff2'),
+    url('./fonts/merriweathersans-italic-variablefont_wght-webfont.woff')
+      format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 @font-face {
   font-family: 'merriweather_sansregular';
-  src: url('./fonts/merriweathersans-variablefont_wght-webfont.woff2') format('woff2'),
-       url('./fonts/merriweathersans-variablefont_wght-webfont.woff') format('woff');
+  src: url('./fonts/merriweathersans-variablefont_wght-webfont.woff2')
+      format('woff2'),
+    url('./fonts/merriweathersans-variablefont_wght-webfont.woff')
+      format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 html,
 body {
@@ -90,7 +92,7 @@ h1 {
   line-height: 50px;
 }
 
-li  {
+li {
   display: block !important;
 }
 
@@ -98,50 +100,62 @@ li  {
   display: block;
   max-height: 100px;
   overflow-y: auto;
-} 
+}
+
 /* Navigation buttons */
+.nav-container {
+  font-family: 'merriweather_sansregular';
+  margin: auto;
+  text-align: center;
+}
+
 .nav-btn {
-  font-family: 'dancing_scriptregular';
+  font-family: 'merriweather_sansregular';
   color: white;
   height: 30px;
   width: auto;
   border: 1px solid lightblue;
   border-radius: 5px;
-  background-color: #779ecb;
+  background-color: #012146;
   margin: 3px;
   padding: 4px;
 }
 
-.connect {
-  font-family: 'dancing_scriptregular';
+.connect_header {
+  font-family: 'merriweather_sansregular';
+  font-size: 60px;
 }
 
 .about {
-  font-family: 'dancing_scriptregular';
+  font-family: 'merriweather_sansregular';
 }
 
-.play_again {
-  font-family: 'dancing_scriptregular';
-  color: white;
-  height: 30px;
-  width: auto;
-  border: 1px solid slateblue;
-  border-radius: 5px;
-  background-color: darkslateblue;
-  margin: 3px;
-  padding: 4px;
+.howtoplay_container {
+  margin: auto;
+  text-align: left;
+  font-family: 'merriweather_sansregular';
+  padding: 20px;
+}
+.howtoplay_header {
+  font-family: 'merriweather_sansregular';
+  font-size: 40px;
 }
 
-.reset_game {
-  font-family: 'dancing_scriptregular';
-  color: black;
-  height: 30px;
-  width: auto;
-  border: 1px solid green;
-  border-radius: 5px;
-  background-color: lightgreen;
-  margin: 3px;
-  padding: 4px;
+.comments_container {
+  font-family: 'merriweather_sansregular';
+  margin: auto;
+  text-align: center;
+}
+.comments_header {
+  font-family: 'merriweather_sansregular';
+  font-size: 60px;
+}
+.comments_explain {
+  font-family: 'merriweather_sansregular';
+  font-size: 25px;
+}
+.comments_display {
+  font-size: 20px;
 }
 
 .spinner {

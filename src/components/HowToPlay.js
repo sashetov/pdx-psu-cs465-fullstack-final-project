@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Page to Explain how to play the game
+// Renders HowToPlay page, explaining the game mechanics
 function HowToPlay() {
   const horizontal_wins = ` X | X | X       |   |          |   |   
 -----------   -----------    -----------
@@ -27,12 +27,17 @@ function HowToPlay() {
  O | O | X     O | X | X      X | X | O `;
 
   return (
-    <div className="container mx-auto text-left">
-      <h1 className="display-1 text-center">How to Play Tic-Tac-Toe</h1>
-      <p>This game is played with two players</p>
+    <div className="howtoplay_container">
+      <h1
+        className="display-1 text-center howtoplay_header"
+        data-testid="how_to_header"
+      >
+        How to Play Tic-Tac-Toe
+      </h1>
+      <p data-testid="two_players">This game is played with two players</p>
       <div>
-        <p>Rules:</p>
-        <ul>
+        <p data-testid="rules">Rules:</p>
+        <ul data-testid="list_of_rules">
           <li>
             The first player enter their name to connect will be 'Player 1'
           </li>
@@ -63,24 +68,24 @@ function HowToPlay() {
         </ul>
       </div>
       <div>
-        <p>Example Wins:</p>
-        <p>
-          <pre>{horizontal_wins}</pre>
-        </p>
+        <p data-testid="wins">Example Wins:</p>
+        <pre data-testid="h_wins">
+          <p>{horizontal_wins}</p>
+        </pre>
         <p></p>
-        <p>
-          <pre>{vertical_wins}</pre>
-        </p>
+        <pre data-testid="v_wins">
+          <p>{vertical_wins}</p>
+        </pre>
         <p></p>
-        <p>
-          <pre>{diagonal_wins}</pre>
-        </p>
+        <pre data-testid="d_wins">
+          <p>{diagonal_wins}</p>
+        </pre>
       </div>
       <div>
-        <p>Example Tied Condition:</p>
-        <p>
-          <pre>{tied}</pre>
-        </p>
+        <p data-testid="ties">Example Tied Conditions:</p>
+        <pre data-testid="tied">
+          <p>{tied}</p>
+        </pre>
       </div>
     </div>
   );
