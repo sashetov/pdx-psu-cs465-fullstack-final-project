@@ -10,6 +10,7 @@ import Board from './components/Board';
 import Comments from './components/Comments';
 
 test('About page renders correctly', () => {
+  // this one passes
   // render About on virtual dom
   render(<About />);
 
@@ -55,7 +56,7 @@ test('About page renders correctly', () => {
 
 test('How To Play page renders correctly', () => {
   // variables for easy testing
-  const horizontal_wins = ` X | X | X | | | | ----------- ----------- ----------- | | X | X | X | | ----------- ----------- ----------- | | | | X | X | X`;
+  const horizontal_wins = ` X | X | X | | | | ----------- ----------- ----------- | | X | X | X | | ----------- ----------- ----------- | | | | X | X | X `;
 
   const vertical_wins = ` O |   |         | O |          |   | O 
    -----------   -----------    -----------
@@ -82,7 +83,7 @@ test('How To Play page renders correctly', () => {
   const two = screen.getByTestId('two_players');
   const rules = screen.getByTestId('rules');
   const list = screen.getByTestId('list_of_rules');
-  const { getAllByRole } = within(list);
+  const { getAllByRole } = within(list); // issue in ariel's side
   const rule_list = getAllByRole('listitem');
   const wins = screen.getByTestId('wins');
   const ties = screen.getByTestId('ties');
@@ -92,7 +93,7 @@ test('How To Play page renders correctly', () => {
   const tied = screen.getByTestId('tied');
 
   // expected results
-  expect(rule_list.length).toBe(9);
+  expect(rule_list.length).toBe(9); // possible issue
   expect(heading).toHaveTextContent('How to Play Tic-Tac-Toe');
   expect(two).toHaveTextContent('This game is played with two players');
   expect(rules).toHaveTextContent('Rules:');
@@ -105,8 +106,24 @@ test('How To Play page renders correctly', () => {
 });
 
 test('Buttons function correctly', () => {
+  //this one passes
+  // Mock functions
+  const handleHome = jest.fn();
+  const handleAbout = jest.fn();
+  const handleConnect = jest.fn();
+  const handleHowToPlay = jest.fn();
+  const handleComments = jest.fn();
+
   // render About on virtual dom
-  render(<Buttons />);
+  render(
+    <Buttons
+      handleHome={handleHome}
+      handleAbout={handleAbout}
+      handleConnect={handleConnect}
+      handleHowToPlay={handleHowToPlay}
+      handleComments={handleComments}
+    />
+  );
 
   // buttons to test
   const home = screen.getByTestId('home_button');
@@ -123,16 +140,37 @@ test('Buttons function correctly', () => {
   fireEvent.click(comment);
 
   // expected results
-  expect(home).toHaveBeenCalledTimes(1); //TODO apparently this isnt correct
-  expect(about).toHaveBeenCalledTimes(1);
-  expect(howTo).toHaveBeenCalledTimes(1);
-  expect(connect).toHaveBeenCalledTimes(1);
-  expect(comment).toHaveBeenCalledTimes(1);
+  expect(home).toBeDefined();
+  expect(about).toBeDefined();
+  expect(howTo).toBeDefined();
+  expect(connect).toBeDefined();
+  expect(comment).toBeDefined();
+
+  expect(handleHome).toHaveBeenCalledTimes(1); //TODO apparently this isnt correct
+  expect(handleAbout).toHaveBeenCalledTimes(1);
+  expect(handleHowToPlay).toHaveBeenCalledTimes(1);
+  expect(handleConnect).toHaveBeenCalledTimes(1);
+  expect(handleComments).toHaveBeenCalledTimes(1);
 });
 
 test('About render correctly when About button clicked', () => {
+  // Mock functions
+  const handleHome = jest.fn();
+  const handleAbout = jest.fn();
+  const handleConnect = jest.fn();
+  const handleHowToPlay = jest.fn();
+  const handleComments = jest.fn();
+
   // render About on virtual dom
-  render(<Buttons />);
+  render(
+    <Buttons
+      handleHome={handleHome}
+      handleAbout={handleAbout}
+      handleConnect={handleConnect}
+      handleHowToPlay={handleHowToPlay}
+      handleComments={handleComments}
+    />
+  );
 
   // buttons to test
   const about = screen.getByTestId('about_button');
@@ -150,6 +188,10 @@ test('About render correctly when About button clicked', () => {
   fireEvent.click(about);
 
   // expected results
+  expect(about).toBeDefined();
+
+  expect(handleAbout).toHaveBeenCalledTimes(1);
+
   expect(heading).toHaveTextContent('About');
   expect(p1).toHaveTextContent(
     'This is a CS465/565 Final Project by Ariel, Cera, and Alex'
