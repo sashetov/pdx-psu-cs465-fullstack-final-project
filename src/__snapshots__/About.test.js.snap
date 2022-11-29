@@ -1,6 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`About render correctly when About button clicked 1`] = `
+exports[`About render to match snapshot 1`] = `
+<div
+  className="container mx-auto text-center"
+>
+  <h1
+    araia-label="about heading"
+    className="about display-1"
+    data-testid="about"
+  >
+    About
+  </h1>
+  <p
+    data-testid="p1"
+  >
+    This is a CS465/565 Final Project by Ariel, Cera, and Alex
+  </p>
+  <p
+    data-testid="p2"
+  >
+    We wanted to implement a game using Node.js, React.js, Express.js, and Socket.io
+  </p>
+  <p
+    data-testid="p3"
+  >
+    We decided on a Tic-Tac-Toe game
+  </p>
+  <p
+    data-testid="p4"
+  >
+    Our project code can be found in: 
+  </p>
+  <p>
+    <a
+      araia-label="github link code"
+      data-testid="link-project"
+      href="https://github.com/gleason9113/465final"
+      rel="noreferrer"
+      target="_blank"
+    >
+      Project
+    </a>
+  </p>
+  <p>
+    More about each of us can be found in:
+  </p>
+  <p>
+    <a
+      araia-label="github link cera"
+      data-testid="cera-git"
+      href="https://github.com/C3ra906"
+      rel="noreferrer"
+      target="_blank"
+    >
+      Cera's Github
+    </a>
+  </p>
+  <p>
+    <a
+      araia-label="github link alex"
+      data-testid="alex-git"
+      href="https://github.com/sashetov"
+      rel="noreferrer"
+      target="_blank"
+    >
+      Alex's Github
+    </a>
+  </p>
+  <p>
+    <a
+      araia-label="github link ariel"
+      data-testid="ariel-git"
+      href="https://github.com/gleason9113"
+      rel="noreferrer"
+      target="_blank"
+    >
+      Ariel's Github
+    </a>
+  </p>
+</div>
+`;
+
+exports[`Buttons render to match snapshot 1`] = `
 <div
   className="nav-container"
 >
@@ -52,50 +133,118 @@ exports[`About render correctly when About button clicked 1`] = `
 </div>
 `;
 
-exports[`Home render correctly when Home button clicked 1`] = `
+exports[`HowToPlay render to match snapshot 1`] = `
 <div
-  className="nav-container"
+  className="howtoplay_container"
 >
-  <button
-    className="nav-btn"
-    data-testid="home_button"
-    id="home"
-    onClick={[MockFunction]}
-    type="button"
+  <h1
+    className="display-1 text-center howtoplay_header"
+    data-testid="how_to_header"
   >
-    Home
-  </button>
-  <button
-    className="nav-btn"
-    data-testid="about_button"
-    id="about"
-    type="button"
+    How to Play Tic-Tac-Toe
+  </h1>
+  <p
+    data-testid="two_players"
   >
-    About
-  </button>
-  <button
-    className="nav-btn"
-    data-testid="connect_button"
-    id="connect"
-    type="button"
-  >
-    Connect
-  </button>
-  <button
-    className="nav-btn"
-    data-testid="howToPlay_button"
-    id="how"
-    type="button"
-  >
-    How To Play
-  </button>
-  <button
-    className="nav-btn"
-    data-testid="comment_button"
-    id="comments"
-    type="button"
-  >
-    Comments
-  </button>
+    This game is played with two players
+  </p>
+  <div>
+    <p
+      data-testid="rules"
+    >
+      Rules:
+    </p>
+    <ul
+      data-testid="list_of_rules"
+    >
+      <li>
+        The first player enter their name to connect will be 'Player 1'
+      </li>
+      <li>
+        The second player to enter their name to connect will be 'Player 2'
+      </li>
+      <li>
+        Player 1 needs to wait until there is a Player 2
+      </li>
+      <li>
+        Player 1 is assigned the symbol 'X' and Player 2 is assigned the symbol 'O'
+      </li>
+      <li>
+        Once there are two players, the game screen will load the 3x3 board
+      </li>
+      <li>
+        The game is played by clicking on a square of the board
+      </li>
+      <li>
+        If the move is valid, the chosen square will be marked by the player's symbol
+      </li>
+      <li>
+        Whoever is the first to connect 3 of their symbols horizontally, vertically, or diagonally wins the game
+      </li>
+      <li>
+        The game will end in a tie if all squares are filled but no one has connected 3 of their symbols
+      </li>
+    </ul>
+  </div>
+  <div>
+    <p
+      data-testid="wins"
+    >
+      Example Wins:
+    </p>
+    <pre
+      data-testid="h_wins"
+    >
+      <p>
+         X | X | X       |   |          |   |   
+-----------   -----------    -----------
+   |   |       X | X | X        |   |
+-----------   -----------    -----------
+   |   |         |   |        X | X | X 
+      </p>
+    </pre>
+    <p />
+    <pre
+      data-testid="v_wins"
+    >
+      <p>
+         O |   |         | O |          |   | O 
+-----------   -----------    -----------
+ O |   |         | O |          |   | O
+-----------   -----------    -----------
+ O |   |         | O |          |   | O
+      </p>
+    </pre>
+    <p />
+    <pre
+      data-testid="d_wins"
+    >
+      <p>
+         X |   |         |   | O
+-----------   -----------
+   | X |         | O |   
+-----------   -----------
+   |   | X     O |   |    
+      </p>
+    </pre>
+  </div>
+  <div>
+    <p
+      data-testid="ties"
+    >
+      Example Tied Conditions:
+    </p>
+    <pre
+      data-testid="tied"
+    >
+      <p>
+         X | O | X     X | O | O      X | X | O
+-----------   -----------    -----------
+ X | X | O     X | O | X      O | O | X
+-----------   -----------    -----------
+ O | O | X     O | X | X      X | X | O 
+      </p>
+    </pre>
+  </div>
 </div>
 `;

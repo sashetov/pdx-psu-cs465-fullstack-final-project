@@ -1,6 +1,7 @@
 import { render, fireEvent, screen, within } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom/extend-expect';
+import MockedSocket from 'socket.io-mock';
 import About from './components/About';
 import HowToPlay from './components/HowToPlay';
 import Form from './components/Form';
@@ -59,8 +60,8 @@ test('Buttons function correctly', () => {
   expect(handleComments).toHaveBeenCalledTimes(1);
 });
 
-// Test Home Button rendering Home
-test('Home render correctly when Home button clicked', () => {
+// Buttons render correctly
+test('Buttons render to match snapshot', () => {
   // Mock functions
   const handleHome = jest.fn();
   const handleAbout = jest.fn();
@@ -68,25 +69,8 @@ test('Home render correctly when Home button clicked', () => {
   const handleHowToPlay = jest.fn();
   const handleComments = jest.fn();
 
-  // render About on virtual dom
-  const home_render = renderer
-    .create(<Buttons handleHome={handleHome} />)
-    .toJSON();
-
-  // expected results
-  expect(home_render).toMatchSnapshot();
-});
-
-test('About render correctly when About button clicked', () => {
-  // Mock functions
-  const handleHome = jest.fn();
-  const handleAbout = jest.fn();
-  const handleConnect = jest.fn();
-  const handleHowToPlay = jest.fn();
-  const handleComments = jest.fn();
-
-  // render About on virtual dom
-  const about_render = renderer
+  // render
+  const buttons = renderer
     .create(
       <Buttons
         handleHome={handleHome}
@@ -99,7 +83,7 @@ test('About render correctly when About button clicked', () => {
     .toJSON();
 
   // expected results
-  expect(about_render).toMatchSnapshot();
+  expect(buttons).toMatchSnapshot();
 });
 
 // Tests About page rendering
@@ -146,6 +130,15 @@ test('About page renders correctly', () => {
   expect(alex_git).toHaveAttribute('target', '_blank');
   expect(ariel_git).toHaveAttribute('href', 'https://github.com/gleason9113');
   expect(ariel_git).toHaveAttribute('target', '_blank');
+});
+
+// About render correctly
+test('About render to match snapshot', () => {
+  // render
+  const about = renderer.create(<About />).toJSON();
+
+  // expected results
+  expect(about).toMatchSnapshot();
 });
 
 // Tests How To Play page rendering
@@ -200,6 +193,39 @@ test('How To Play page renders correctly', () => {
   expect(tied).toHaveTextContent(tie_con);
 });
 
+// HowToPlay render correctly
+test('HowToPlay render to match snapshot', () => {
+  // render
+  const howTo = renderer.create(<HowToPlay />).toJSON();
+
+  // expected results
+  expect(howTo).toMatchSnapshot();
+});
+
+// Home render correctly
+test('Home render to match snapshot', () => {
+  const socket = new MockedSocket();
+  const newGame = false;
+  const first_player = 'A';
+  const second_player = 'B';
+  const gameFinished = false;
+  // render
+  const home = renderer
+    .create(
+      <Home
+        socket={socket}
+        first_player={first_player}
+        second_player={second_player}
+        newGame={newGame}
+        gameFinished={gameFinished}
+      />
+    )
+    .toJSON();
+
+  // expected results
+  expect(home).toMatchSnapshot();
+});
+
 test('Connect page renders correctly', () => {
   // render About on virtual dom
   render(<Form />);
@@ -214,6 +240,8 @@ test('Connect page renders correctly', () => {
   const submit = screen.getByTestId('submit');
   const reset = screen.getByTestId('reset');
 
+  const handleSubmit = jest.fn();
+
   // interaction
   fireEvent.click(submit);
   fireEvent.click(reset);
@@ -222,4 +250,7 @@ test('Connect page renders correctly', () => {
   expect(name_label).toHaveTextContent('Name');
   expect(email_label).toHaveTextContent('Email');
   expect(comments_label).toHaveTextContent('Comments');
+  expect(submit).toBeDefined();
+  expect(reset).toBeDefined();
+  expect(handleSubmit).toHaveBeenCalledTimes(1);
 });
