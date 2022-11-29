@@ -260,9 +260,9 @@ test('Inputs render correctly', async () => {
   const comments = screen.getByTestId('comments');
 
   // interaction
-  userEvent.type(name, 'cera');
-  userEvent.type(email, 'abc@pdx.edu');
-  userEvent.type(comments, 'Hello');
+  userEvent.keyboard(name, 'cera');
+  userEvent.keyboard(email, 'abc@pdx.edu');
+  userEvent.keyboard(comments, 'Hello');
 
   // expected results
   await expect(name).toHaveValue('cera');
