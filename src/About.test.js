@@ -218,35 +218,56 @@ test('Home render to match snapshot', () => {
   expect(home).toMatchSnapshot();
 });
 
+// Connect page renders Correctly
 test('Connect page renders correctly', () => {
   // render Form on virtual dom
   render(<Form />);
 
   // elements to test
-  const name = screen.getByTestId('name');
+  const header = screen.getByTestId('connect_header');
   const name_label = screen.getByTestId('name-label');
-  const email = screen.getByTestId('email');
   const email_label = screen.getByTestId('email-label');
-  const comments = screen.getByTestId('comments');
   const comments_label = screen.getByTestId('comments-label');
   const submit = screen.getByTestId('submit');
   const reset = screen.getByTestId('reset');
 
-  const handleSubmit = jest.fn();
-
   // interaction
   fireEvent.click(reset);
-  userEvent.click(submit);
+  fireEvent.click(submit);
 
   // expected results
   expect(submit).toBeDefined();
   expect(reset).toBeDefined();
 
-  expect(handleSubmit).toHaveBeenCalledTimes(1);
-
+  expect(header).toHaveTextContent("Let's Connect!");
   expect(name_label).toHaveTextContent('Name');
   expect(email_label).toHaveTextContent('Email');
   expect(comments_label).toHaveTextContent('Comments');
+});
+
+// Test Connect inputs
+test('Inputs render correctly', async () => {
+  // render Form on virtual dom
+  render(
+    <Form>
+      <input />
+    </Form>
+  );
+
+  // elements to test
+  const name = screen.getByTestId('name');
+  const email = screen.getByTestId('email');
+  const comments = screen.getByTestId('comments');
+
+  // interaction
+  userEvent.type(name, 'cera');
+  userEvent.type(email, 'abc@pdx.edu');
+  userEvent.type(comments, 'Hello');
+
+  // expected results
+  await expect(name).toHaveValue('cera');
+  await expect(email).toHaveValue('abc@pdx.edu');
+  await expect(comments).toHaveValue('hello');
 });
 
 // Connect render to match snapshot

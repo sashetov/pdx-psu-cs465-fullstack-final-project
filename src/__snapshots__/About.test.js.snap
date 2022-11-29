@@ -272,11 +272,15 @@ exports[`Connect render to match snapshot 1`] = `
   className="container mx-auto my-auto text-center"
 >
   <form
+    aria-label="connect form"
     className="connect_form form w-50 mx-auto mt-5 p-3"
+    data-testid="connect_form"
     onSubmit={[Function]}
   >
     <h1
+      aria-label="connect header"
       className="mt-2 mb-4 connect_header"
+      data-testid="connect_header"
     >
       Let's Connect!
     </h1>
@@ -284,14 +288,15 @@ exports[`Connect render to match snapshot 1`] = `
       className="form-group mx-auto my-2"
     >
       <label
-        className="py-2"
+        aria-label="name label"
+        className="py-2 name_label"
         data-testid="name-label"
-        for="name"
+        htmlFor="name"
       >
         Name
       </label>
       <input
-        aria-label="name"
+        aria-label="name field"
         className="form-control"
         data-testid="name"
         id="name"
@@ -302,14 +307,15 @@ exports[`Connect render to match snapshot 1`] = `
       className="form-group mx-auto my-2"
     >
       <label
+        aria-label="email label"
         className="py-2"
         data-testid="email-label"
-        for="email"
+        htmlFor="email"
       >
         Email
       </label>
       <input
-        aria-label="email"
+        aria-label="email field"
         className="form-control"
         data-testid="email"
         id="email"
@@ -320,14 +326,15 @@ exports[`Connect render to match snapshot 1`] = `
       className="form-group mx-auto my-2"
     >
       <label
+        aria-label="comments label"
         className="py-2"
         data-testid="comments-label"
-        for="comments"
+        htmlFor="comments"
       >
         Comments
       </label>
       <textarea
-        aria-label="comments"
+        aria-label="comments field"
         className="form-control"
         data-testid="comments"
         id="comments"

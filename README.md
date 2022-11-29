@@ -101,6 +101,7 @@ eslint for linting
 [https://testing-library.com/docs/user-event/setup/](https://testing-library.com/docs/user-event/setup/)
 [how-to-mock-socket-io-client-using-jest-react-testing-library](https://stackoverflow.com/questions/58211676/how-to-mock-socket-io-client-using-jest-react-testing-library)
 [Fetch and display data from API in React js](https://www.codingdeft.com/posts/react-fetch-data-api/)
+[How To Write Snapshot Tests For React Components With Jest](https://www.digitalocean.com/community/tutorials/how-to-write-snapshot-tests-for-react-components-with-jest)
 
 ## Test /join endpoint from browser:
 

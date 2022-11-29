@@ -62,41 +62,64 @@ function Form() {
       <form
         className="connect_form form w-50 mx-auto mt-5 p-3"
         onSubmit={handleSubmit}
+        aria-label="connect form"
+        data-testid="connect_form"
       >
-        <h1 className="mt-2 mb-4 connect_header">Let's Connect!</h1>
+        <h1
+          className="mt-2 mb-4 connect_header"
+          data-testid="connect_header"
+          aria-label="connect header"
+        >
+          Let's Connect!
+        </h1>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="name" data-testid="name-label">
+          <label
+            className="py-2 name_label"
+            htmlFor="name"
+            aria-label="name label"
+            data-testid="name-label"
+          >
             Name
           </label>
           <input
             type="text"
             className="form-control"
             id="name"
-            aria-label="name"
+            aria-label="name field"
             data-testid="name"
           />
         </div>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="email" data-testid="email-label">
+          <label
+            className="py-2"
+            htmlFor="email"
+            data-testid="email-label"
+            aria-label="email label"
+          >
             Email
           </label>
           <input
             type="email"
             className="form-control"
             id="email"
-            aria-label="email"
+            aria-label="email field"
             data-testid="email"
           />
         </div>
         <div className="form-group mx-auto my-2">
-          <label className="py-2" for="comments" data-testid="comments-label">
+          <label
+            className="py-2"
+            htmlFor="comments"
+            data-testid="comments-label"
+            aria-label="comments label"
+          >
             Comments
           </label>
           <textarea
             className="form-control"
             id="comments"
             rows="4"
-            aria-label="comments"
+            aria-label="comments field"
             data-testid="comments"
           ></textarea>
         </div>
