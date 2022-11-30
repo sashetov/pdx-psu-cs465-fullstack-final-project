@@ -194,30 +194,6 @@ test('HowToPlay render to match snapshot', () => {
   expect(howTo).toMatchSnapshot();
 });
 
-// Home render to match snapshot
-test('Home render to match snapshot', () => {
-  const socket = new MockedSocket();
-  const newGame = true;
-  const first_player = 'A';
-  const second_player = 'B';
-  const gameFinished = false;
-  // render
-  const home = renderer
-    .create(
-      <Home
-        socket={socket}
-        first_player={first_player}
-        second_player={second_player}
-        newGame={newGame}
-        gameFinished={gameFinished}
-      />
-    )
-    .toJSON();
-
-  // expected results
-  expect(home).toMatchSnapshot();
-});
-
 // Connect page renders Correctly
 test('Connect page renders correctly', () => {
   // render Form on virtual dom
@@ -228,16 +204,6 @@ test('Connect page renders correctly', () => {
   const name_label = screen.getByTestId('name-label');
   const email_label = screen.getByTestId('email-label');
   const comments_label = screen.getByTestId('comments-label');
-  const submit = screen.getByTestId('submit');
-  const reset = screen.getByTestId('reset');
-
-  // interaction
-  fireEvent.click(reset);
-  fireEvent.click(submit);
-
-  // expected results
-  expect(submit).toBeDefined();
-  expect(reset).toBeDefined();
 
   expect(header).toHaveTextContent("Let's Connect!");
   expect(name_label).toHaveTextContent('Name');
@@ -260,14 +226,14 @@ test('Inputs render correctly', async () => {
   const comments = screen.getByTestId('comments');
 
   // interaction
-  userEvent.keyboard(name, 'cera');
-  userEvent.keyboard(email, 'abc@pdx.edu');
-  userEvent.keyboard(comments, 'Hello');
+  fireEvent.change(name, { target: { value: 'cera' } });
+  fireEvent.change(email, { target: { value: 'abc@pdx.edu' } });
+  fireEvent.change(comments, { target: { value: 'Hello' } });
 
   // expected results
   await expect(name).toHaveValue('cera');
   await expect(email).toHaveValue('abc@pdx.edu');
-  await expect(comments).toHaveValue('hello');
+  await expect(comments).toHaveValue('Hello');
 });
 
 // Connect render to match snapshot
