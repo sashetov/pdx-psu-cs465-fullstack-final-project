@@ -103,6 +103,7 @@ eslint for linting
 [Fetch and display data from API in React js](https://www.codingdeft.com/posts/react-fetch-data-api/)
 [How To Write Snapshot Tests For React Components With Jest](https://www.digitalocean.com/community/tutorials/how-to-write-snapshot-tests-for-react-components-with-jest)
 [Firing Events](https://testing-library.com/docs/dom-testing-library/api-events#fireevent)
+[How to test useRef() without mocking useRef()?](https://medium.com/developer-rants/how-to-test-useref-without-mocking-useref-699165f4994e)
 
 ## Test /join endpoint from browser:
 

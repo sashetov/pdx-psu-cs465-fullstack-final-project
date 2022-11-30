@@ -229,6 +229,7 @@ test('How To Play page renders correctly', () => {
   const v_wins = screen.getByTestId('v_wins');
   const d_wins = screen.getByTestId('d_wins');
   const tied_ex = screen.getByTestId('tied_ex');
+  const enjoy = screen.getByTestId('enjoy');
 
   // expected results
   expect(rule_list.length).toBe(9);
@@ -241,6 +242,7 @@ test('How To Play page renders correctly', () => {
   expect(v_wins).toBeTruthy();
   expect(d_wins).toBeTruthy();
   expect(tied_ex).toBeTruthy();
+  expect(enjoy).toHaveTextContent('Hope you enjoy the game!');
 });
 
 // HowToPlay render to match snapshot

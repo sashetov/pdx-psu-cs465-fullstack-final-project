@@ -881,5 +881,13 @@ exports[`HowToPlay render to match snapshot 1`] = `
       </p>
     </pre>
   </div>
+  <div>
+    <p
+      aria-label="enjoy"
+      data-testid="enjoy"
+    >
+      Hope you enjoy the game!
+    </p>
+  </div>
 </div>
 `;

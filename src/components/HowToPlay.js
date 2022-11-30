@@ -94,6 +94,11 @@ function HowToPlay() {
           <p>{tied}</p>
         </pre>
       </div>
+      <div>
+        <p data-testid="enjoy" aria-label="enjoy">
+          Hope you enjoy the game!
+        </p>
+      </div>
     </div>
   );
 }
