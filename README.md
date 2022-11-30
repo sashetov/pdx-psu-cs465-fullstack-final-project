@@ -45,64 +45,63 @@ npm run test-react
 You can see the libraries used in package.json, but the main ones are:
 
 ```
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.2.0",
-    "bootstrap": "^5.2.2",
-    "express": "^4.16.4",
-    "jest": "^27.5.1",
-    "mocha": "^10.1.0",
-    "npm": "^9.1.2",
-    "prettier": "^2.7.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1",
-    "should": "^13.2.3",
-    "socket.io": "^4.5.4",
-    "socket.io-client": "^4.5.4",
-    "socket.io-mock": "^1.3.2",
-    "web-vitals": "^2.1.4"
-  },
-  "devDependencies": {
-    "eslint": "^8.24.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.3.0",
-    "eslint-plugin-promise": "^6.0.1",
-    "eslint-plugin-react": "^7.31.8",
-    "nodemon": "^2.0.20"
-  },
+"@testing-library/jest-dom": "^5.16.5",
+"@testing-library/react": "^13.4.0",
+"@testing-library/user-event": "^13.5.0",
+"axios": "^1.2.0",
+"bootstrap": "^5.2.2",
+"create-react-app": "^5.0.1",
+"express": "^4.16.4",
+"jest": "^27.5.1",
+"mocha": "^10.1.0",
+"npm": "^9.1.2",
+"prettier": "^2.7.1",
+"react": "^18.2.0",
+"react-dom": "^18.2.0",
+"react-scripts": "^5.0.1",
+"react-test-renderer": "^18.2.0",
+"run-parallel": "^1.2.0",
+"should": "^13.2.3",
+"socket.io": "^4.5.4",
+"socket.io-client": "^4.5.4",
+"socket.io-mock": "^1.3.2",
+"web-vitals": "^2.1.4"
+"eslint": "^8.24.0",
+"eslint-config-airbnb-base": "^15.0.0",
+"eslint-config-standard": "^17.0.0",
+"eslint-plugin-import": "^2.26.0",
+"eslint-plugin-n": "^15.3.0",
+"eslint-plugin-promise": "^6.0.1",
+"eslint-plugin-react": "^7.31.8",
+"nodemon": "^2.0.20"
 ```
 
-we do use two different test frameworks:\
-jest for the frontend,\
-mocha and should for the backend\
-both front and backend use socket.io\
-the backend uses express\
-the frontend uses react and bootstrap\
-eslint for linting
+We do use two different test frameworks:\
+- jest for the frontend.\
+- mocha and should for the backend.\
+Both front and backend use socket.io.\
+The backend uses express.\
+The frontend uses react and bootstrap.\
+eslint is used for linting.
 
 ## Tutorials Used:
 
-[cometchat: how to build a chat app with socket.io/node.js](https://www.cometchat.com/tutorials/how-to-build-a-chat-app-with-socket-io-node-js)
-[node.js-socket.io-tic-tac-toe](https://codesandbox.io/s/2zx1nj2lqp)
-[tic-tac-toe-cool-math-in-react-js](https://www.golangprograms.com/tic-tac-toe-cool-math-in-react-js.html)
-[build-multiplayer-realtime-tic-tac-toe-game-with-socketio-and-vue](https://dev.to/nilmadhabmondal/build-multiplayer-realtime-tic-tac-toe-game-with-socketio-and-vue-5clp)
-[oreilly react tutorial](https://learning.oreilly.com/videos/react-the/9781801812603/9781801812603-video1_1/)
-[hooks-effect](https://reactjs.org/docs/hooks-effect.html)
-[passing-socket-io-object-between-react-components](https://copyprogramming.com/tutorial/passing-socket-io-object-between-react-components)
-[how-to-send-data-to-socket-io-from-react](https://copyprogramming.com/howto/how-to-send-data-to-socket-io-from-react)
-[introduction-to-socket-io-in-nodejs-with-simple-example](https://medium.com/deep-tour-of-node-js/introduction-to-socket-io-in-nodejs-with-simple-example-74214e6c1da7)
-[https://borzecki.github.io/blog/jest-event-emitters](https://borzecki.github.io/blog/jest-event-emitters)
-[https://stackoverflow.com/questions/56978283/unit-testing-react-click-outside-component-using-jest-and-react-testing-library](https://stackoverflow.com/questions/56978283/unit-testing-react-click-outside-component-using-jest-and-react-testing-library)
-[https://testing-library.com/docs/user-event/setup/](https://testing-library.com/docs/user-event/setup/)
-[how-to-mock-socket-io-client-using-jest-react-testing-library](https://stackoverflow.com/questions/58211676/how-to-mock-socket-io-client-using-jest-react-testing-library)
-[Fetch and display data from API in React js](https://www.codingdeft.com/posts/react-fetch-data-api/)
-[How To Write Snapshot Tests For React Components With Jest](https://www.digitalocean.com/community/tutorials/how-to-write-snapshot-tests-for-react-components-with-jest)
-[Firing Events](https://testing-library.com/docs/dom-testing-library/api-events#fireevent)
+[cometchat: how to build a chat app with socket.io/node.js](https://www.cometchat.com/tutorials/how-to-build-a-chat-app-with-socket-io-node-js)\
+[node.js-socket.io-tic-tac-toe](https://codesandbox.io/s/2zx1nj2lqp)\
+[tic-tac-toe-cool-math-in-react-js](https://www.golangprograms.com/tic-tac-toe-cool-math-in-react-js.html)\
+[build-multiplayer-realtime-tic-tac-toe-game-with-socketio-and-vue](https://dev.to/nilmadhabmondal/build-multiplayer-realtime-tic-tac-toe-game-with-socketio-and-vue-5clp)\
+[oreilly react tutorial](https://learning.oreilly.com/videos/react-the/9781801812603/9781801812603-video1_1/)\
+[hooks-effect](https://reactjs.org/docs/hooks-effect.html)\
+[passing-socket-io-object-between-react-components](https://copyprogramming.com/tutorial/passing-socket-io-object-between-react-components)\
+[how-to-send-data-to-socket-io-from-react](https://copyprogramming.com/howto/how-to-send-data-to-socket-io-from-react)\
+[introduction-to-socket-io-in-nodejs-with-simple-example](https://medium.com/deep-tour-of-node-js/introduction-to-socket-io-in-nodejs-with-simple-example-74214e6c1da7)\
+[https://borzecki.github.io/blog/jest-event-emitters](https://borzecki.github.io/blog/jest-event-emitters)\
+[https://stackoverflow.com/questions/56978283/unit-testing-react-click-outside-component-using-jest-and-react-testing-library](https://stackoverflow.com/questions/56978283/unit-testing-react-click-outside-component-using-jest-and-react-testing-library)\
+[https://testing-library.com/docs/user-event/setup/](https://testing-library.com/docs/user-event/setup/)\
+[how-to-mock-socket-io-client-using-jest-react-testing-library](https://stackoverflow.com/questions/58211676/how-to-mock-socket-io-client-using-jest-react-testing-library)\
+[Fetch and display data from API in React js](https://www.codingdeft.com/posts/react-fetch-data-api/)\
+[How To Write Snapshot Tests For React Components With Jest](https://www.digitalocean.com/community/tutorials/how-to-write-snapshot-tests-for-react-components-with-jest)\
+[Firing Events](https://testing-library.com/docs/dom-testing-library/api-events#fireevent)\
 [How to test useRef() without mocking useRef()?](https://medium.com/developer-rants/how-to-test-useref-without-mocking-useref-699165f4994e)
 
 ## Test /join endpoint from browser:
