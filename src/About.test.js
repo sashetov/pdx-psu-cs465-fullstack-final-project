@@ -1,10 +1,4 @@
-import {
-  render,
-  fireEvent,
-  screen,
-  within,
-  userEvent,
-} from '@testing-library/react';
+import { render, fireEvent, screen, within } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom/extend-expect';
 import MockedSocket from 'socket.io-mock';
@@ -204,11 +198,15 @@ test('Connect page renders correctly', () => {
   const name_label = screen.getByTestId('name-label');
   const email_label = screen.getByTestId('email-label');
   const comments_label = screen.getByTestId('comments-label');
+  const submit = screen.getByTestId('submit');
+  const reset = screen.getByTestId('reset');
 
   expect(header).toHaveTextContent("Let's Connect!");
   expect(name_label).toHaveTextContent('Name');
   expect(email_label).toHaveTextContent('Email');
   expect(comments_label).toHaveTextContent('Comments');
+  expect(submit).toHaveAttribute('value', 'Submit');
+  expect(reset).toHaveAttribute('value', 'Reset');
 });
 
 // Test Connect inputs
