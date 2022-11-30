@@ -17,28 +17,14 @@ const Board = ({
   const markSquare = useRef(false); // variable to hold whether move was allowed/disallowed
   const errorCode = useRef(-1); // variable to hold error code from the backend
   const winner = useRef(-2); // variable to hold who won from the backend
-
+  const win = useRef(-2); // var to hold whether someone won or not
   newGame.current = false; // Already in a game
 
   // useEffect works after render
   useEffect(() => {
+    win.current = -2; // -2 means no one has won or tied
     // Shows to console our current socket
     window.socket = socket;
-    console.log('socket:', socket);
-  }, [socket]);
-
-  // Functions
-  // Communicates to the backend server which square was clicked. Server determines validity of the move.
-  const move = (index) => {
-    let win = -2; // -2 means no one has won or tied
-    setMessage(''); // Resets user message to nothing
-
-    // Re-render the board
-    setUpdate(update + 1);
-
-    // Sends server index of the square clicked
-    socket.emit('move', { move_id: index });
-
     // Captures status message and errorCode from server
     socket.on('move_done', (data) => {
       let state = [...boardState];
@@ -55,7 +41,7 @@ const Board = ({
       } else if (data.status === 'success') {
         errorCode.current = 7; //success
         markSquare.current = true;
-        win = data.data.gameWinner;
+        win.current = data.data.gameWinner;
         state = [...data.data.boardState];
       } else {
         console.log('unknown error occured w/ client side move_done'); //error not matching error codes have occurred
@@ -64,6 +50,19 @@ const Board = ({
       }
       mark(state, win);
     });
+
+  }, [socket, boardState]);
+
+  // Functions
+  // Communicates to the backend server which square was clicked. Server determines validity of the move.
+  const move = (index) => {
+    setMessage(''); // Resets user message to nothing
+
+    // Re-render the board
+    setUpdate(update + 1);
+
+    // Sends server index of the square clicked
+    socket.emit('move', { move_id: index });
   };
 
   // Marks the square if appropriate and updates boardState
@@ -77,7 +76,6 @@ const Board = ({
     // Marking square not allowed
     else {
       console.log('The move is invalid');
-
       setUpdate(update + 1);
     }
 
@@ -90,20 +88,20 @@ const Board = ({
     message_picker();
 
     // Checks to see if a player won and gives appropriate console message
-    if (win !== -2 && win !== null) {
+    if (win.current !== -2 && win.current !== null) {
       // Server determined a player is missing
-      if (win === -1) {
+      if (win.current === -1) {
         winner.current = -1;
         console.log(
           'Error: One of the players is missing. Please join the game.'
         );
-      } else if (win === 0) {
+      } else if (win.current === 0) {
         winner.current = 0;
         console.log(`${first_player.current} won!`);
-      } else if (win === 1) {
+      } else if (win.current === 1) {
         winner.current = 1;
         console.log(`${second_player.current} won!`);
-      } else if (win === 2) {
+      } else if (win.current === 2) {
         winner.current = 2;
         console.log('Tied. Gameover');
       }
