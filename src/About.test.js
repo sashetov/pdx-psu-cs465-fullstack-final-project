@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, fireEvent, screen, within } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import '@testing-library/jest-dom/extend-expect';
@@ -100,9 +101,64 @@ test('Buttons render to match snapshot', () => {
   expect(buttons).toMatchSnapshot();
 });
 
+// Tests Home render match snapshot when newGame is false
+test('Home render to match snapshot when newGame is false', () => {
+  // Mock socket
+  const socket = new MockedSocket();
+
+  // variables
+  const newGame = React.createRef(false);
+  const first_player = 'A';
+  const second_player = 'B';
+  const gameFinished = React.createRef(false);
+
+  // render
+  const about = renderer
+    .create(
+      <Home
+        socket={socket}
+        newGame={newGame}
+        first_player={first_player}
+        second_player={second_player}
+        gameFinished={gameFinished}
+      />
+    )
+    .toJSON();
+
+  // expected results
+  expect(about).toMatchSnapshot();
+});
+
+// Tests Home render match snapshot when newGame is true
+test('Home render to match snapshot when newGame is true', () => {
+  // Mock socket
+  const socket = new MockedSocket();
+
+  // variables
+  const newGame = React.createRef(true);
+  const first_player = 'A';
+  const second_player = 'B';
+  const gameFinished = React.createRef(false);
+
+  // render
+  const about = renderer
+    .create(
+      <Home
+        socket={socket}
+        newGame={newGame}
+        first_player={first_player}
+        second_player={second_player}
+        gameFinished={gameFinished}
+      />
+    )
+    .toJSON();
+
+  // expected results
+  expect(about).toMatchSnapshot();
+});
+
 // Tests About page rendering
 test('About page renders correctly', () => {
-  // this one passes
   // render About on virtual dom
   render(<About />);
 
@@ -167,16 +223,24 @@ test('How To Play page renders correctly', () => {
   const list = screen.getByTestId('list_of_rules');
   const { getAllByRole } = within(list); // issue in ariel's side
   const rule_list = getAllByRole('listitem');
-  const wins = screen.getByTestId('wins');
   const ties = screen.getByTestId('ties');
+  const wins = screen.getByTestId('wins');
+  const h_wins = screen.getByTestId('h_wins');
+  const v_wins = screen.getByTestId('v_wins');
+  const d_wins = screen.getByTestId('d_wins');
+  const tied_ex = screen.getByTestId('tied_ex');
 
   // expected results
-  expect(rule_list.length).toBe(9); // possible issue
+  expect(rule_list.length).toBe(9);
   expect(heading).toHaveTextContent('How to Play Tic-Tac-Toe');
   expect(two).toHaveTextContent('This game is played with two players');
   expect(rules).toHaveTextContent('Rules:');
   expect(wins).toHaveTextContent('Example Wins:');
   expect(ties).toHaveTextContent('Example Tied Conditions:');
+  expect(h_wins).toBeTruthy();
+  expect(v_wins).toBeTruthy();
+  expect(d_wins).toBeTruthy();
+  expect(tied_ex).toBeTruthy();
 });
 
 // HowToPlay render to match snapshot
@@ -253,7 +317,7 @@ test('Comments render to match snapshot', () => {
 });
 
 // Comments page renders correctly without any comments
-test('Comments page renders corretly without any comments', () => {
+test('Comments page renders correctly without any comments', () => {
   // render About on virtual dom
   render(<Comments />);
 
@@ -268,4 +332,60 @@ test('Comments page renders corretly without any comments', () => {
     'You can leave us comments by filling out the form in the Connect page!'
   );
   expect(display).toHaveTextContent('No comments received');
+});
+
+// Tests Board render match snapshot when game isn't finished
+test('Board render to match snapshot when game is not finished', () => {
+  // Mock socket
+  const socket = new MockedSocket();
+
+  // variables
+  const newGame = React.createRef(false);
+  const first_player = 'A';
+  const second_player = 'B';
+  const gameFinished = React.createRef(false);
+
+  // render
+  const board = renderer
+    .create(
+      <Board
+        socket={socket}
+        newGame={newGame}
+        first_player={first_player}
+        second_player={second_player}
+        gameFinished={gameFinished}
+      />
+    )
+    .toJSON();
+
+  // expected results
+  expect(board).toMatchSnapshot();
+});
+
+// Tests Board render match snapshot when game is finished
+test('Board render to match snapshot when game is finished', () => {
+  // Mock socket
+  const socket = new MockedSocket();
+
+  // variables
+  const newGame = React.createRef(false);
+  const first_player = 'A';
+  const second_player = 'B';
+  const gameFinished = React.createRef(true);
+
+  // render
+  const board = renderer
+    .create(
+      <Board
+        socket={socket}
+        newGame={newGame}
+        first_player={first_player}
+        second_player={second_player}
+        gameFinished={gameFinished}
+      />
+    )
+    .toJSON();
+
+  // expected results
+  expect(board).toMatchSnapshot();
 });

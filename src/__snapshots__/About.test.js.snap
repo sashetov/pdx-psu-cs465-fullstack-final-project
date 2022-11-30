@@ -81,6 +81,192 @@ exports[`About render to match snapshot 1`] = `
 </div>
 `;
 
+exports[`Board render to match snapshot when game is finished 1`] = `
+<div
+  className="container-sm w-50"
+>
+  <div
+    aria-label="row-0"
+    className="row"
+  >
+    <div
+      aria-label="cell 0"
+      className="col cell text-center"
+      id="0"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 1"
+      className="col cell text-center"
+      id="1"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 2"
+      className="col cell text-center"
+      id="2"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    aria-label="row-1"
+    className="row text-center"
+  >
+    <div
+      aria-label="cell 3"
+      className="col cell text-center"
+      id="3"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 4"
+      className="col cell text-center"
+      id="4"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 5"
+      className="col cell text-center"
+      id="5"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    aria-label="row-2"
+    className="row"
+  >
+    <div
+      aria-label="cell 6"
+      className="col cell text-center"
+      id="6"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 7"
+      className="col cell text-center"
+      id="7"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 8"
+      className="col cell text-center"
+      id="8"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    className="row"
+    style={
+      Object {
+        "margin": "20px",
+      }
+    }
+  />
+  <div
+    className="row"
+  >
+    <div
+      aria-label="message board"
+      className="col message text-center"
+      id="user_message"
+    />
+  </div>
+</div>
+`;
+
+exports[`Board render to match snapshot when game is not finished 1`] = `
+<div
+  className="container-sm w-50"
+>
+  <div
+    aria-label="row-0"
+    className="row"
+  >
+    <div
+      aria-label="cell 0"
+      className="col cell text-center"
+      id="0"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 1"
+      className="col cell text-center"
+      id="1"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 2"
+      className="col cell text-center"
+      id="2"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    aria-label="row-1"
+    className="row text-center"
+  >
+    <div
+      aria-label="cell 3"
+      className="col cell text-center"
+      id="3"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 4"
+      className="col cell text-center"
+      id="4"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 5"
+      className="col cell text-center"
+      id="5"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    aria-label="row-2"
+    className="row"
+  >
+    <div
+      aria-label="cell 6"
+      className="col cell text-center"
+      id="6"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 7"
+      className="col cell text-center"
+      id="7"
+      onClick={[Function]}
+    />
+    <div
+      aria-label="cell 8"
+      className="col cell text-center"
+      id="8"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    className="row"
+    style={
+      Object {
+        "margin": "20px",
+      }
+    }
+  />
+  <div
+    className="row"
+  >
+    <div
+      aria-label="message board"
+      className="col message text-center"
+      id="user_message"
+    />
+  </div>
+</div>
+`;
+
 exports[`ButtonHanddler render to match snapshot 1`] = `
 <div>
   <div
@@ -365,17 +551,227 @@ exports[`Connect render to match snapshot 1`] = `
 </div>
 `;
 
+exports[`Home render to match snapshot when newGame is false 1`] = `
+<div>
+  <div
+    className="container mx-auto text-center"
+  >
+    <h1
+      className="display-1"
+    >
+      Tic-Tac-Toe
+    </h1>
+  </div>
+  <div
+    className="container-sm w-50"
+  >
+    <div
+      aria-label="row-0"
+      className="row"
+    >
+      <div
+        aria-label="cell 0"
+        className="col cell text-center"
+        id="0"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 1"
+        className="col cell text-center"
+        id="1"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 2"
+        className="col cell text-center"
+        id="2"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      aria-label="row-1"
+      className="row text-center"
+    >
+      <div
+        aria-label="cell 3"
+        className="col cell text-center"
+        id="3"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 4"
+        className="col cell text-center"
+        id="4"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 5"
+        className="col cell text-center"
+        id="5"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      aria-label="row-2"
+      className="row"
+    >
+      <div
+        aria-label="cell 6"
+        className="col cell text-center"
+        id="6"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 7"
+        className="col cell text-center"
+        id="7"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 8"
+        className="col cell text-center"
+        id="8"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      className="row"
+      style={
+        Object {
+          "margin": "20px",
+        }
+      }
+    />
+    <div
+      className="row"
+    >
+      <div
+        aria-label="message board"
+        className="col message text-center"
+        id="user_message"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Home render to match snapshot when newGame is true 1`] = `
+<div>
+  <div
+    className="container mx-auto text-center"
+  >
+    <h1
+      className="display-1"
+    >
+      Tic-Tac-Toe
+    </h1>
+  </div>
+  <div
+    className="container-sm w-50"
+  >
+    <div
+      aria-label="row-0"
+      className="row"
+    >
+      <div
+        aria-label="cell 0"
+        className="col cell text-center"
+        id="0"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 1"
+        className="col cell text-center"
+        id="1"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 2"
+        className="col cell text-center"
+        id="2"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      aria-label="row-1"
+      className="row text-center"
+    >
+      <div
+        aria-label="cell 3"
+        className="col cell text-center"
+        id="3"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 4"
+        className="col cell text-center"
+        id="4"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 5"
+        className="col cell text-center"
+        id="5"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      aria-label="row-2"
+      className="row"
+    >
+      <div
+        aria-label="cell 6"
+        className="col cell text-center"
+        id="6"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 7"
+        className="col cell text-center"
+        id="7"
+        onClick={[Function]}
+      />
+      <div
+        aria-label="cell 8"
+        className="col cell text-center"
+        id="8"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      className="row"
+      style={
+        Object {
+          "margin": "20px",
+        }
+      }
+    />
+    <div
+      className="row"
+    >
+      <div
+        aria-label="message board"
+        className="col message text-center"
+        id="user_message"
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`HowToPlay render to match snapshot 1`] = `
 <div
   className="howtoplay_container"
 >
   <h1
+    aria-label="How To Play Tic-Tac-Toe header"
     className="display-1 text-center howtoplay_header"
     data-testid="how_to_header"
   >
     How to Play Tic-Tac-Toe
   </h1>
   <p
+    aria-label="require 2 players"
     data-testid="two_players"
   >
     This game is played with two players
@@ -387,6 +783,7 @@ exports[`HowToPlay render to match snapshot 1`] = `
       Rules:
     </p>
     <ul
+      aria-label="rules list"
       data-testid="list_of_rules"
     >
       <li>
@@ -420,11 +817,13 @@ exports[`HowToPlay render to match snapshot 1`] = `
   </div>
   <div>
     <p
+      aria-label="example wins"
       data-testid="wins"
     >
       Example Wins:
     </p>
     <pre
+      aria-label="horizontal wins"
       data-testid="h_wins"
     >
       <p>
@@ -437,6 +836,7 @@ exports[`HowToPlay render to match snapshot 1`] = `
     </pre>
     <p />
     <pre
+      aria-label="vertical wins"
       data-testid="v_wins"
     >
       <p>
@@ -449,6 +849,7 @@ exports[`HowToPlay render to match snapshot 1`] = `
     </pre>
     <p />
     <pre
+      aria-label="diagonal wins"
       data-testid="d_wins"
     >
       <p>
@@ -462,12 +863,14 @@ exports[`HowToPlay render to match snapshot 1`] = `
   </div>
   <div>
     <p
+      aria-label="example tied"
       data-testid="ties"
     >
       Example Tied Conditions:
     </p>
     <pre
-      data-testid="tied"
+      aria-label="tied game"
+      data-testid="tied_ex"
     >
       <p>
          X | O | X     X | O | O      X | X | O

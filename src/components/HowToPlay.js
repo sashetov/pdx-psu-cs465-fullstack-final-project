@@ -31,13 +31,16 @@ function HowToPlay() {
       <h1
         className="display-1 text-center howtoplay_header"
         data-testid="how_to_header"
+        aria-label="How To Play Tic-Tac-Toe header"
       >
         How to Play Tic-Tac-Toe
       </h1>
-      <p data-testid="two_players">This game is played with two players</p>
+      <p data-testid="two_players" aria-label="require 2 players">
+        This game is played with two players
+      </p>
       <div>
         <p data-testid="rules">Rules:</p>
-        <ul data-testid="list_of_rules">
+        <ul data-testid="list_of_rules" aria-label="rules list">
           <li>
             The first player enter their name to connect will be 'Player 1'
           </li>
@@ -68,22 +71,26 @@ function HowToPlay() {
         </ul>
       </div>
       <div>
-        <p data-testid="wins">Example Wins:</p>
-        <pre data-testid="h_wins">
+        <p data-testid="wins" aria-label="example wins">
+          Example Wins:
+        </p>
+        <pre data-testid="h_wins" aria-label="horizontal wins">
           <p>{horizontal_wins}</p>
         </pre>
         <p></p>
-        <pre data-testid="v_wins">
+        <pre data-testid="v_wins" aria-label="vertical wins">
           <p>{vertical_wins}</p>
         </pre>
         <p></p>
-        <pre data-testid="d_wins">
+        <pre data-testid="d_wins" aria-label="diagonal wins">
           <p>{diagonal_wins}</p>
         </pre>
       </div>
       <div>
-        <p data-testid="ties">Example Tied Conditions:</p>
-        <pre data-testid="tied">
+        <p data-testid="ties" aria-label="example tied">
+          Example Tied Conditions:
+        </p>
+        <pre data-testid="tied_ex" aria-label="tied game">
           <p>{tied}</p>
         </pre>
       </div>
