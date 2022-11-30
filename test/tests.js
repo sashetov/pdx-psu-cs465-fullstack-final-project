@@ -60,15 +60,15 @@ const testOnlyOnePlayerPlay = (done) => {
       res1.status.should.be.equal(200);
       res1.data.playerName.should.be.equal('player3');
       res1.data.symbol.should.be.equal('X');
+      sockets[2].emit('move', { move_id: 0 });
+      sockets[2].once('move_done', (data) => {
+        data.status.should.be.equal('error');
+        data.msg.should.be.equal('Player attempting to play in a game that is not fully initialized. You dont have an opponent yet');
+        data.errorCode.should.be.equal(3);
+        should(data.data).not.be.ok;
+        done();
+      });
     }).catch((err) => done(err));
-    sockets[2].emit('move', { move_id: 0 });
-    sockets[2].once('move_done', (data) => {
-      data.status.should.be.equal('error');
-      data.msg.should.be.equal('player attempting to move without being in a game, join this player to a game with GET to /join');
-      data.errorCode.should.be.equal(1);
-      should(data.data).not.be.ok;
-      done();
-    });
   }, 200); // wait for sockets to setup
 };
 const testJoinGamePlayer4 = (done) => {
@@ -387,8 +387,8 @@ const testPlayers12Player1WindsMove5 = (done) => {
 const player1SendChatMessageTest = (done) => {
   const handler = (data) => {
     data.status.should.be.equal('error');
-    data.msg.should.be.equal('player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over');
-    data.errorCode.should.be.equal(3);
+    data.msg.should.be.equal('player attempting to chat without being in a game, join this player to a game with GET to /join');
+    data.errorCode.should.be.equal(1);
     done();
   };
   sockets[0].once('chat_done', handler);
@@ -470,7 +470,7 @@ describe('Play game tests', () => {
   it('player 1 and 2 play until player 1 wins move 5', testPlayers12Player1WindsMove5);
 });
 describe('Chat tests', () => {
-  it('player 1 send chat message test - fails because game is over', player1SendChatMessageTest);
+  it('player 1 send chat message test - fails because game is over and player needs to rejoin', player1SendChatMessageTest);
   it('player 5 send chat message test - success', player5SendChatMessageTest);
   it('player 6 send chat message test - success', player6SendChatMessageTest);
 });
