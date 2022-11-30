@@ -220,7 +220,7 @@ The possible error code values are:
 error code:
    1 - player attempting to move without being in a game, join this player to a game with GET to /join
    2 - you did not provide a valid move id, you need to provide data that looks like {move_id: move_id}, where move_id is an interger that corresponds to an index in the board array
-   3 - player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over
+   3 - Player attempting to play in a game that is not fully initialized. You dont have an opponent yet
    4 - player attempting to move to a slot in the game that already has a symbol in it
    5 - player attempting to play out of turn
 ```
@@ -271,7 +271,7 @@ You will find these error codes in the event data that comes back with the `chat
 ```
 {
   "status": "error",
-  "msg": "player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is ove",
+  "msg": "Player attempting to play in a game that is not fully initialized. You dont have an opponent yet",
   "errorCode": 3,
   "data": null
 }
@@ -286,7 +286,7 @@ The possible error code values are:
 ```
 error code:
    1 - player attempting to move without being in a game, join this player to a game with GET to /join
-   3 - player attempting to play in a game that is not fully initialized or is over. you either dont have an opponent yet or the game is over
+   3 - Player attempting to play in a game that is not fully initialized. You dont have an opponent yet
    6 - chat message not provided, you need to provide it in the data for the socket under the key "message"
 ```
 
