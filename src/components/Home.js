@@ -9,6 +9,7 @@ const Home = ({
   first_player,
   second_player,
   gameFinished,
+  board_update,
 }) => {
   return (
     <div>
@@ -19,6 +20,7 @@ const Home = ({
         second_player={second_player}
         newGame={newGame}
         gameFinished={gameFinished}
+        board_update={board_update}
       />
     </div>
   );

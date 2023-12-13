@@ -9,6 +9,7 @@ const Container = ({
   second_player,
   newGame,
   gameFinished,
+  board_update,
 }) => {
   // Hooks
   const [joined, setJoined] = useState(false);
@@ -53,6 +54,7 @@ const Container = ({
           second_player={second_player}
           newGame={newGame}
           gameFinished={gameFinished}
+          board_update={board_update}
         />
       );
     }

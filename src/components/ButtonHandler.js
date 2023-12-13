@@ -16,7 +16,7 @@ function ButtonHandler({ socket }) {
   const first_player = useRef(''); // variable for the name of the first player
   const second_player = useRef(''); // variable for the name of the second player
   const gameFinished = useRef(false); // variable for whether the game has finished (controls whether chat component is shown)
-
+  const board_update = useRef(['', '', '', '', '', '', '', '', '']); // holds the board state)
   // handles click of Home button
   const handleHome = () => {
     linked.current = true;
@@ -30,6 +30,7 @@ function ButtonHandler({ socket }) {
           first_player={first_player}
           second_player={second_player}
           gameFinished={gameFinished}
+          board_update={board_update}
         />
       );
     }
@@ -42,6 +43,7 @@ function ButtonHandler({ socket }) {
           first_player={first_player}
           second_player={second_player}
           gameFinished={gameFinished}
+          board_update={board_update}
         />
       );
     }
@@ -101,6 +103,7 @@ function ButtonHandler({ socket }) {
           second_player={second_player}
           newGame={newGame}
           gameFinished={gameFinished}
+          board_update={board_update}
         />
       </div>
     );

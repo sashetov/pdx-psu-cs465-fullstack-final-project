@@ -8,9 +8,10 @@ const Board = ({
   second_player,
   newGame,
   gameFinished,
+  board_update,
 }) => {
   // Hooks
-  const [boardState, setBoard] = useState(['', '', '', '', '', '', '', '', '']); // holds the board state
+  const [boardState, setBoard] = useState(board_update.current); // holds the board state
   const [message, setMessage] = useState(''); // used for user message display
   const [update, setUpdate] = useState(0); // used to re-render the page
   const reference = useRef(null);
@@ -48,9 +49,9 @@ const Board = ({
         errorCode.current = -1; //resets value to default
         markSquare.current = false; //resets value to default
       }
+
       mark(state, win);
     });
-
   }, [socket, boardState]);
 
   // Functions
@@ -81,6 +82,7 @@ const Board = ({
 
     // Updates the board on client side and displays in console
     setBoard([...state]);
+    board_update.current = [...state];
     console.log('Updated board:');
     console.log(state);
 
@@ -120,7 +122,7 @@ const Board = ({
   const message_picker = () => {
     console.log('in message');
     if (errorCode.current === 1) {
-      setMessage(`You are not in a game. Please join.`);
+      setMessage(`You are not in a game. Please join by refreshing the page.`);
     } else if (errorCode.current === 2) {
       setMessage(`Invalid move id`);
     } else if (errorCode.current === 3) {
@@ -153,6 +155,7 @@ const Board = ({
       setMessage(``);
     }
     gameFinished.current = true;
+    board_update.current = ['', '', '', '', '', '', '', '', ''];
     setUpdate(update + 1);
   };
 
